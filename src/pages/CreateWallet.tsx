@@ -5,6 +5,7 @@ import {
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
+import NewAccount from "../components/account-form/NewAccount";
 import ExploreContainer from "../components/ExploreContainer";
 import "./CreateWallet.css";
 
@@ -13,7 +14,7 @@ const CreateWallet: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Create a wallet</IonTitle>
+          <IonTitle>New account</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
@@ -22,7 +23,7 @@ const CreateWallet: React.FC = () => {
             <IonTitle size="large">Create a wallet</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <ExploreContainer />
+        <NewAccount />
       </IonContent>
     </IonPage>
   );
