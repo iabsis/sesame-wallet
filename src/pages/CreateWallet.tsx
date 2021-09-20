@@ -4,36 +4,22 @@ import {
   IonPage,
   IonTitle,
   IonToolbar,
-  useIonRouter,
 } from "@ionic/react";
-import { getStorage } from "alephium-js";
 import ExploreContainer from "../components/ExploreContainer";
-import "./Home.css";
+import "./CreateWallet.css";
 
-const Storage = getStorage();
-
-const Home: React.FC = () => {
-  const usernames = Storage.list();
-  const hasWallet = usernames.length > 0;
-
-  //	Initializing router
-  const router = useIonRouter();
-
-  if (!hasWallet) {
-    router.push("/wallet/create");
-  }
-
+const CreateWallet: React.FC = () => {
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Blank</IonTitle>
+          <IonTitle>Create a wallet</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
         <IonHeader collapse="condense">
           <IonToolbar>
-            <IonTitle size="large">Blank</IonTitle>
+            <IonTitle size="large">Create a wallet</IonTitle>
           </IonToolbar>
         </IonHeader>
         <ExploreContainer />
@@ -42,4 +28,4 @@ const Home: React.FC = () => {
   );
 };
 
-export default Home;
+export default CreateWallet;
