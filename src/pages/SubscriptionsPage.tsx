@@ -89,7 +89,6 @@ const SubscriptionsPage = () => {
       {subscriptions &&
         subscriptions.length > 0 &&
         subscriptions.map((subscription) => {
-          console.log(subscription, subscription.nbSlots);
           return (
             <SubscriptionElement
               subscription={subscription}
