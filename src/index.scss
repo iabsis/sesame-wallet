@@ -1,6 +1,12 @@
 /* GLOBAL SETTINGS */
 @import "style/scss/variables";
 
+html,
+body {
+  overflow-x: hidden;
+  width: 100vw;
+}
+
 body {
   font-size: inherit;
   margin: 0;
@@ -15,7 +21,10 @@ body {
 
   --ion-text-color: white;
   background-color: #17161b !important;
-  overflow-x: hidden;
+}
+
+input {
+  color: $text-default;
 }
 
 ion-router-outlet {

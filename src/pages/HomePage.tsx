@@ -71,7 +71,7 @@ const HomePage = ({ hasWallet, usernames, networkId }: HomeProps) => {
             </>
           ) : (
             <>
-              <PanelTitle useLayoutId={false}>Welcome2!</PanelTitle>
+              <PanelTitle useLayoutId={false}>Welcome!</PanelTitle>
               {renderActions()}
             </>
           )}

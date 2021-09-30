@@ -1,22 +1,10 @@
-import { createGlobalStyle } from 'styled-components'
-import { isElectron } from '../utils/misc'
+import { createGlobalStyle } from "styled-components";
+import { isElectron } from "../utils/misc";
 
-// Extension: define window size
-const limitedSize = `
-  height: 600px;
-  width: 400px;
-`
-
-const freeSize = `
-  height: 100%;
-`
-
-export const appHeaderHeight = '50px'
+export const appHeaderHeight = "50px";
 
 export const GlobalStyle = createGlobalStyle`
-  html {
-    ${!isElectron() ? limitedSize : freeSize}
-  }
+
 
   body {
     color: ${({ theme }) => theme.font.primary};
@@ -62,19 +50,19 @@ export const GlobalStyle = createGlobalStyle`
       background-color: ${({ theme }) => theme.global.accent};
     }
   }
-`
+`;
 
 // Breakpoints
 
 export const deviceSizes = {
   mobile: 800,
   tablet: 1000,
-  desktop: 1600
-}
+  desktop: 1600,
+};
 
 export const deviceBreakPoints = {
   mobile: `(max-width: ${deviceSizes.mobile}px)`,
   tablet: `(max-width: ${deviceSizes.tablet}px)`,
   desktop: `(min-width: ${deviceSizes.desktop}px)`,
-  short: '(max-height: 600px)'
-}
+  short: "(max-height: 600px)",
+};
