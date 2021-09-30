@@ -3,10 +3,11 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
-    "@capacitor/android": "^3.2.3",
+    "@capacitor/android": "3.2.4",
     "@capacitor/browser": "^1.0.3",
     "@capacitor/core": "3.2.3",
     "@capacitor/ios": "^3.2.4",
+    "@ionic/cli": "^6.17.1",
     "@ionic/react": "^5.5.0",
     "@ionic/react-router": "^5.5.0",
     "@stripe/react-stripe-js": "^1.4.1",
