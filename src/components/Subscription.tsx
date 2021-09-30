@@ -53,7 +53,7 @@ const SubscriptionElement: FC<SubscriptionContext> = ({
           <div className="info">
             <div className="soft-text">
               Subscribed on{" "}
-              {dayjs(subscription.requestedAt).format("d MMM, YYYY")}
+              {dayjs(subscription.requestedAt).format("D MMM, YYYY")}
             </div>
             <SwitchLink
               className="no-margin no-padding"
@@ -85,7 +85,7 @@ const SubscriptionElement: FC<SubscriptionContext> = ({
                     <div className="col-left">
                       <div className="row-subtitle">
                         Invoice on{" "}
-                        {dayjs(invoice.invoiceDate).format("d MMM, YYYY")}
+                        {dayjs(invoice.invoiceDate).format("D MMM, YYYY")}
                       </div>
                     </div>
                     <div className="col-right">

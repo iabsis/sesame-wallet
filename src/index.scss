@@ -15,6 +15,7 @@ body {
 
   --ion-text-color: white;
   background-color: #17161b !important;
+  overflow-x: hidden;
 }
 
 ion-router-outlet {
