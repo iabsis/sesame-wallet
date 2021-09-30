@@ -1,0 +1,20 @@
+@import "variables";
+
+.row {
+    display: flex;
+    margin: 1rem 0;
+    flex: auto;
+    align-items: center;
+
+    .row-title {
+        font-weight: bold;
+    }
+    .row-subtitle {
+        opacity: 0.8;
+        font-style: italic;
+    }
+
+    .col-left {
+        flex-grow: 1;
+    }
+}

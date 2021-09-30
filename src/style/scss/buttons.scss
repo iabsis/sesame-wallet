@@ -1,0 +1,83 @@
+@import "variables";
+
+.global-close {
+    font-size: 2rem;
+    position: absolute;
+    top: 0;
+    right: 1rem;
+    color: $primary;
+}
+
+.checkbox {
+    color: $text-default;
+
+    &.checked {
+        color: $primary;
+    }
+}
+
+.credit-card {
+    margin-top: 2rem;
+}
+
+.nice-colors {
+    font-size: 2rem;
+    text-align: center;
+
+    background: -webkit-linear-gradient(
+        45deg,
+        rgba(153, 198, 234, 1) 0%,
+        rgba(154, 237, 147, 1) 33%,
+        rgba(253, 205, 106, 1) 67%,
+        rgba(250, 172, 148, 1) 100%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 2rem;
+    font-weight: 800;
+}
+
+.section-title {
+    margin-top: 2rem;
+    text-align: center;
+    color: $text-default;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+}
+
+.label-success,
+.label-error {
+    text-align: center;
+    padding: 2px 12px;
+    border-radius: 30px;
+    font-weight: 600;
+    white-space: nowrap;
+    display: inline-block;
+    font-size: 0.8rem;
+    &.with-icon {
+        &::before {
+            margin-right: 0.5rem;
+        }
+    }
+}
+
+.label-success {
+    color: #37c461;
+    background-color: rgba(55, 196, 97, 0.2);
+    &.with-icon {
+        &::before {
+            content: $icon-coche;
+            font-family: $icomoon-font-family;
+        }
+    }
+}
+.label-error {
+    color: rgba(243, 113, 93, 1);
+    background-color: rgba(243, 113, 93, 0.2);
+    &.with-icon {
+        &::before {
+            content: $icon-failed;
+            font-family: $icomoon-font-family;
+        }
+    }
+}

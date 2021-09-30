@@ -1,0 +1,188 @@
+/* GLOBAL SETTINGS */
+@import "style/scss/variables";
+
+body {
+  font-size: inherit;
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-y: auto;
+  height: 100%;
+  width: 100%;
+  font-weight: 500;
+  font-size: 13px;
+
+  --ion-text-color: white;
+  background-color: #17161b !important;
+}
+
+ion-router-outlet {
+  ion-page {
+    padding-bottom: 300px;
+  }
+}
+
+ion-range {
+  margin-top: 12px;
+  --bar-background-active: #d4aa00;
+  --pin-background: #d4aa00;
+}
+
+ion-tab-bar {
+  background: #17161b;
+  border-top: 2px solid #d4aa00;
+  height: 70px;
+}
+
+ion-tab-button {
+  background: #17161b;
+  --ripple-color: #d4aa00;
+  ion-label {
+    font-weight: 900;
+  }
+
+  .icon {
+    font-size: 1.3rem;
+    padding-bottom: 0.3rem;
+  }
+
+  &.tab-selected {
+    color: #d4aa00;
+    border-top: 4px solid #d4aa00;
+  }
+}
+
+ion-card {
+  --background: #17161b;
+  border: 1px solid #d4aa00;
+}
+
+#root {
+  height: 100%;
+  display: flex;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+h1 {
+  font-size: 2.3em;
+  margin-bottom: 40px;
+  margin-top: 30px;
+}
+
+h2 {
+  font-weight: 600;
+}
+
+h3 {
+  font-weight: 600;
+  font-size: 1em;
+}
+
+.pr-2 {
+  padding-right: 0.5rem;
+}
+
+.page-title {
+  text-align: center;
+  color: $primary;
+  font-weight: 300;
+}
+
+.page-subtitle {
+  text-align: center;
+  margin-top: -2rem;
+  padding: 0 3rem;
+  font-size: 0.9rem;
+}
+
+input,
+button {
+  outline: none;
+  border: none;
+  background: transparent;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+#app-header {
+  -webkit-app-region: drag;
+  z-index: 10000;
+}
+
+/* FONTS */
+
+@font-face {
+  font-family: "Inter";
+  src: url("./style/fonts/Inter.var.woff2") format("woff2");
+  font-weight: 100 1000;
+}
+
+.ion-page-hidden {
+  display: none;
+}
+
+.ion-page {
+  height: 100vh;
+  overflow: auto;
+}
+
+.ion-color-primary {
+  background-color: #d4aa00;
+  color: white;
+}
+
+.ion-color-success {
+  background-color: green;
+  color: white;
+}
+
+.ion-color-danger {
+  background-color: red;
+  color: white;
+}
+
+.page-padding {
+  padding-top: 2rem;
+}
+.no-margin {
+  margin: 0 !important;
+}
+
+.no-margin {
+  padding: 0 !important;
+}
+
+.soft-text {
+  opacity: 0.8;
+  font-style: italic;
+}
+
+.textual-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.my-2 {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.internal-page {
+  padding-bottom: 100px;
+}
+
+@import "style/scss/plans.scss";
+@import "style/scss/subscriptions.scss";
+@import "style/scss/buttons.scss";
+@import "style/scss/diagramm.scss";
+@import "style/scss/grid.scss";
+@import "style/scss/app-brand.scss";
+@import "style/scss/custom-font.scss";
