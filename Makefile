@@ -13,12 +13,12 @@ all: android ios
 	zip -r platforms/all/app-release-all.zip platforms/ios platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk platforms/android/app/build/outputs/apk/debug/app-debug.apk
 
 android: nodes_modules
-	npx ionic cordova platform add android --prod --release
-	npx ionic cordova build android --release --prod
+	npx ionic capacitor platform add android --prod --release
+	npx ionic capacitor build android --release --prod
 
 ios: nodes_modules
-	npx ionic cordova platform add ios --prod --release
-	npx ionic cordova prepare ios --release --prod
+	npx ionic capacitor platform add ios --prod --release
+	npx ionic capacitor prepare ios --release --prod
 
 show:
 	@ echo Timestamp: "$(timeStamp)"
