@@ -3,5 +3,8 @@
 apt update
 apt -y install git
 
-git config --global url."https://github.com/".insteadOf git@github.com:
-git config --global url."https://".insteadOf git://
+## Not working
+#git config --global url."https://github.com/".insteadOf git@github.com:
+#git config --global url."https://".insteadOf git://
+
+ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
