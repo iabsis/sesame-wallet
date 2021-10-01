@@ -3,34 +3,34 @@ npm_version:=$(shell npm -v)
 timeStamp:=$(shell date +%Y%m%d%H%M%S)
 
 
-.PHONY: android ios
+#.PHONY: android ios
 
 node_modules:
 	npm install
 
-all: android ios
-	zip -r app-release-all.zip ios android/app/build/outputs/bundle/release/app-release.aab android/app/build/outputs/apk/release/app-release-unsigned.apk
-
-resources/android:
-	npx cordova-res android --skip-config --copy
-
-resources/ios:
-	npx cordova-res ios --skip-config --copy
+all: android-prod ios-xcode
+	mkdir -p platforms/all
+	zip -r platforms/all/app-release-all.zip ios android/app/build/outputs/bundle/release/app-release.aab android/app/build/outputs/apk/release/app-release-unsigned.apk
 
 build:
 	npx ionic build
 
-android: node_modules build resources/android
-	npx ionic capacitor sync android
+android: node_modules build
+	npx ionic capacitor add android
+	npx cordova-res android --skip-config --copy
+
+android-prod: android
 	cd android && ./gradlew assembleRelease
 	cd android && ./gradlew bundle
 
-android-dev: node_modules build resources/android
-	npx ionic capacitor sync android
+android-dev: node_modules build android
+	npx cordova-res ios --skip-config --copy
 	cd android && ./gradlew assembleDebug
 
-ios: node_modules build resources/ios
-	npx ionic capacitor sync ios
+ios: node_modules build
+	npx ionic capacitor add ios
+
+ios-xcode: ios
 
 show:
 	@ echo Timestamp: "$(timeStamp)"

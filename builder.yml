@@ -7,4 +7,4 @@ builder:
 publish:
 - method: redmine
   options:
-    file: "app-release-all.zip"
+    file: "all/app-release-all.zip"
