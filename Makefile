@@ -6,7 +6,7 @@ timeStamp:=$(shell date +%Y%m%d%H%M%S)
 .PHONY: android ios
 
 node_modules:
-	npm install
+	npx yarn install
 
 all: android ios
 	zip -r app-release-all.zip ios android/app/build/outputs/bundle/release/app-release.aab android/app/build/outputs/apk/release/app-release-unsigned.apk
@@ -16,6 +16,9 @@ resources/android:
 
 resources/ios:
 	npx cordova-res ios
+
+build:
+	npx ionic build
 
 android: node_modules build resources/android
 	npx ionic capacitor sync android
