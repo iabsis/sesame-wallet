@@ -6,7 +6,7 @@ timeStamp:=$(shell date +%Y%m%d%H%M%S)
 .PHONY: android ios
 
 node_modules:
-	npx yarn install
+	npm install
 
 all: android ios
 	zip -r app-release-all.zip ios android/app/build/outputs/bundle/release/app-release.aab android/app/build/outputs/apk/release/app-release-unsigned.apk
