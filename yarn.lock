@@ -1190,7 +1190,7 @@
   "resolved" "https://registry.npmjs.org/@capacitor/browser/-/browser-1.0.3.tgz"
   "version" "1.0.3"
 
-"@capacitor/cli@3.2.3":
+"@capacitor/cli@^3.2.3":
   "integrity" "sha512-vEinN2Q4ZSosPIRnNdRSAOA+zIjBhVxZOg5n0OKY/QkqENTemIT7mhAfoOgTdSu1iwrqJGf+Tt34cOkCo0a+0A=="
   "resolved" "https://registry.npmjs.org/@capacitor/cli/-/cli-3.2.3.tgz"
   "version" "3.2.3"

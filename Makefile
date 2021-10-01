@@ -12,10 +12,10 @@ all: android ios
 	zip -r app-release-all.zip ios android/app/build/outputs/bundle/release/app-release.aab android/app/build/outputs/apk/release/app-release-unsigned.apk
 
 resources/android:
-	npx cordova-res android
+	npx cordova-res android --skip-config --copy
 
 resources/ios:
-	npx cordova-res ios
+	npx cordova-res ios --skip-config --copy
 
 build:
 	npx ionic build
@@ -24,6 +24,10 @@ android: node_modules build resources/android
 	npx ionic capacitor sync android
 	cd android && ./gradlew assembleRelease
 	cd android && ./gradlew bundle
+
+android-dev: node_modules build resources/android
+	npx ionic capacitor sync android
+	cd android && ./gradlew assembleDebug
 
 ios: node_modules build resources/ios
 	npx ionic capacitor sync ios
