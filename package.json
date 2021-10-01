@@ -33,6 +33,7 @@
     "bip39": "^3.0.3",
     "classnames": "^2.3.1",
     "concurrently": "^6.2.1",
+    "cordova-res": "^0.15.3",
     "dayjs": "^1.10.6",
     "electron": "^14.0.0",
     "electron-builder": "^22.10.5",
