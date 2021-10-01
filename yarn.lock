@@ -1219,7 +1219,7 @@
   dependencies:
     "tslib" "^2.1.0"
 
-"@capacitor/ios@^3.2.4":
+"@capacitor/ios@3.2.4":
   "integrity" "sha512-d9ECeZC2uknOGB/IHaapBvuUSpYoM0J202M8Fw4OBPAkc26ysvMreHoCWCB0nd0leks53biI6DJdS60/VbYTWg=="
   "resolved" "https://registry.npmjs.org/@capacitor/ios/-/ios-3.2.4.tgz"
   "version" "3.2.4"
