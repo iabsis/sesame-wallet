@@ -31,7 +31,7 @@ show:
 	@ echo npm_version: $(npm_version)
 
 clean:
-	@ rm -rf dist node_modules www platform plugins
+	@ rm -rf node_modules build android ios resources/android resources/ios
 	@ rm -rf dist.tar.gz
 
 INFO := @bash -c '\
