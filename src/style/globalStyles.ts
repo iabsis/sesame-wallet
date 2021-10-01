@@ -32,7 +32,7 @@ export const GlobalStyle = createGlobalStyle`
     .tagify__dropdown__wrapper {
       border: none;
       border-radius: 7px;
-      background-color: ${({ theme }) => theme.bg.contrast};
+      background-color: #ecc524;
     }
 
     .tagify__dropdown__item  {
