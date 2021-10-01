@@ -28,10 +28,12 @@ import {
 } from "../services/subscriptions";
 import InvoiceHistory from "../components/InvoiceHistory";
 import SubscriptionElement from "../components/Subscription";
+import { Button } from "../components/Buttons";
+import { useHistory } from "react-router";
 
 const SubscriptionsPage = () => {
   const { jwtToken } = useContext(GlobalContext);
-
+  const history = useHistory();
   const [subscriptions, setSubscriptions] = useState<Subscription[] | null>(
     null
   );
@@ -80,12 +82,21 @@ const SubscriptionsPage = () => {
     setSubscriptionsOpened(updatedHistory);
   };
 
+  const goToPlanSelection = () => {
+    history.push("/choose-plan");
+  };
+
   return (
     <IonPage className="internal-page">
       <h1 className="page-title">Your subscriptions</h1>
       <p className="page-subtitle">
         Below, you will find your subscription history and the invoices.
       </p>
+
+      <Button className="btn-centered" onClick={goToPlanSelection}>
+        <i className="icon-pick-axe pr-2"></i> Start mining
+      </Button>
+
       {subscriptions &&
         subscriptions.length > 0 &&
         subscriptions.map((subscription) => {

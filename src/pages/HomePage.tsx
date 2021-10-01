@@ -100,7 +100,16 @@ const Login = ({
   const history = useHistory();
 
   const login = async (callback: () => void) => {
-    const walletEncrypted = Storage.load(credentials.username);
+    let walletEncrypted = null;
+
+    if (!credentials.username) {
+      setSnackbarMessage({
+        text: "Please select the wallet to open first",
+        type: "alert",
+      });
+    } else {
+      walletEncrypted = Storage.load(credentials.username);
+    }
     if (walletEncrypted === null) {
       setSnackbarMessage({ text: "Unknown account name", type: "info" });
     } else {
