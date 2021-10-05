@@ -274,7 +274,7 @@ const WalletHomePage = () => {
             {openedSubscriptions.length > 0 ? (
               <FooterActions apparitionDelay={0.3}>
                 <Button onClick={() => goToPage("/wallet/subscriptions")}>
-                  Show my active plan
+                  Show my active plan ({openedSubscriptions.length})
                 </Button>
               </FooterActions>
             ) : (
