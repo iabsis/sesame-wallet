@@ -94,7 +94,7 @@ const SubscriptionsPage = () => {
       </p>
 
       <Button className="btn-centered" onClick={goToPlanSelection}>
-        <i className="icon-pick-axe pr-2"></i> Start mining
+          <i className="icon-pick-axe pr-2"></i> Start new subscription
       </Button>
 
       {subscriptions &&
@@ -109,6 +109,8 @@ const SubscriptionsPage = () => {
             ></SubscriptionElement>
           );
         })}
+
+
     </IonPage>
   );
 };

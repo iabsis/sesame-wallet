@@ -55,12 +55,14 @@ const SubscriptionElement: FC<SubscriptionContext> = ({
               Subscribed on{" "}
               {dayjs(subscription.requestedAt).format("D MMM, YYYY")}
             </div>
+            {subscription.renewal ? (
             <SwitchLink
               className="no-margin no-padding"
               onClick={cancelSubscription}
             >
               Cancel the subscription
             </SwitchLink>
+            ) : null }
           </div>
         </div>
       </div>
