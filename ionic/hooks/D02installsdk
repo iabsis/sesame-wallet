@@ -1,7 +1,0 @@
-ANDROID_PLATFORMS_VERSION=31
-ANDROID_BUILD_TOOLS_VERSION=30.0.3
-yes | sdkmanager --licenses
-sdkmanager "tools" && \  
-sdkmanager "platform-tools" && \
-sdkmanager "platforms;android-${ANDROID_PLATFORMS_VERSION}" && \
-sdkmanager "build-tools;${ANDROID_BUILD_TOOLS_VERSION}"

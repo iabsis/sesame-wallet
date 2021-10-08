@@ -1,5 +1,3 @@
 #!/bin/bash
 
-apt update
-apt -y install git
 npm install -g npm
