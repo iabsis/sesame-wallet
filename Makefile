@@ -2,7 +2,9 @@ node_version:=$(shell node -v)
 npm_version:=$(shell npm -v)
 timeStamp:=$(shell date +%Y%m%d%H%M%S)
 
-ANDROID_SDK_ROOT=/opt/android-sdk-linux
+ifeq ($(ANDROID_SDK_ROOT),)
+export ANDROID_SDK_ROOT := /opt/android-sdk-linux
+endif
 
 #.PHONY: android ios
 
