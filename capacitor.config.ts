@@ -1,10 +1,15 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'com.iabsis.alephium',
-  appName: 'alephium-mining-mobile-ionic',
+  appId: 'com.iabsis.sesamewallet',
+  appName: 'Sesame Wallet',
   webDir: 'build',
-  bundledWebRuntime: false
+  bundledWebRuntime: false,
+  plugins: {
+    SplashScreen: {
+      launchShowDuration: 0
+    }
+  }
 };
 
 export default config;

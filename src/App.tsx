@@ -10,6 +10,9 @@ import ChoosePlanRootPages from "./pages/PlanManagement/ChoosePlanRootPage";
 import { Wallet, getStorage } from "alephium-js";
 import { AnimatePresence, AnimateSharedLayout, motion } from "framer-motion";
 import WalletPages from "./pages/Wallet/WalletRootPage";
+import PaymentSuccess from "./pages/Payment/PaymentSuccess";
+import PaymentFailed from "./pages/Payment/PaymentFailed";
+
 import HomeTabs from "./pages/HomeTabs";
 import { AsyncReturnType } from "type-fest";
 import {
@@ -22,6 +25,7 @@ import SettingsPage from "./pages/SettingsPage";
 import { Modal } from "./components/Modal";
 import Spinner from "./components/Spinner";
 import { deviceBreakPoints } from "./style/globalStyles";
+import AppUrlListener from './pages/AppUrlListener';
 
 interface Context {
   usernames: string[];
@@ -144,6 +148,7 @@ const App = () => {
     >
       <IonApp>
         <IonReactRouter>
+          <AppUrlListener></AppUrlListener>
           <IonRouterOutlet>
             <AnimateSharedLayout type="crossfade">
               <Switch>
@@ -161,6 +166,12 @@ const App = () => {
                 </Route>
                 <Route path="/wallet">
                   <HomeTabs />
+                </Route>
+                <Route path="/payment-success">
+                  <PaymentSuccess />
+                </Route>
+                <Route path="/payment-failed">
+                  <PaymentFailed />
                 </Route>
                 <Route path="">
                   <HomePage
