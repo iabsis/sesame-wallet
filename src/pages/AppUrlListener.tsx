@@ -6,9 +6,9 @@ const AppUrlListener: React.FC<any> = () => {
     let history = useHistory();
     useEffect(() => {
       App.addListener('appUrlOpen', (event: URLOpenListenerEvent) => {
-        // Example url: https://beerswift.app/tabs/tab2
-        // slug = /tabs/tab2
-        const slug = event.url.split('.app').pop();
+        const prefix = /\w+:\/\/[\w.]*/
+        const slug = event.url.replace(prefix, '');
+        console.log("DEEEPLINK", slug);
         if (slug) {
           history.push(slug);
         }
