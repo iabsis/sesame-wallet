@@ -9,6 +9,7 @@ interface ButtonProps extends HTMLMotionProps<"button"> {
   disabled?: boolean;
   transparent?: boolean;
   squared?: boolean;
+  full?: boolean;
 }
 
 const variants: Variants = {
@@ -43,8 +44,8 @@ const StyledButton = styled(motion.button)<ButtonProps>`
   align-items: center;
   justify-content: center;
   height: ${({ squared }) => (squared ? "40px" : "46px")};
-  width: ${({ squared }) => (squared ? "40px" : "80%")};
-  max-width: 250px;
+  width: ${({ squared, full }) => (full ? "100%" : squared ? "40px" : "80%")};
+  margin: ${({ full }) => (full ? "30px" : "")};
   border-radius: 7px;
   border: none;
   background-color: ${({ theme, secondary, transparent, alert }) =>
@@ -78,7 +79,6 @@ const StyledButton = styled(motion.button)<ButtonProps>`
   }
 
   transition: 0.2s ease-out;
-
 
   &:hover {
     background-color: ${({ theme, secondary, transparent }) =>
