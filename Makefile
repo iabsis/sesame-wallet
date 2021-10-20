@@ -20,6 +20,7 @@ build:
 
 android: node_modules build
 	npx ionic capacitor add android
+	npx cordova-res android
 	npx cordova-res android --skip-config --copy --icon-background-source '#17161b'
 
 android-prod: android
@@ -41,7 +42,8 @@ show:
 	@ echo npm_version: $(npm_version)
 
 clean:
-	@ rm -rf node_modules build android ios resources/android resources/ios
+	@ rm -rf node_modules build android ios
+	@ rm -rf resources/android/icon resources/android/splash resources/ios
 	@ rm -rf dist.tar.gz
 
 INFO := @bash -c '\
