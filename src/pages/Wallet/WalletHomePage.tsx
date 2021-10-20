@@ -279,8 +279,14 @@ const WalletHomePage = () => {
               </FooterActions>
             ) : (
               <FooterActions apparitionDelay={0.3}>
+<<<<<<< HEAD
                 <Button onClick={() => goToPage("/choose-plan")}>
-                  <i className="icon-pick-axe pr-2"></i> Start mining
+                  <i className="icon-pick-axe pr-2"></i> Get a cloud mining subscription
+=======
+                <Button full onClick={() => goToPage("/choose-plan")}>
+                  <i className="icon-pick-axe pr-2"></i> Subscribe to our cloud
+                  mining service
+>>>>>>> 8fedeececaeae1475ecf5b3804405c73b6e2e37b
                 </Button>
               </FooterActions>
             )}
