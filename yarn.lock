@@ -1180,10 +1180,10 @@
   "resolved" "https://registry.npmjs.org/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz"
   "version" "0.2.3"
 
-"@capacitor/android@3.2.4":
-  "integrity" "sha512-eR4Lw8GCBJ7yGJ4k78a8tXhVU3iqfq8GMBM0KXYtOYe3SWRO+jOD/puFM9CPFD5uF9PtB+0iaqpLjn1YbvfFZw=="
-  "resolved" "https://registry.npmjs.org/@capacitor/android/-/android-3.2.4.tgz"
-  "version" "3.2.4"
+"@capacitor/android@3.2.5":
+  "integrity" "sha512-eq9luSS8Bivyp3F46BaUgmPXxMzuUTdZO/bToHIUBu66Ufh4ou/TDg0opMXjuKIYJgjAsddxkPBeREj8KabbSQ=="
+  "resolved" "https://registry.npmjs.org/@capacitor/android/-/android-3.2.5.tgz"
+  "version" "3.2.5"
 
 "@capacitor/app@^1.0.3":
   "integrity" "sha512-kilAdWODV5p32wz0jVGdSoQTEx4Q0TM/xYj9w3iYYNI24v1WIRnEs04TaGTG8JFYIUksJaOqGC3PoZddfZ1POA=="
@@ -1224,10 +1224,10 @@
   dependencies:
     "tslib" "^2.1.0"
 
-"@capacitor/ios@3.2.4":
-  "integrity" "sha512-d9ECeZC2uknOGB/IHaapBvuUSpYoM0J202M8Fw4OBPAkc26ysvMreHoCWCB0nd0leks53biI6DJdS60/VbYTWg=="
-  "resolved" "https://registry.npmjs.org/@capacitor/ios/-/ios-3.2.4.tgz"
-  "version" "3.2.4"
+"@capacitor/ios@3.2.5":
+  "integrity" "sha512-z3GU07Dz3SJIfdxk4JaLXDZcWWb4LcvjMz7RzOmN13WOWETWWWUnJJdG14QJewjvXPEBZ/XY7MohClWsgjToEw=="
+  "resolved" "https://registry.npmjs.org/@capacitor/ios/-/ios-3.2.5.tgz"
+  "version" "3.2.5"
 
 "@cnakazawa/watch@^1.0.3":
   "integrity" "sha512-v9kIhKwjeZThiWrLmj0y17CWoyddASLj9O2yvbZkbvw/N3rWOYy9zkV66ursAoVr0mV15bL8g0c4QZUE6cdDoQ=="

@@ -3,11 +3,11 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
-    "@capacitor/android": "3.2.4",
+    "@capacitor/android": "3.2.5",
     "@capacitor/app": "^1.0.3",
     "@capacitor/browser": "^1.0.3",
     "@capacitor/core": "3.2.3",
-    "@capacitor/ios": "3.2.4",
+    "@capacitor/ios": "3.2.5",
     "@ionic-native/deeplinks": "^5.36.0",
     "@ionic/cli": "^6.17.1",
     "@ionic/react": "^5.5.0",

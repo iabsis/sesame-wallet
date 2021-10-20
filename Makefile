@@ -20,7 +20,7 @@ build:
 
 android: node_modules build
 	npx ionic capacitor add android
-	npx cordova-res android --skip-config --copy
+	npx cordova-res android --skip-config --copy --icon-background-source '#17161b'
 
 android-prod: android
 	cd android && ./gradlew assembleRelease
