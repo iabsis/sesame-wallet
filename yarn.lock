@@ -2844,9 +2844,10 @@
     "require-from-string" "^2.0.2"
     "uri-js" "^4.2.2"
 
-"alephium-js@git+https://projects.iabsis.com/git/alephium-js/":
-  "resolved" "git+https://projects.iabsis.com/git/alephium-js/#fb289c3f3860b7eea9ff8b1bef5a881c20a22305"
-  "version" "0.10.4"
+"alephium-js@^0.11.0":
+  "integrity" "sha512-JKI5v6aE070dC/zY0B8uNYocwGWOlEd2R2eOdJaXGIE7HTWcYawSfBtS4flr/orkanfwdA0713LTJWv1kHsOLA=="
+  "resolved" "https://registry.npmjs.org/alephium-js/-/alephium-js-0.11.0.tgz"
+  "version" "0.11.0"
   dependencies:
     "base-x" "^3.0.8"
     "bcfg" "~0.1.6"
@@ -3474,9 +3475,9 @@
   "version" "0.6.1"
 
 "bcfg@~0.1.6":
-  "integrity" "sha512-BR2vwQZwu24aRm588XHOnPVjjQtbK8sF0RopRFgMuke63/REJMWnePTa2YHKDBefuBYiVdgkowuB1/e4K7Ue3g=="
-  "resolved" "https://registry.npmjs.org/bcfg/-/bcfg-0.1.6.tgz"
-  "version" "0.1.6"
+  "integrity" "sha512-+4beq5bXwfmxdcEoHYQsaXawh1qFzjLcRvPe5k5ww/NEWzZTm56Jk8LuPmfeGB7X584jZ8xGq6UgMaZnNDa5Ww=="
+  "resolved" "https://registry.npmjs.org/bcfg/-/bcfg-0.1.7.tgz"
+  "version" "0.1.7"
   dependencies:
     "bsert" "~0.0.10"
 
