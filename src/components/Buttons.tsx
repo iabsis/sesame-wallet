@@ -10,6 +10,7 @@ interface ButtonProps extends HTMLMotionProps<"button"> {
   transparent?: boolean;
   squared?: boolean;
   full?: boolean;
+  marginBottom?: boolean;
 }
 
 const variants: Variants = {
@@ -46,7 +47,7 @@ const StyledButton = styled(motion.button)<ButtonProps>`
   height: ${({ squared }) => (squared ? "40px" : "46px")};
   width: ${({ squared, full }) => (full ? "100%" : squared ? "40px" : "80%")};
   margin: ${({ full }) => (full ? "30px" : "")};
-  margin-bottom: 20px;
+  margin-bottom: ${({ marginBottom }) => (marginBottom ? "20px" : "")};
   border-radius: 7px;
   border: none;
   background-color: ${({ theme, secondary, transparent, alert }) =>

@@ -21,7 +21,6 @@ const AppHeader: FC = ({ children }) => {
 
 const HeaderContainer = styled(motion.header)`
   height: 50px;
-  position: fixed;
   top: 0;
   right: 0;
   left: 0;

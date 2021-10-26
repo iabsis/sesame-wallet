@@ -188,7 +188,9 @@ const InitialActions = ({
         existing one.
       </CenteredSecondaryParagraph>
       <SectionContent inList>
-        <Button onClick={() => history.push("/create")}>New wallet</Button>
+        <Button marginBottom onClick={() => history.push("/create")}>
+          New wallet
+        </Button>
         <Button onClick={() => history.push("/import")}>Import wallet</Button>
         {hasWallet && (
           <SwitchLink onClick={() => setShowActions(false)}>
