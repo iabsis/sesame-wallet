@@ -28,6 +28,7 @@ input {
 }
 
 ion-router-outlet {
+  overflow-y: auto;
   ion-page {
     padding-bottom: 300px;
   }

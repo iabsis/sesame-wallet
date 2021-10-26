@@ -46,6 +46,7 @@ const StyledButton = styled(motion.button)<ButtonProps>`
   height: ${({ squared }) => (squared ? "40px" : "46px")};
   width: ${({ squared, full }) => (full ? "100%" : squared ? "40px" : "80%")};
   margin: ${({ full }) => (full ? "30px" : "")};
+  margin-bottom: 20px;
   border-radius: 7px;
   border: none;
   background-color: ${({ theme, secondary, transparent, alert }) =>
