@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { IonApp, IonRouterOutlet, useIonRouter } from "@ionic/react";
+import { IonApp, IonRouterOutlet, useIonRouter, setupConfig } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
 import styled from "styled-components";
 import { Redirect, Route, Switch, useHistory } from "react-router-dom";
@@ -81,6 +81,10 @@ const App = () => {
   const [clientIsLoading, setClientIsLoading] = useState(false);
   const history = useHistory();
   const router = useIonRouter();
+
+  setupConfig({
+    swipeBackEnabled: false
+  });
 
   // Create client
   useEffect(() => {

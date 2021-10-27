@@ -41,12 +41,11 @@ android-prod: android
 	cd android && ./gradlew bundle
 
 android-dev: node_modules build android
-	npx cordova-res ios --skip-config --copy
 	cd android && ./gradlew assembleDebug
 
 ios: node_modules build
 	npx ionic capacitor add ios
-	sed $(SEDARG) 's/version="1.0.0"/version="$(version)"/g' ios/App/App/config.xml
+	npx cordova-res ios --skip-config --copy
 
 ios-xcode: ios
 

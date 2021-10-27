@@ -23,6 +23,7 @@ body {
   background-color: #17161b !important;
 }
 
+
 input {
   color: $text-default;
 }
@@ -125,6 +126,8 @@ a {
 #app-header {
   -webkit-app-region: drag;
   z-index: 10000;
+  //padding-top: constant(safe-area-inset-top);
+  padding-top: calc(10px + env(safe-area-inset-top));
 }
 
 /* FONTS */
@@ -142,6 +145,7 @@ a {
 .ion-page {
   height: 100vh;
   overflow: auto;
+  overflow-x: hidden;
 }
 
 .ion-color-primary {
