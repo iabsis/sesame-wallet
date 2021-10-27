@@ -23,7 +23,6 @@ body {
   background-color: #17161b !important;
 }
 
-
 input {
   color: $text-default;
 }
@@ -39,6 +38,7 @@ ion-range {
   margin-top: 12px;
   --bar-background-active: #d4aa00;
   --pin-background: #d4aa00;
+  --pin-color: #17161b !important;
 }
 
 ion-tab-bar {
