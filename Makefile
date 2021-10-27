@@ -1,12 +1,15 @@
 node_version:=$(shell node -v)
 npm_version:=$(shell npm -v)
 timeStamp:=$(shell date +%Y%m%d%H%M%S)
+version:=$(shell xml2 < config.xml | grep version | cut -d= -f 2)
+versionName:=$(shell xml2 < config.xml | grep version | cut -d= -f 2 | cut -d. -f 1,2)
+versionCode:=$(shell xml2 < config.xml | grep version | cut -d= -f 2 | cut -d. -f 3)
 
 ifeq ($(ANDROID_SDK_ROOT),)
 export ANDROID_SDK_ROOT := /opt/android-sdk-linux
 endif
 
-#.PHONY: android ios
+.PHONY: android-version
 
 node_modules:
 	npm install
@@ -22,6 +25,8 @@ android: node_modules build
 	npx ionic capacitor add android
 	npx cordova-res android
 	npx cordova-res android --skip-config --copy --icon-background-source '#17161b'
+	sed -i 's/versionName.*/versionName "$(versionName)"/g' android/app/build.gradle
+	sed -i 's/versionCode.*/versionCode $(versionCode)/g' android/app/build.gradle
 
 android-prod: android
 	cd android && ./gradlew assembleRelease
@@ -33,6 +38,7 @@ android-dev: node_modules build android
 
 ios: node_modules build
 	npx ionic capacitor add ios
+	sed -i 's/version="1.0.0"/version="$(version)"/g' ios/App/App/config.xml
 
 ios-xcode: ios
 
@@ -47,5 +53,5 @@ clean:
 	@ rm -rf dist.tar.gz
 
 INFO := @bash -c '\
-  printf $(YELLOW); \
+  printf $(versionCode); \
   echo "=> $$1"; \
