@@ -4,9 +4,17 @@ timeStamp:=$(shell date +%Y%m%d%H%M%S)
 version:=$(shell xml2 < config.xml | grep version | cut -d= -f 2)
 versionName:=$(shell xml2 < config.xml | grep version | cut -d= -f 2 | cut -d. -f 1,2)
 versionCode:=$(shell xml2 < config.xml | grep version | cut -d= -f 2 | cut -d. -f 3)
+UNAME_S:=$(shell uname -s)
 
 ifeq ($(ANDROID_SDK_ROOT),)
 export ANDROID_SDK_ROOT := /opt/android-sdk-linux
+endif
+
+
+ifeq ($(UNAME_S),Darwin)
+SEDARG += -i ".bkp"
+else
+SEDARG += -i
 endif
 
 .PHONY: android-version
@@ -38,7 +46,7 @@ android-dev: node_modules build android
 
 ios: node_modules build
 	npx ionic capacitor add ios
-	sed -i 's/version="1.0.0"/version="$(version)"/g' ios/App/App/config.xml
+	sed $(SEDARG) 's/version="1.0.0"/version="$(version)"/g' ios/App/App/config.xml
 
 ios-xcode: ios
 
