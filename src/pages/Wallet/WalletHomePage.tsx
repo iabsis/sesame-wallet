@@ -53,7 +53,7 @@ import { Route } from "react-router-dom";
 import ImportWordsPage from "../WalletManagement/ImportWordsPage";
 import { ellipse, refresh, square, triangle } from "ionicons/icons";
 import { getSubscriptions, Subscription } from "../../services/subscriptions";
-import appLogo from "../../images/logo.svg";
+import appLogo from "../../images/app-top-icon.svg";
 
 dayjs.extend(relativeTime);
 
@@ -228,7 +228,6 @@ const WalletHomePage = () => {
       <AppHeader>
         <div className="app-brand">
           <img src={appLogo} className="app-logo" />
-          <div className="app-name">CRYPTOÏDAL</div>
         </div>
         <RefreshButton
           transparent
@@ -280,7 +279,8 @@ const WalletHomePage = () => {
             ) : (
               <FooterActions apparitionDelay={0.3}>
                 <Button onClick={() => goToPage("/choose-plan")}>
-                  <i className="icon-pick-axe pr-2"></i> Get a cloud mining subscription
+                  <i className="icon-pick-axe pr-2"></i> Get a cloud mining
+                  subscription
                 </Button>
               </FooterActions>
             )}
