@@ -1,19 +1,12 @@
 @import "variables";
 
 .app-brand {
-    // position: absolute;
-    // top: 4px;
-    // left: 0;
-    // display: flex;
-    // align-items: center;
+    flex: 1;
+    display: flex;
+    
     .app-logo {
-        height: 32px;
-        // margin: 0.5rem;
+        height: 15px;
     }
     flex-grow: 1;
-    // .app-name {
-    //     text-transform: uppercase;
-    //     font-weight: 900;
-    //     font-size: 1.2rem;
-    // }
+
 }
