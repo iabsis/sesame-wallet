@@ -107,7 +107,7 @@ export const getBiometricPasswordFor = (
     FingerprintAIO.isAvailable()
       .then(() => {
         FingerprintAIO.loadBiometricSecret({
-          title: `Access ${walletName}'s' wallet`,
+          title: `Access ${walletName}'s wallet`,
           description: "Use your biometric access to open your wallet",
           disableBackup: true,
         })
