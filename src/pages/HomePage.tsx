@@ -21,6 +21,61 @@ import alephiumLogo from "../images/alephium_logo.svg";
 import { deviceBreakPoints } from "../style/globalStyles";
 import AppHeader from "../components/AppHeader";
 
+import {
+  AvailableResult,
+  BiometryType,
+  NativeBiometric,
+} from "capacitor-native-biometric";
+
+const setCredential = () => {
+  // Save user's credentials
+  NativeBiometric.setCredentials({
+    username: "username",
+    password: "password",
+    server: "www.example.com",
+  }).then();
+};
+
+const deleteCredential = () => {
+  // Delete user's credentials
+  NativeBiometric.deleteCredentials({
+    server: "www.example.com",
+  });
+};
+
+const checkCredential = () => {
+  NativeBiometric.isAvailable().then((result: AvailableResult) => {
+    const isAvailable = result.isAvailable;
+    alert("RESULT " + JSON.stringify(result));
+    // const isFaceId=result.biometryType==BiometryType.FACE_ID;
+    // const isFaceId = result.biometryType == BiometryType.FACE_ID;
+
+    if (isAvailable) {
+      // Get user's credentials
+      NativeBiometric.getCredentials({
+        server: "www.example.com",
+      }).then((credentials) => {
+        alert("CREDENTIAL " + JSON.stringify(credentials));
+        // Authenticate using biometrics before logging the user in
+        NativeBiometric.verifyIdentity({
+          reason: "For easy log in",
+          title: "Log in",
+          subtitle: "Maybe add subtitle here?",
+          description: "Maybe a description too?",
+        })
+          .then(() => {
+            //     // Authentication successful
+            alert("SUCCESS!!");
+            //     // this.login(credentials.username, credentials.password);
+          })
+          .catch((err) => {
+            //   // Failed to authenticate
+            alert("FAIL!");
+          });
+      });
+    }
+  });
+};
 interface HomeProps {
   hasWallet: boolean;
   usernames: string[];
@@ -165,6 +220,7 @@ const Login = ({
           </Button>
         </SectionContent>
       </Form>
+
       <SwitchLink onClick={() => setShowActions(true)}>
         Create / import a new wallet
       </SwitchLink>
@@ -192,6 +248,9 @@ const InitialActions = ({
           New wallet
         </Button>
         <Button onClick={() => history.push("/import")}>Import wallet</Button>
+        <Button onClick={checkCredential}>Check credentials</Button>
+        <Button onClick={setCredential}>Set credentials</Button>
+        <Button onClick={deleteCredential}>Delete credentials</Button>
         {hasWallet && (
           <SwitchLink onClick={() => setShowActions(false)}>
             Use an existing account

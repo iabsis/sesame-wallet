@@ -1224,6 +1224,13 @@
   dependencies:
     "tslib" "^2.1.0"
 
+"@capacitor/core@3.0.0":
+  "integrity" "sha512-JmKE6QEayo8MqWcApwMP5YFimpVb2mcIEHBwgP/P9nSAOxOcbdpJyd9HhBt5pzZAE1MBngPADWWwZLrdNSjCnA=="
+  "resolved" "https://registry.npmjs.org/@capacitor/core/-/core-3.0.0.tgz"
+  "version" "3.0.0"
+  dependencies:
+    "tslib" "^2.1.0"
+
 "@capacitor/ios@3.2.5":
   "integrity" "sha512-z3GU07Dz3SJIfdxk4JaLXDZcWWb4LcvjMz7RzOmN13WOWETWWWUnJJdG14QJewjvXPEBZ/XY7MohClWsgjToEw=="
   "resolved" "https://registry.npmjs.org/@capacitor/ios/-/ios-3.2.5.tgz"
@@ -4057,6 +4064,13 @@
   "integrity" "sha512-RBByOG6xWXUp0CR2/WU2amXz3stjKpSl5J1xU49F1n2OxD//uBZO4wCKUiG+QMGf7CHGfDDcqoKriomoGVxTeA=="
   "resolved" "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001258.tgz"
   "version" "1.0.30001258"
+
+"capacitor-native-biometric@^3.0.3":
+  "integrity" "sha512-ewMxvMPZPAJH/5CFmezNUDOTS0pSP9sMLkM7bhxUBeSomYOdWiz42dN+gETCFSz7XrCfg+xPkN5tDHZekgy5lw=="
+  "resolved" "https://registry.npmjs.org/capacitor-native-biometric/-/capacitor-native-biometric-3.0.3.tgz"
+  "version" "3.0.3"
+  dependencies:
+    "@capacitor/core" "3.0.0"
 
 "capture-exit@^2.0.0":
   "integrity" "sha512-PiT/hQmTonHhl/HFGN+Lx3JJUznrVYJ3+AQsnthneZbvW7x+f08Tk7yLJTLEOUvBTbduLeeBkxEaYXUOUrRq6g=="
