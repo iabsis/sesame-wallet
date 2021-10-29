@@ -15,6 +15,7 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   error?: string;
   isValid?: boolean;
   disabled?: boolean;
+  endButton?: any;
 }
 
 interface TextAreaProps extends React.InputHTMLAttributes<HTMLTextAreaElement> {
@@ -41,6 +42,7 @@ export const Input = ({
   disabled,
   onChange,
   value,
+  endButton,
   ...props
 }: InputProps) => {
   const [canBeAnimated, setCanBeAnimated] = useState(false);
@@ -68,6 +70,7 @@ export const Input = ({
         disabled={disabled}
         isValid={isValid}
       />
+      {endButton}
       {!disabled && isValid && (
         <ValidIconContainer
           initial={{ y: 10, opacity: 0 }}

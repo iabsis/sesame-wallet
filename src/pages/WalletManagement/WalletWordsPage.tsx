@@ -16,6 +16,7 @@ import { GlobalContext } from "../../App";
 import { StepsContext } from "../MultiStepsController";
 import { IonIcon } from "@ionic/react";
 import { copy } from "ionicons/icons";
+import { Clipboard } from "@capacitor/clipboard";
 
 const WalletWordsPage = () => {
   const { mnemonic, plainWallet } = useContext(WalletManagementContext);
@@ -25,8 +26,7 @@ const WalletWordsPage = () => {
   const handleAddressClick = () => {
     const address = plainWallet?.address;
     if (address) {
-      navigator.clipboard
-        .writeText(address)
+      Clipboard.write({ string: address })
         .catch((e) => {
           throw e;
         })
@@ -41,8 +41,7 @@ const WalletWordsPage = () => {
 
   const handlePassphraseClick = () => {
     if (mnemonic) {
-      navigator.clipboard
-        .writeText(mnemonic)
+      Clipboard.write({ string: mnemonic })
         .catch((e) => {
           throw e;
         })

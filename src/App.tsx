@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { IonApp, IonRouterOutlet, useIonRouter, setupConfig } from "@ionic/react";
+import {
+  IonApp,
+  IonRouterOutlet,
+  useIonRouter,
+  setupConfig,
+} from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
 import styled from "styled-components";
 import { Redirect, Route, Switch, useHistory } from "react-router-dom";
@@ -25,7 +30,8 @@ import SettingsPage from "./pages/SettingsPage";
 import { Modal } from "./components/Modal";
 import Spinner from "./components/Spinner";
 import { deviceBreakPoints } from "./style/globalStyles";
-import AppUrlListener from './pages/AppUrlListener';
+import AppUrlListener from "./pages/AppUrlListener";
+import { FingerprintAIO } from "@ionic-native/fingerprint-aio";
 
 interface Context {
   usernames: string[];
@@ -40,6 +46,7 @@ interface Context {
   setSnackbarMessage: (message: SnackbarMessage) => void;
   jwtToken: String | null;
   setJwtToken: (token: string | null) => void;
+  isFingerPrintAvailable: boolean;
 }
 
 type Client = AsyncReturnType<typeof createClient>;
@@ -57,6 +64,7 @@ const initialContext: Context = {
   setSnackbarMessage: () => null,
   jwtToken: null,
   setJwtToken: () => null,
+  isFingerPrintAvailable: false,
 };
 
 interface SnackbarMessage {
@@ -71,6 +79,8 @@ const Storage = getStorage();
 
 const App = () => {
   const [wallet, setWallet] = useState<Wallet>();
+  const [isFingerPrintAvailable, setIsFingerPrintAvailable] =
+    useState<boolean>(false);
   const [currentUsername, setCurrentUsername] = useState("");
   const [jwtToken, setJwtToken] = useState<string | null>(null);
   const [snackbarMessage, setSnackbarMessage] = useState<
@@ -83,7 +93,7 @@ const App = () => {
   const router = useIonRouter();
 
   setupConfig({
-    swipeBackEnabled: false
+    swipeBackEnabled: false,
   });
 
   // Create client
@@ -129,6 +139,17 @@ const App = () => {
     }
   }, [snackbarMessage]);
 
+  useEffect(() => {
+    FingerprintAIO.isAvailable()
+      .then((value) => {
+        console.log(value);
+        setIsFingerPrintAvailable(true);
+      })
+      .catch(() => {
+        setIsFingerPrintAvailable(false);
+      });
+  });
+
   const usernames = Storage.list();
   const hasWallet = usernames.length > 0;
   const networkId = 1;
@@ -148,6 +169,7 @@ const App = () => {
         setSettings,
         jwtToken,
         setJwtToken,
+        isFingerPrintAvailable,
       }}
     >
       <IonApp>

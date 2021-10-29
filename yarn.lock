@@ -1217,17 +1217,15 @@
     "tslib" "^2.1.0"
     "xml2js" "^0.4.23"
 
+"@capacitor/clipboard@^1.0.5":
+  "integrity" "sha512-+FY07/RwoAhgp8E16LNIYn/ucsorBchsuHlznOlFVbh/4ITb6Vxx20he4hb3jf6UeBESt+T/K8vk2U6/TZ95bQ=="
+  "resolved" "https://registry.npmjs.org/@capacitor/clipboard/-/clipboard-1.0.5.tgz"
+  "version" "1.0.5"
+
 "@capacitor/core@^3.0.0", "@capacitor/core@^3.2.0", "@capacitor/core@3.2.3":
   "integrity" "sha512-6oIi9EXgTRI8Xg3Gg8IWSQcddshb6lNtywkQA+QWoTL/6qV/l519tBcZHV9cu6BA7GT3qm2WcX9yQjwDq5iKpw=="
   "resolved" "https://registry.npmjs.org/@capacitor/core/-/core-3.2.3.tgz"
   "version" "3.2.3"
-  dependencies:
-    "tslib" "^2.1.0"
-
-"@capacitor/core@3.0.0":
-  "integrity" "sha512-JmKE6QEayo8MqWcApwMP5YFimpVb2mcIEHBwgP/P9nSAOxOcbdpJyd9HhBt5pzZAE1MBngPADWWwZLrdNSjCnA=="
-  "resolved" "https://registry.npmjs.org/@capacitor/core/-/core-3.0.0.tgz"
-  "version" "3.0.0"
   dependencies:
     "tslib" "^2.1.0"
 
@@ -1389,6 +1387,13 @@
   "resolved" "https://registry.npmjs.org/@humanwhocodes/object-schema/-/object-schema-1.2.0.tgz"
   "version" "1.2.0"
 
+"@ionic-native/clipboard@^5.36.0":
+  "integrity" "sha512-+i5vOTNo77y6mAZ2fLD75m9UzAST12gnSVeOqR3UKFKMZ4e3wF7r7YyJ6khbHsFAACBc51WB5U6NOuMDif5qwA=="
+  "resolved" "https://registry.npmjs.org/@ionic-native/clipboard/-/clipboard-5.36.0.tgz"
+  "version" "5.36.0"
+  dependencies:
+    "@types/cordova" "latest"
+
 "@ionic-native/core@^5.1.0":
   "integrity" "sha512-lOrkktadlKYbYf1LrDyAtsu1JnQ0oCCdkOU7iHQ8oXnNOkMwobFfD2m62F1CoOr0u9LIkpYnZSPjng8lZbmbNw=="
   "resolved" "https://registry.npmjs.org/@ionic-native/core/-/core-5.36.0.tgz"
@@ -1399,6 +1404,13 @@
 "@ionic-native/deeplinks@^5.36.0":
   "integrity" "sha512-JWW+ozeUTxTzSmQ/dA0FNvl26wpXIaPMat5p7kSydQeVR1Xgpt3vCNmYnzs81B5dbN9RkH+TuWuYQ7HVoJhsQw=="
   "resolved" "https://registry.npmjs.org/@ionic-native/deeplinks/-/deeplinks-5.36.0.tgz"
+  "version" "5.36.0"
+  dependencies:
+    "@types/cordova" "latest"
+
+"@ionic-native/fingerprint-aio@^5.36.0":
+  "integrity" "sha512-zd1PAfMsW4Inx/Vi399O29LWr9R1q0Gcj/2g86PZWSb0KnMG8dCoKoXKmkN3+HhajA/cdXaHEJWXbv+t6VlX8Q=="
+  "resolved" "https://registry.npmjs.org/@ionic-native/fingerprint-aio/-/fingerprint-aio-5.36.0.tgz"
   "version" "5.36.0"
   dependencies:
     "@types/cordova" "latest"
@@ -4065,13 +4077,6 @@
   "resolved" "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001258.tgz"
   "version" "1.0.30001258"
 
-"capacitor-native-biometric@^3.0.3":
-  "integrity" "sha512-ewMxvMPZPAJH/5CFmezNUDOTS0pSP9sMLkM7bhxUBeSomYOdWiz42dN+gETCFSz7XrCfg+xPkN5tDHZekgy5lw=="
-  "resolved" "https://registry.npmjs.org/capacitor-native-biometric/-/capacitor-native-biometric-3.0.3.tgz"
-  "version" "3.0.3"
-  dependencies:
-    "@capacitor/core" "3.0.0"
-
 "capture-exit@^2.0.0":
   "integrity" "sha512-PiT/hQmTonHhl/HFGN+Lx3JJUznrVYJ3+AQsnthneZbvW7x+f08Tk7yLJTLEOUvBTbduLeeBkxEaYXUOUrRq6g=="
   "resolved" "https://registry.npmjs.org/capture-exit/-/capture-exit-2.0.0.tgz"
@@ -4616,6 +4621,11 @@
   "integrity" "sha1-Z29us8OZl8LuGsOpJP1hJHSPV40="
   "resolved" "https://registry.npmjs.org/copy-descriptor/-/copy-descriptor-0.1.1.tgz"
   "version" "0.1.1"
+
+"cordova-plugin-fingerprint-aio@^4.0.2":
+  "integrity" "sha512-Mmm/Ee85s4JH7qL3yikQ2J2I2vY2XbNi1fttoEK2kI++YHr/WeqPHWGREFL7bmFYjZTph/JovhfWHPGV924WjQ=="
+  "resolved" "https://registry.npmjs.org/cordova-plugin-fingerprint-aio/-/cordova-plugin-fingerprint-aio-4.0.2.tgz"
+  "version" "4.0.2"
 
 "cordova-res@^0.15.3":
   "integrity" "sha512-bFjlrpJO0C7VRJZhIss71UtZU6zksFYYPZDvjr8hDY8FrjTPcSRm0P3oksr87QPg47HBrBTrmpe03G4j7qcOHg=="

@@ -20,62 +20,16 @@ import { Settings as SettingsIcon } from "lucide-react";
 import alephiumLogo from "../images/alephium_logo.svg";
 import { deviceBreakPoints } from "../style/globalStyles";
 import AppHeader from "../components/AppHeader";
-
+import { AskForBiometric } from "../components/AskForBiometric";
 import {
-  AvailableResult,
-  BiometryType,
-  NativeBiometric,
-} from "capacitor-native-biometric";
+  disableBiometricFor,
+  getBiometricPasswordFor,
+  isBiometricAskedForWallet,
+  isBiometricEnabledForWallet,
+} from "../services/fingerprints";
 
-const setCredential = () => {
-  // Save user's credentials
-  NativeBiometric.setCredentials({
-    username: "username",
-    password: "password",
-    server: "www.example.com",
-  }).then();
-};
+import fingerprint from "../images/fingerprint.svg";
 
-const deleteCredential = () => {
-  // Delete user's credentials
-  NativeBiometric.deleteCredentials({
-    server: "www.example.com",
-  });
-};
-
-const checkCredential = () => {
-  NativeBiometric.isAvailable().then((result: AvailableResult) => {
-    const isAvailable = result.isAvailable;
-    alert("RESULT " + JSON.stringify(result));
-    // const isFaceId=result.biometryType==BiometryType.FACE_ID;
-    // const isFaceId = result.biometryType == BiometryType.FACE_ID;
-
-    if (isAvailable) {
-      // Get user's credentials
-      NativeBiometric.getCredentials({
-        server: "www.example.com",
-      }).then((credentials) => {
-        alert("CREDENTIAL " + JSON.stringify(credentials));
-        // Authenticate using biometrics before logging the user in
-        NativeBiometric.verifyIdentity({
-          reason: "For easy log in",
-          title: "Log in",
-          subtitle: "Maybe add subtitle here?",
-          description: "Maybe a description too?",
-        })
-          .then(() => {
-            //     // Authentication successful
-            alert("SUCCESS!!");
-            //     // this.login(credentials.username, credentials.password);
-          })
-          .catch((err) => {
-            //   // Failed to authenticate
-            alert("FAIL!");
-          });
-      });
-    }
-  });
-};
 interface HomeProps {
   hasWallet: boolean;
   usernames: string[];
@@ -150,11 +104,23 @@ const Login = ({
     username: "",
     password: "",
   });
-  const { setWallet, setCurrentUsername, setSnackbarMessage } =
-    useContext(GlobalContext);
+  const {
+    setWallet,
+    setCurrentUsername,
+    setSnackbarMessage,
+    isFingerPrintAvailable,
+  } = useContext(GlobalContext);
   const history = useHistory();
 
-  const login = async (callback: () => void) => {
+  const [askForBiometric, setAskForBiometric] = useState(false);
+
+  const login = async (
+    callback: (
+      wallet: any,
+      credentials: { username: string; password: string }
+    ) => void,
+    password?: string | null
+  ) => {
     let walletEncrypted = null;
 
     if (!credentials.username) {
@@ -169,11 +135,14 @@ const Login = ({
       setSnackbarMessage({ text: "Unknown account name", type: "info" });
     } else {
       try {
-        const wallet = await walletOpen(credentials.password, walletEncrypted);
+        const wallet = await walletOpen(
+          password ? password : credentials.password,
+          walletEncrypted
+        );
         if (wallet) {
           setWallet(wallet);
           setCurrentUsername(credentials.username);
-          callback();
+          callback(wallet, credentials);
         }
       } catch (e) {
         setSnackbarMessage({ text: "Invalid password", type: "alert" });
@@ -190,11 +159,59 @@ const Login = ({
 
   const handleLogin = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
-    login(() => history.push("/wallet"));
+    login((wallet, credentials) => {
+      const bioOn = isBiometricEnabledForWallet(credentials.username);
+      const bioAsked = isBiometricAskedForWallet(credentials.username);
+      if (!isFingerPrintAvailable || bioAsked) {
+        history.push("/wallet");
+      } else {
+        setAskForBiometric(true);
+      }
+    });
+  };
+
+  const loginWithFingerprint = () => {
+    getBiometricPasswordFor(credentials.username)
+      .then((password: string | null) => {
+        console.log("GOT PASSWORD", password);
+        login(() => {
+          history.push("/wallet");
+        }, password);
+      })
+      .catch((err) => {
+        console.log("ERR", err);
+        setSnackbarMessage({
+          text: "Unable to unlock. Please use your password",
+          type: "alert",
+        });
+        // disableBiometricFor(credentials.username);
+      });
   };
 
   return (
     <>
+      {askForBiometric && (
+        <AskForBiometric
+          finished={(choice: boolean) => {
+            setAskForBiometric(false);
+            history.push("/wallet");
+          }}
+          success={() => {
+            setSnackbarMessage({
+              text: "Your wallet is now unloackable from your fingerprint",
+              type: "success",
+            });
+          }}
+          failure={() => {
+            setSnackbarMessage({
+              text: "Sorry, we were unable to enable fingerprint access for your wallet",
+              type: "alert",
+            });
+          }}
+          walletName={credentials.username}
+          walletPassword={credentials.password}
+        />
+      )}
       <Form>
         <SectionContent inList>
           <Select
@@ -212,6 +229,15 @@ const Login = ({
               handleCredentialsChange("password", e.target.value)
             }
             value={credentials.password}
+            endButton={
+              isBiometricEnabledForWallet(credentials.username) && (
+                <img
+                  src={fingerprint}
+                  className="fingerprint-button"
+                  onClick={loginWithFingerprint}
+                />
+              )
+            }
           />
         </SectionContent>
         <SectionContent inList>
@@ -236,6 +262,7 @@ const InitialActions = ({
   setShowActions: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const history = useHistory();
+  const { isFingerPrintAvailable } = useContext(GlobalContext);
 
   return (
     <>
@@ -248,9 +275,7 @@ const InitialActions = ({
           New wallet
         </Button>
         <Button onClick={() => history.push("/import")}>Import wallet</Button>
-        <Button onClick={checkCredential}>Check credentials</Button>
-        <Button onClick={setCredential}>Set credentials</Button>
-        <Button onClick={deleteCredential}>Delete credentials</Button>
+
         {hasWallet && (
           <SwitchLink onClick={() => setShowActions(false)}>
             Use an existing account
