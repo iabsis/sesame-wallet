@@ -58,11 +58,13 @@ export const setBiometricPasswordFor = (walletName: string, walletPassword: stri
             enableBiometricFor(walletName);
             resolve(data);
           })
-          .catch(() => {
+          .catch((e) => {
+            console.log("ERROR4", e);
             reject({ reason: "FINGERPRINT_FAILED" });
           });
       })
-      .catch(() => {
+      .catch((e) => {
+        console.log("ERROR5", e);
         reject({ reason: "FINGERPRINT_NOT_AVAILABLE" });
       });
   });
