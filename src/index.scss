@@ -194,6 +194,10 @@ a {
   padding-bottom: 100px;
 }
 
+.accent {
+  color: $primary;
+}
+
 @import "style/scss/plans.scss";
 @import "style/scss/subscriptions.scss";
 @import "style/scss/buttons.scss";

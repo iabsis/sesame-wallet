@@ -7,11 +7,7 @@ import { motion } from "framer-motion";
 import { Form, Input, Select } from "../components/Inputs";
 import { Button } from "../components/Buttons";
 import tinycolor from "tinycolor2";
-import {
-  MainPanel,
-  PanelTitle,
-  SectionContent,
-} from "../components/PageComponents";
+import { MainPanel, PanelTitle, SectionContent } from "../components/PageComponents";
 import { useHistory } from "react-router";
 import Paragraph, { CenteredSecondaryParagraph } from "../components/Paragraph";
 import { walletOpen, getStorage } from "alephium-js";
@@ -21,12 +17,7 @@ import alephiumLogo from "../images/alephium_logo.svg";
 import { deviceBreakPoints } from "../style/globalStyles";
 import AppHeader from "../components/AppHeader";
 import { AskForBiometric } from "../components/AskForBiometric";
-import {
-  disableBiometricFor,
-  getBiometricPasswordFor,
-  isBiometricAskedForWallet,
-  isBiometricEnabledForWallet,
-} from "../services/fingerprints";
+import { disableBiometricFor, getBiometricPasswordFor, isBiometricAskedForWallet, isBiometricEnabledForWallet } from "../services/fingerprints";
 
 import fingerprint from "../images/fingerprint.svg";
 
@@ -43,18 +34,12 @@ const HomePage = ({ hasWallet, usernames, networkId }: HomeProps) => {
   const [showActions, setShowActions] = useState(false);
   const theme = useTheme();
 
-  const renderActions = () => (
-    <InitialActions hasWallet={hasWallet} setShowActions={setShowActions} />
-  );
+  const renderActions = () => <InitialActions hasWallet={hasWallet} setShowActions={setShowActions} />;
 
   return (
     <HomeContainer>
       <AppHeader>
-        <SettingsButton
-          transparent
-          squared
-          onClick={() => history.push("/settings")}
-        >
+        <SettingsButton transparent squared onClick={() => history.push("/settings")}>
           <SettingsIcon />
         </SettingsButton>
       </AppHeader>
@@ -69,14 +54,8 @@ const HomePage = ({ hasWallet, usernames, networkId }: HomeProps) => {
           ) : hasWallet ? (
             <>
               <PanelTitle useLayoutId={false}>Welcome back!</PanelTitle>
-              <CenteredSecondaryParagraph>
-                Please choose an account and enter your password to continue.
-              </CenteredSecondaryParagraph>
-              <Login
-                setShowActions={setShowActions}
-                usernames={usernames}
-                networkId={networkId}
-              />
+              <CenteredSecondaryParagraph>Please choose an account and enter your password to continue.</CenteredSecondaryParagraph>
+              <Login setShowActions={setShowActions} usernames={usernames} networkId={networkId} />
             </>
           ) : (
             <>
@@ -92,35 +71,17 @@ const HomePage = ({ hasWallet, usernames, networkId }: HomeProps) => {
 
 // === Components
 
-const Login = ({
-  usernames,
-  setShowActions,
-}: {
-  usernames: string[];
-  networkId: number;
-  setShowActions: React.Dispatch<React.SetStateAction<boolean>>;
-}) => {
+const Login = ({ usernames, setShowActions }: { usernames: string[]; networkId: number; setShowActions: React.Dispatch<React.SetStateAction<boolean>> }) => {
   const [credentials, setCredentials] = useState({
     username: "",
     password: "",
   });
-  const {
-    setWallet,
-    setCurrentUsername,
-    setSnackbarMessage,
-    isFingerPrintAvailable,
-  } = useContext(GlobalContext);
+  const { setWallet, setCurrentUsername, setSnackbarMessage, isFingerPrintAvailable } = useContext(GlobalContext);
   const history = useHistory();
 
   const [askForBiometric, setAskForBiometric] = useState(false);
 
-  const login = async (
-    callback: (
-      wallet: any,
-      credentials: { username: string; password: string }
-    ) => void,
-    password?: string | null
-  ) => {
+  const login = async (callback: (wallet: any, credentials: { username: string; password: string }) => void, password?: string | null) => {
     let walletEncrypted = null;
 
     if (!credentials.username) {
@@ -135,10 +96,7 @@ const Login = ({
       setSnackbarMessage({ text: "Unknown account name", type: "info" });
     } else {
       try {
-        const wallet = await walletOpen(
-          password ? password : credentials.password,
-          walletEncrypted
-        );
+        const wallet = await walletOpen(password ? password : credentials.password, walletEncrypted);
         if (wallet) {
           setWallet(wallet);
           setCurrentUsername(credentials.username);
@@ -150,12 +108,9 @@ const Login = ({
     }
   };
 
-  const handleCredentialsChange = useCallback(
-    (type: "username" | "password", value: string) => {
-      setCredentials((prev) => ({ ...prev, [type]: value }));
-    },
-    []
-  );
+  const handleCredentialsChange = useCallback((type: "username" | "password", value: string) => {
+    setCredentials((prev) => ({ ...prev, [type]: value }));
+  }, []);
 
   const handleLogin = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
@@ -217,26 +172,16 @@ const Login = ({
           <Select
             placeholder="Account name"
             options={usernames.map((u) => ({ label: u, value: u }))}
-            onValueChange={(value) =>
-              handleCredentialsChange("username", value?.value || "")
-            }
+            onValueChange={(value) => handleCredentialsChange("username", value?.value || "")}
           />
           <Input
             placeholder="Password"
             type="password"
             autoComplete="off"
-            onChange={(e) =>
-              handleCredentialsChange("password", e.target.value)
-            }
+            onChange={(e) => handleCredentialsChange("password", e.target.value)}
             value={credentials.password}
             endButton={
-              isBiometricEnabledForWallet(credentials.username) && (
-                <img
-                  src={fingerprint}
-                  className="fingerprint-button"
-                  onClick={loginWithFingerprint}
-                />
-              )
+              isBiometricEnabledForWallet(credentials.username) && <img src={fingerprint} className="fingerprint-button" onClick={loginWithFingerprint} />
             }
           />
         </SectionContent>
@@ -247,40 +192,25 @@ const Login = ({
         </SectionContent>
       </Form>
 
-      <SwitchLink onClick={() => setShowActions(true)}>
-        Create / import a new wallet
-      </SwitchLink>
+      <SwitchLink onClick={() => setShowActions(true)}>Create / import a new wallet</SwitchLink>
     </>
   );
 };
 
-const InitialActions = ({
-  hasWallet,
-  setShowActions,
-}: {
-  hasWallet: boolean;
-  setShowActions: React.Dispatch<React.SetStateAction<boolean>>;
-}) => {
+const InitialActions = ({ hasWallet, setShowActions }: { hasWallet: boolean; setShowActions: React.Dispatch<React.SetStateAction<boolean>> }) => {
   const history = useHistory();
   const { isFingerPrintAvailable } = useContext(GlobalContext);
 
   return (
     <>
-      <CenteredSecondaryParagraph>
-        Please choose wether you want to create or new wallet, or import an
-        existing one.
-      </CenteredSecondaryParagraph>
+      <CenteredSecondaryParagraph>Please choose wether you want to create or new wallet, or import an existing one.</CenteredSecondaryParagraph>
       <SectionContent inList>
         <Button marginBottom onClick={() => history.push("/create")}>
           New wallet
         </Button>
         <Button onClick={() => history.push("/import")}>Import wallet</Button>
 
-        {hasWallet && (
-          <SwitchLink onClick={() => setShowActions(false)}>
-            Use an existing account
-          </SwitchLink>
-        )}
+        {hasWallet && <SwitchLink onClick={() => setShowActions(false)}>Use an existing account</SwitchLink>}
       </SectionContent>
     </>
   );
@@ -407,12 +337,7 @@ const CloudGroup = ({
   }
 
   return (
-    <StyledCloudGroup
-      initial={{ [side]: "-100px" }}
-      animate={{ [side]: distance }}
-      transition={{ delay: 0.1, duration: 0.5 }}
-      style={style}
-    >
+    <StyledCloudGroup initial={{ [side]: "-100px" }} animate={{ [side]: distance }} transition={{ delay: 0.1, duration: 0.5 }} style={style}>
       {clouds}
     </StyledCloudGroup>
   );
@@ -426,8 +351,7 @@ const StyledCloudGroup = styled(motion.div)`
 
 const Cloud = styled.div`
   position: absolute;
-  background-color: ${({ theme }) =>
-    tinycolor(theme.global.secondary).setAlpha(0.3).toString()};
+  background-color: ${({ theme }) => tinycolor(theme.global.secondary).setAlpha(0.3).toString()};
   height: 3px;
 `;
 
@@ -438,8 +362,7 @@ export const SwitchLink = styled(Paragraph)`
   cursor: pointer;
 
   &:hover {
-    color: ${({ theme }) =>
-      tinycolor(theme.global.accent).darken(10).toString()};
+    color: ${({ theme }) => tinycolor(theme.global.accent).darken(10).toString()};
   }
 `;
 

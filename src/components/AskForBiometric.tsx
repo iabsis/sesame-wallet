@@ -2,12 +2,9 @@ import React, { useState } from "react";
 
 import { SectionContent } from "./PageComponents";
 import { Button } from "./Buttons";
-import {
-  addBiometricPasswordFor,
-  disableBiometricFor,
-  enableBiometricFor,
-} from "../services/fingerprints";
+import { addBiometricPasswordFor, disableBiometricFor, enableBiometricFor } from "../services/fingerprints";
 
+import fingerprint from "../images/fingerprint.svg";
 interface AskForBiometricProps {
   walletName: string;
   finished: (choice: boolean) => void;
@@ -16,13 +13,7 @@ interface AskForBiometricProps {
   walletPassword?: string;
 }
 
-export const AskForBiometric = ({
-  walletName,
-  walletPassword,
-  finished,
-  success,
-  failure,
-}: AskForBiometricProps) => {
+export const AskForBiometric = ({ walletName, walletPassword, finished, success, failure }: AskForBiometricProps) => {
   const handleEnable = () => {
     if (!walletPassword) {
       return finished(true);
@@ -48,10 +39,12 @@ export const AskForBiometric = ({
 
   return (
     <div className="popup-biometric-enable">
+      <h1>Fingerprint access</h1>
       <h3>
-        Wouly you like to use the fingerprint authentication for the wallet{" "}
+        Would you like to use the fingerprint authentication for the wallet <strong className="accent">{walletName}</strong>?
       </h3>
-      <strong>{walletName}</strong>?
+
+      <img className="big-image" src={fingerprint} alt="Fingerprint" />
       <SectionContent inList>
         <Button marginBottom onClick={handleEnable} type="submit">
           Yes
