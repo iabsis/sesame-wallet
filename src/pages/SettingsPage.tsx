@@ -11,7 +11,7 @@ import Modal from "../components/Modal";
 import { CenteredSecondaryParagraph } from "../components/Paragraph";
 import { walletOpen, getStorage, Wallet } from "alephium-js";
 import styled from "styled-components";
-import { addBiometricPasswordFor, disableBiometricFor, isBiometricEnabledForWallet } from "../services/fingerprints";
+import { addBiometricPasswordFor, deleteBiometricFor, disableBiometricFor, isBiometricEnabledForWallet } from "../services/fingerprints";
 
 const Storage = getStorage();
 
@@ -82,6 +82,7 @@ const AccountSettings = () => {
 
   const handleRemoveAccount = () => {
     Storage.remove(currentUsername);
+    deleteBiometricFor(currentUsername);
     handleLogout();
   };
 

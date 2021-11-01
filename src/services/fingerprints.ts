@@ -5,9 +5,7 @@ import { FingerprintAIO } from "@ionic-native/fingerprint-aio";
  * @returns the local storage containing biometric setup
  */
 const openBiometricLocalStorage = (): any => {
-  let biometricActivationJson: string = localStorage.getItem(
-    `biometricActivation`
-  ) as string;
+  let biometricActivationJson: string = localStorage.getItem(`biometricActivation`) as string;
   if (!biometricActivationJson) {
     biometricActivationJson = "{}";
   }
@@ -42,11 +40,7 @@ const intBiometricDataForWallet = (walletName: string) => {
   return biometricActivation;
 };
 
-export const setBiometricPasswordFor = (
-  walletName: string,
-  walletPassword: string,
-  initialData: any
-) => {
+export const setBiometricPasswordFor = (walletName: string, walletPassword: string, initialData: any) => {
   // Save user's credentials
   initialData[walletName] = walletPassword;
   const secret = JSON.stringify(initialData);
@@ -57,8 +51,7 @@ export const setBiometricPasswordFor = (
         FingerprintAIO.registerBiometricSecret({
           secret,
           title: `Adding ${walletName} to the credentials store`,
-          description:
-            "Use your biometric authentication in order to add this wallet in your credentials store.",
+          description: "Use your biometric authentication in order to add this wallet in your credentials store.",
           disableBackup: true,
         })
           .then((data) => {
@@ -86,22 +79,21 @@ export const getBiometricPassword = (): Promise<string | null> => {
           disableBackup: true,
         })
           .then((data) => {
-            console.log("DECRYPTED", data);
             resolve(data);
           })
-          .catch(() => {
+          .catch((e) => {
+            console.log("ERROR1", e);
             reject({ reason: "FINGERPRINT_FAILED" });
           });
       })
-      .catch(() => {
+      .catch((e) => {
+        console.log("ERROR2", e);
         reject({ reason: "FINGERPRINT_NOT_AVAILABLE" });
       });
   });
 };
 
-export const getBiometricPasswordFor = (
-  walletName: string
-): Promise<string | null> => {
+export const getBiometricPasswordFor = (walletName: string): Promise<string | null> => {
   // Save user's credentials
   return new Promise((resolve, reject) => {
     FingerprintAIO.isAvailable()
@@ -112,7 +104,6 @@ export const getBiometricPasswordFor = (
           disableBackup: true,
         })
           .then((decryptedData) => {
-            console.log("DECRYPTED", decryptedData);
             const data = JSON.parse(decryptedData);
             resolve(data[walletName] ? data[walletName] : null);
           })
@@ -126,10 +117,7 @@ export const getBiometricPasswordFor = (
   });
 };
 
-export const addBiometricPasswordFor = async (
-  walletName: string,
-  walletPassword: string
-) => {
+export const addBiometricPasswordFor = async (walletName: string, walletPassword: string) => {
   // Save user's credentials
   const decryptedData: string | null = await getBiometricPassword();
   const data = JSON.parse(decryptedData ? decryptedData : "{}");
@@ -185,5 +173,19 @@ export const disableBiometricFor = (walletName: string) => {
 
   biometricActivation[walletName].biometricOn = false;
   biometricActivation[walletName].biometricAsked = true;
+  saveBiometricSetup(biometricActivation);
+};
+
+/**
+ * Remove viometric settings for an user (ie : When removing an account)
+ * @param walletName wallet name to enable biometric for
+ */
+export const deleteBiometricFor = (walletName: string) => {
+  const biometricActivation = intBiometricDataForWallet(walletName);
+
+  if (biometricActivation[walletName]) {
+    delete biometricActivation[walletName];
+  }
+
   saveBiometricSetup(biometricActivation);
 };
