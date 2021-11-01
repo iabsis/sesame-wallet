@@ -49,7 +49,7 @@ export const AskForBiometric = ({
   return (
     <div className="popup-biometric-enable">
       <h3>
-        Wouly you like to use the fingerprint authentication for the wallet{" "}
+        Would you like to unlock your wallet with your fingerprint{" "}
       </h3>
       <strong>{walletName}</strong>?
       <SectionContent inList>
