@@ -85,6 +85,7 @@ export const getBiometricPassword = (): Promise<string | null> => {
           })
           .catch((e) => {
             if (e.code === -113) {
+              // iOS returns an error when trying to access the keyring when empty
               resolve(null);
             } else {
               console.log("ERROR1", e);
