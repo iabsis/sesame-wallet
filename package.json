@@ -10,6 +10,7 @@
     "@capacitor/core": "3.2.3",
     "@capacitor/ios": "3.2.5",
     "@ionic-native/clipboard": "^5.36.0",
+    "@ionic-native/core": "^5.36.0",
     "@ionic-native/deeplinks": "^5.36.0",
     "@ionic-native/fingerprint-aio": "^5.36.0",
     "@ionic/cli": "^6.17.1",
