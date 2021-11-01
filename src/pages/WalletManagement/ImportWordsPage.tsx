@@ -60,6 +60,7 @@ const ImportWordsPage = () => {
       if (isHTTPError(e)) {
         setSnackbarMessage({ text: e.error.detail, type: "alert" });
       } else {
+        console.log(e);
         setSnackbarMessage({
           text: e.message,
           type: "alert",
