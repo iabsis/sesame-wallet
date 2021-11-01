@@ -84,8 +84,12 @@ export const getBiometricPassword = (): Promise<string | null> => {
             resolve(data);
           })
           .catch((e) => {
-            console.log("ERROR1", e);
-            reject({ reason: "FINGERPRINT_FAILED" });
+            if (e.code === -113) {
+              resolve(null);
+            } else {
+              console.log("ERROR1", e);
+              reject({ reason: "FINGERPRINT_FAILED" });
+            }
           });
       })
       .catch((e) => {
