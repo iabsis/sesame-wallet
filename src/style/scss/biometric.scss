@@ -8,7 +8,7 @@
     z-index: 10000;
     left: 0;
     right: 0;
-    padding: 5em 2em;
+    padding: 2em 2em;
     overflow: hidden;
     opacity: 1;
     animation: moveUp 0.5s ease-in-out;
@@ -25,4 +25,11 @@
     position: absolute;
     width: 34px;
     transform: translate(-42px, 6px);
+}
+
+.big-image {
+    max-width: 80vw;
+    max-height: 30vh;
+    display: block;
+    margin: 5vh auto;
 }
