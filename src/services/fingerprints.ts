@@ -40,6 +40,13 @@ const intBiometricDataForWallet = (walletName: string) => {
   return biometricActivation;
 };
 
+/**
+ * Ask for fingerprint, then save the wallet password in the vault
+ * @param walletName Name of the wallet
+ * @param walletPassword Password of the wallet
+ * @param initialData Initial data contained in the wallet (containing password of all wallets)
+ * @returns
+ */
 export const setBiometricPasswordFor = (walletName: string, walletPassword: string, initialData: any) => {
   // Save user's credentials
   initialData[walletName] = walletPassword;
@@ -70,6 +77,10 @@ export const setBiometricPasswordFor = (walletName: string, walletPassword: stri
   });
 };
 
+/**
+ * Ask for fingerprint and return the password of all wallets
+ * @returns all biometric data savec by the spplication
+ */
 export const getBiometricPassword = (): Promise<string | null> => {
   // Save user's credentials
   return new Promise((resolve, reject) => {
@@ -100,6 +111,10 @@ export const getBiometricPassword = (): Promise<string | null> => {
   });
 };
 
+/**
+ * Ask for fingerprint and return the password of a specific wallet
+ * @returns Password of a specific wallet encrypted by biometric
+ */
 export const getBiometricPasswordFor = (walletName: string): Promise<string | null> => {
   // Save user's credentials
   return new Promise((resolve, reject) => {
