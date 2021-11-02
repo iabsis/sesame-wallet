@@ -38,11 +38,11 @@ const HomePage = ({ hasWallet, usernames, networkId }: HomeProps) => {
 
   return (
     <HomeContainer>
-      <AppHeader>
+      {/* <AppHeader>
         <SettingsButton transparent squared onClick={() => history.push("/settings")}>
           <SettingsIcon />
         </SettingsButton>
-      </AppHeader>
+      </AppHeader> */}
 
       <InteractionArea>
         <MainPanel verticalAlign="center" horizontalAlign="center">

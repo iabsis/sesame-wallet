@@ -14,33 +14,33 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with the library. If not, see <http://www.gnu.org/licenses/>.
 
-import { CliqueClient, ExplorerClient } from 'alephium-js'
+import { CliqueClient, ExplorerClient } from "alephium-js";
 
 // =================== //
 // === API CLIENTS === //
 // =================== //
 
 export async function createClient(settings?: Settings) {
-  const loadedSettings = settings || loadSettingsOrDefault()
+  const loadedSettings = settings || loadSettingsOrDefault();
   const cliqueClient = new CliqueClient({
-    baseUrl: loadedSettings.nodeHost
-  })
+    baseUrl: loadedSettings.nodeHost,
+  });
 
   const explorerClient = new ExplorerClient({
-    baseUrl: loadedSettings.explorerApiHost
-  })
+    baseUrl: loadedSettings.explorerApiHost,
+  });
 
   //If `nodeHost` have a port `....:12345`, we consider it as a multi-nodes clique
-  const isMultiNodesClique = loadedSettings.nodeHost.match(/(:[0-9]+)$/) != null
+  const isMultiNodesClique = loadedSettings.nodeHost.match(/(:[0-9]+)$/) != null;
 
-  console.log('Multi-nodes clique: ' + isMultiNodesClique)
-  console.log('Connecting to: ' + cliqueClient.baseUrl)
-  console.log('Explorer backend: ' + explorerClient.baseUrl)
+  console.log("Multi-nodes clique: " + isMultiNodesClique);
+  console.log("Connecting to: " + cliqueClient.baseUrl);
+  console.log("Explorer backend: " + explorerClient.baseUrl);
 
   // Init clients
-  await cliqueClient.init(isMultiNodesClique)
+  await cliqueClient.init(isMultiNodesClique);
 
-  return { clique: cliqueClient, explorer: explorerClient }
+  return { clique: cliqueClient, explorer: explorerClient };
 }
 
 // ================ //
@@ -48,38 +48,30 @@ export async function createClient(settings?: Settings) {
 // ================ //
 
 export interface Settings {
-  nodeHost: string
-  explorerApiHost: string
-  explorerUrl: string
+  nodeHost: string;
+  explorerApiHost: string;
+  explorerUrl: string;
 }
 
-export function settingsDefault(): Settings {
+/**
+ *
+ * @returns Default settings for the different APIs. Unlike the officiel alephium wallet, we don't allow users to override these values. This, in order to be able to automatically switch the reverse proxy when switching from testnet to mainnet.
+ */
+function settingsDefault(): Settings {
   return {
-    nodeHost: 'https://testnet-wallet.alephium.org',
-    explorerApiHost: 'https://testnet-backend.alephium.org',
-    explorerUrl: 'https://testnet.alephium.org'
-  }
-}
-
-export function loadSettings(): Settings | null {
-  const str = window.localStorage.getItem('settings')
-  if (str) {
-    return JSON.parse(str)
-  } else {
-    return null
-  }
+    nodeHost: "https://node.sesamewallet.io",
+    explorerApiHost: "https://explorer-backend.sesamewallet.io",
+    explorerUrl: "https://explorer.sesamewallet.io",
+  };
 }
 
 export function loadSettingsOrDefault() {
-  const settings = loadSettings()
-  if (!settings) {
-    return settingsDefault()
-  } else {
-    return settings
-  }
+  const settings: Settings = settingsDefault();
+  saveSettings(settings);
+  return settings;
 }
 
 export function saveSettings(settings: Settings) {
-  const str = JSON.stringify(settings)
-  window.localStorage.setItem('settings', str)
+  const str = JSON.stringify(settings);
+  window.localStorage.setItem("settings", str);
 }

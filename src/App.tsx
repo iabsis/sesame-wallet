@@ -1,10 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  IonApp,
-  IonRouterOutlet,
-  useIonRouter,
-  setupConfig,
-} from "@ionic/react";
+import { IonApp, IonRouterOutlet, useIonRouter, setupConfig } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
 import styled from "styled-components";
 import { Redirect, Route, Switch, useHistory } from "react-router-dom";
@@ -20,12 +15,7 @@ import PaymentFailed from "./pages/Payment/PaymentFailed";
 
 import HomeTabs from "./pages/HomeTabs";
 import { AsyncReturnType } from "type-fest";
-import {
-  createClient,
-  loadSettingsOrDefault,
-  saveSettings,
-  Settings,
-} from "./utils/clients";
+import { createClient, loadSettingsOrDefault, saveSettings, Settings } from "./utils/clients";
 import SettingsPage from "./pages/SettingsPage";
 import { Modal } from "./components/Modal";
 import Spinner from "./components/Spinner";
@@ -79,13 +69,10 @@ const Storage = getStorage();
 
 const App = () => {
   const [wallet, setWallet] = useState<Wallet>();
-  const [isFingerPrintAvailable, setIsFingerPrintAvailable] =
-    useState<boolean>(false);
+  const [isFingerPrintAvailable, setIsFingerPrintAvailable] = useState<boolean>(false);
   const [currentUsername, setCurrentUsername] = useState("");
   const [jwtToken, setJwtToken] = useState<string | null>(null);
-  const [snackbarMessage, setSnackbarMessage] = useState<
-    SnackbarMessage | undefined
-  >();
+  const [snackbarMessage, setSnackbarMessage] = useState<SnackbarMessage | undefined>();
   const [client, setClient] = useState<Client>();
   const [settings, setSettings] = useState<Settings>(loadSettingsOrDefault());
   const [clientIsLoading, setClientIsLoading] = useState(false);
@@ -132,10 +119,7 @@ const App = () => {
   // Remove snackbar popup
   useEffect(() => {
     if (snackbarMessage) {
-      setTimeout(
-        () => setSnackbarMessage(undefined),
-        snackbarMessage.duration || 3000
-      );
+      setTimeout(() => setSnackbarMessage(undefined), snackbarMessage.duration || 3000);
     }
   }, [snackbarMessage]);
 
@@ -200,11 +184,7 @@ const App = () => {
                   <PaymentFailed />
                 </Route>
                 <Route path="">
-                  <HomePage
-                    hasWallet={hasWallet}
-                    usernames={usernames}
-                    networkId={networkId}
-                  />
+                  <HomePage hasWallet={hasWallet} usernames={usernames} networkId={networkId} />
                 </Route>
               </Switch>
             </AnimateSharedLayout>
@@ -216,29 +196,18 @@ const App = () => {
           </IonRouterOutlet>
         </IonReactRouter>
       </IonApp>
-      <ClientLoading>
-        {clientIsLoading && <Spinner size="15px" />}
-      </ClientLoading>
+      <ClientLoading>{clientIsLoading && <Spinner size="15px" />}</ClientLoading>
       <SnackbarManager message={snackbarMessage} />
     </GlobalContext.Provider>
   );
 };
 
-const SnackbarManager = ({
-  message,
-}: {
-  message: SnackbarMessage | undefined;
-}) => {
+const SnackbarManager = ({ message }: { message: SnackbarMessage | undefined }) => {
   return (
     <SnackbarManagerContainer>
       <AnimatePresence>
         {message && (
-          <SnackbarPopup
-            initial={{ y: 10, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className={message?.type}
-          >
+          <SnackbarPopup initial={{ y: 10, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ opacity: 0 }} className={message?.type}>
             {message?.text}
           </SnackbarPopup>
         )}
