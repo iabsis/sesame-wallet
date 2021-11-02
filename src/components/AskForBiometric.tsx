@@ -41,7 +41,7 @@ export const AskForBiometric = ({ walletName, walletPassword, finished, success,
     <div className="popup-biometric-enable">
       <h1>Fingerprint access</h1>
       <h3>
-        Would you like to use the fingerprint authentication for the wallet <strong className="accent">{walletName}</strong>?
+        Would you like to unlock your wallet <strong className="accent">{walletName}</strong> with your fingerprint?
       </h3>
 
       <img className="big-image" src={fingerprint} alt="Fingerprint" />
