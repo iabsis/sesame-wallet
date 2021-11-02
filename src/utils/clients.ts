@@ -15,6 +15,7 @@
 // along with the library. If not, see <http://www.gnu.org/licenses/>.
 
 import { CliqueClient, ExplorerClient } from "alephium-js";
+import { config } from "../config/config";
 
 // =================== //
 // === API CLIENTS === //
@@ -59,9 +60,9 @@ export interface Settings {
  */
 function settingsDefault(): Settings {
   return {
-    nodeHost: "https://node.sesamewallet.io",
-    explorerApiHost: "https://explorer-backend.sesamewallet.io",
-    explorerUrl: "https://explorer.sesamewallet.io",
+    nodeHost: config.ALEPHIUM_NODE_HOST,
+    explorerApiHost: config.ALEPHIUM_EXPLORER_API_HOST,
+    explorerUrl: config.ALEPHIUM_EXPLORER_URL,
   };
 }
 
