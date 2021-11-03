@@ -6,8 +6,10 @@
     "@capacitor/android": "3.2.5",
     "@capacitor/app": "^1.0.3",
     "@capacitor/browser": "^1.0.3",
+    "@capacitor/configure": "^1.0.8",
     "@capacitor/core": "3.2.3",
     "@capacitor/ios": "3.2.5",
+    "@capacitor/project": "^1.0.8",
     "@ionic-native/deeplinks": "^5.36.0",
     "@ionic/cli": "^6.17.1",
     "@ionic/react": "^5.5.0",
@@ -85,7 +87,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "cap-config": "cap-config"
   },
   "eslintConfig": {
     "extends": [
