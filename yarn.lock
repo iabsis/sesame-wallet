@@ -1180,10 +1180,10 @@
   "resolved" "https://registry.npmjs.org/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz"
   "version" "0.2.3"
 
-"@capacitor/android@3.2.5":
-  "integrity" "sha512-eq9luSS8Bivyp3F46BaUgmPXxMzuUTdZO/bToHIUBu66Ufh4ou/TDg0opMXjuKIYJgjAsddxkPBeREj8KabbSQ=="
-  "resolved" "https://registry.npmjs.org/@capacitor/android/-/android-3.2.5.tgz"
-  "version" "3.2.5"
+"@capacitor/android@3.3.0":
+  "integrity" "sha512-dzbzdN7KjjwpUbg7mZKVkgAVytEwGyXUL4Z1t9c12UhViJaNjU7/nSlTXjb+IiauwVg9oI2LHtSVrp1NIjUycw=="
+  "resolved" "https://registry.npmjs.org/@capacitor/android/-/android-3.3.0.tgz"
+  "version" "3.3.0"
 
 "@capacitor/app@^1.0.3":
   "integrity" "sha512-kilAdWODV5p32wz0jVGdSoQTEx4Q0TM/xYj9w3iYYNI24v1WIRnEs04TaGTG8JFYIUksJaOqGC3PoZddfZ1POA=="
@@ -1245,10 +1245,10 @@
     "yaml" "^1.10.2"
     "yargs" "^17.2.1"
 
-"@capacitor/core@^3.0.0", "@capacitor/core@^3.2.0", "@capacitor/core@3.2.3":
-  "integrity" "sha512-6oIi9EXgTRI8Xg3Gg8IWSQcddshb6lNtywkQA+QWoTL/6qV/l519tBcZHV9cu6BA7GT3qm2WcX9yQjwDq5iKpw=="
-  "resolved" "https://registry.npmjs.org/@capacitor/core/-/core-3.2.3.tgz"
-  "version" "3.2.3"
+"@capacitor/core@^3.0.0", "@capacitor/core@^3.2.0", "@capacitor/core@^3.3.0":
+  "integrity" "sha512-bKkg/IGALz5OKJPGwtGXoqi4JUXWbuILnZ9J12Mv21fPMFBoszYOiMfm7FqdcCwqcyJWCdG3SQDxCz0Q3e2y8Q=="
+  "resolved" "https://registry.npmjs.org/@capacitor/core/-/core-3.3.0.tgz"
+  "version" "3.3.0"
   dependencies:
     "tslib" "^2.1.0"
 
@@ -1460,13 +1460,6 @@
   "integrity" "sha512-H9XAx3hc0BQHY6l+IFSWHDySypcXsvsuLhgYLUGywmJ5pswRVQJUHpOsobnLYp2ZUaUlKiKDrgWWhosOwAEM8Q=="
   "resolved" "https://registry.npmjs.org/@hutson/parse-repository-url/-/parse-repository-url-3.0.2.tgz"
   "version" "3.0.2"
-
-"@ionic-native/core@^5.1.0":
-  "integrity" "sha512-lOrkktadlKYbYf1LrDyAtsu1JnQ0oCCdkOU7iHQ8oXnNOkMwobFfD2m62F1CoOr0u9LIkpYnZSPjng8lZbmbNw=="
-  "resolved" "https://registry.npmjs.org/@ionic-native/core/-/core-5.36.0.tgz"
-  "version" "5.36.0"
-  dependencies:
-    "@types/cordova" "latest"
 
 "@ionic-native/deeplinks@^5.36.0":
   "integrity" "sha512-JWW+ozeUTxTzSmQ/dA0FNvl26wpXIaPMat5p7kSydQeVR1Xgpt3vCNmYnzs81B5dbN9RkH+TuWuYQ7HVoJhsQw=="
@@ -8872,20 +8865,7 @@
     "jest-regex-util" "^26.0.0"
     "jest-snapshot" "^26.6.2"
 
-"jest-resolve@*":
-  "integrity" "sha512-tRAz2bwraHufNp+CCmAD8ciyCpXCs1NQxB5EJAmtCFy6BN81loFEGWKzYu26Y62lAJJe4X4jg36Kf+NsQyiStQ=="
-  "version" "26.6.0"
-  dependencies:
-    "@jest/types" "^26.6.0"
-    "chalk" "^4.0.0"
-    "graceful-fs" "^4.2.4"
-    "jest-pnp-resolver" "^1.2.2"
-    "jest-util" "^26.6.0"
-    "read-pkg-up" "^7.0.1"
-    "resolve" "^1.17.0"
-    "slash" "^3.0.0"
-
-"jest-resolve@^26.6.2":
+"jest-resolve@*", "jest-resolve@^26.6.2":
   "integrity" "sha512-sOxsZOq25mT1wRsfHcbtkInS+Ek7Q8jCHUB0ZUTP0tc/c41QHriU/NunqMfCUWsL4H3MHpvQD4QR9kSYhS7UvQ=="
   "resolved" "https://registry.npmjs.org/jest-resolve/-/jest-resolve-26.6.2.tgz"
   "version" "26.6.2"
@@ -12841,7 +12821,7 @@
   dependencies:
     "estree-walker" "^0.6.1"
 
-"rollup@^1.20.0 || ^2.0.0", "rollup@^1.20.0||^2.0.0", "rollup@^1.31.1", "rollup@>=0.60.0 <3", "rollup@>=0.66.0 <3":
+"rollup@^1.20.0 || ^2.0.0", "rollup@^1.20.0||^2.0.0", "rollup@^1.31.1", "rollup@^2.30.0", "rollup@>=0.60.0 <3", "rollup@>=0.66.0 <3":
   "integrity" "sha512-/2HA0Ec70TvQnXdzynFffkjA6XN+1e2pEv/uKS5Ulca40g2L7KuOE3riasHoNVHOsFD5KKZgDsMk1CP3Tw9s+A=="
   "resolved" "https://registry.npmjs.org/rollup/-/rollup-1.32.1.tgz"
   "version" "1.32.1"
@@ -12849,13 +12829,6 @@
     "@types/estree" "*"
     "@types/node" "*"
     "acorn" "^7.1.0"
-
-"rollup@^2.30.0":
-  "integrity" "sha512-l7s90JQhCQ6JyZjKgo7Lq1dKh2RxatOM+Jr6a9F7WbS9WgKbocyUSeLmZl8evAse7y96Ae98L2k1cBOwWD8nHw=="
-  "resolved" "https://registry.npmjs.org/rollup/-/rollup-2.59.0.tgz"
-  "version" "2.59.0"
-  optionalDependencies:
-    "fsevents" "~2.3.2"
 
 "rsvp@^3.0.21":
   "integrity" "sha512-OfWGQTb9vnwRjwtA2QwpG2ICclHC3pgXZO5xt8H2EfgDquO0qVdSb5T88L4qJVAEugbS56pAuV4XZM58UX8ulw=="
