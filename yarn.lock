@@ -1180,10 +1180,10 @@
   "resolved" "https://registry.npmjs.org/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz"
   "version" "0.2.3"
 
-"@capacitor/android@3.2.5":
-  "integrity" "sha512-eq9luSS8Bivyp3F46BaUgmPXxMzuUTdZO/bToHIUBu66Ufh4ou/TDg0opMXjuKIYJgjAsddxkPBeREj8KabbSQ=="
-  "resolved" "https://registry.npmjs.org/@capacitor/android/-/android-3.2.5.tgz"
-  "version" "3.2.5"
+"@capacitor/android@3.3.0":
+  "integrity" "sha512-dzbzdN7KjjwpUbg7mZKVkgAVytEwGyXUL4Z1t9c12UhViJaNjU7/nSlTXjb+IiauwVg9oI2LHtSVrp1NIjUycw=="
+  "resolved" "https://registry.npmjs.org/@capacitor/android/-/android-3.3.0.tgz"
+  "version" "3.3.0"
 
 "@capacitor/app@^1.0.3":
   "integrity" "sha512-kilAdWODV5p32wz0jVGdSoQTEx4Q0TM/xYj9w3iYYNI24v1WIRnEs04TaGTG8JFYIUksJaOqGC3PoZddfZ1POA=="
@@ -1222,10 +1222,10 @@
   "resolved" "https://registry.npmjs.org/@capacitor/clipboard/-/clipboard-1.0.5.tgz"
   "version" "1.0.5"
 
-"@capacitor/core@^3.0.0", "@capacitor/core@^3.2.0", "@capacitor/core@3.2.3":
-  "integrity" "sha512-6oIi9EXgTRI8Xg3Gg8IWSQcddshb6lNtywkQA+QWoTL/6qV/l519tBcZHV9cu6BA7GT3qm2WcX9yQjwDq5iKpw=="
-  "resolved" "https://registry.npmjs.org/@capacitor/core/-/core-3.2.3.tgz"
-  "version" "3.2.3"
+"@capacitor/core@^3.0.0", "@capacitor/core@^3.2.0", "@capacitor/core@^3.3.0":
+  "integrity" "sha512-bKkg/IGALz5OKJPGwtGXoqi4JUXWbuILnZ9J12Mv21fPMFBoszYOiMfm7FqdcCwqcyJWCdG3SQDxCz0Q3e2y8Q=="
+  "resolved" "https://registry.npmjs.org/@capacitor/core/-/core-3.3.0.tgz"
+  "version" "3.3.0"
   dependencies:
     "tslib" "^2.1.0"
 
