@@ -7,8 +7,10 @@
     "@capacitor/app": "^1.0.3",
     "@capacitor/browser": "^1.0.3",
     "@capacitor/clipboard": "^1.0.5",
+    "@capacitor/configure": "^1.0.8",
     "@capacitor/core": "^3.3.0",
     "@capacitor/ios": "3.2.5",
+    "@capacitor/project": "^1.0.8",
     "@ionic-native/clipboard": "^5.36.0",
     "@ionic-native/core": "^5.36.0",
     "@ionic-native/deeplinks": "^5.36.0",
@@ -90,7 +92,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "cap-config": "cap-config"
   },
   "eslintConfig": {
     "extends": [

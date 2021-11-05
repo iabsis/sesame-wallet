@@ -1,0 +1,37 @@
+vars:
+  BUNDLE_ID:
+    default: com.iabsis.sesamewallet
+  PACKAGE_NAME:
+    default: com.iabsis.sesamewallet
+  VERSION_NAME:
+    default: 1.1.2
+
+platforms:
+  ios:
+    targets:
+      App:
+        bundleId: $BUNDLE_ID
+        version: $VERSION_NAME
+        incrementBuild: true
+        productName: Sesame wallet
+        displayName: Sesame wallet
+
+        buildSettings:
+          ENABLE_BITCODE: false
+          STRIP_SWIFT_SYMBOLS: false
+
+        infoPlist:
+          - NSFaceIDUsageDescription: Use Face ID to authenticate yourself and unlock your wallet
+          - CFBundleURLTypes:
+              - CFBundleURLSchemes:
+                  - msauth.$(PRODUCT_BUNDLE_IDENTIFIER)
+                  - msauth.$(PRODUCT_BUNDLE_IDENTIFIER)-intunemam
+                  - msauth.com.microsoft.intunemam
+
+        entitlements:
+          - keychain-access-groups: ["$BUNDLE_ID", "com.microsoft.intune.mam", "com.microsoft.adalcache"]
+
+  android:
+    packageName: $PACKAGE_NAME
+    versionName: $VERSION_NAME
+    incrementVersionCode: true
