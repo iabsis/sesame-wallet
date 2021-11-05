@@ -194,6 +194,10 @@ a {
   padding-bottom: 100px;
 }
 
+.accent {
+  color: $primary;
+}
+
 @import "style/scss/plans.scss";
 @import "style/scss/subscriptions.scss";
 @import "style/scss/buttons.scss";
@@ -201,3 +205,4 @@ a {
 @import "style/scss/grid.scss";
 @import "style/scss/app-brand.scss";
 @import "style/scss/custom-font.scss";
+@import "style/scss/biometric.scss";
