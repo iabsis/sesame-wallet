@@ -1,7 +1,7 @@
 import { createGlobalStyle } from "styled-components";
 import { isElectron } from "../utils/misc";
 
-export const appHeaderHeight = "30px";
+export const appHeaderHeight = "50px";
 
 export const GlobalStyle = createGlobalStyle`
 

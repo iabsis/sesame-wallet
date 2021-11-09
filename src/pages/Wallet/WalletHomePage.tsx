@@ -1,27 +1,11 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import styled, { useTheme } from "styled-components";
-import {
-  SectionContent,
-  MainPanel,
-  FooterActions,
-} from "../../components/PageComponents";
+import { SectionContent, MainPanel, FooterActions } from "../../components/PageComponents";
 import { GlobalContext } from "../../App";
 import { useHistory } from "react-router-dom";
 import { Transaction } from "alephium-js/dist/api/api-explorer";
-import {
-  Send,
-  QrCode,
-  RefreshCw,
-  Lock,
-  LucideProps,
-  Settings as SettingsIcon,
-  Shovel,
-} from "lucide-react";
-import {
-  abbreviateAmount,
-  calAmountDelta,
-  openInNewWindow,
-} from "../../utils/misc";
+import { Send, QrCode, RefreshCw, Lock, LucideProps, Settings as SettingsIcon, Shovel } from "lucide-react";
+import { abbreviateAmount, calAmountDelta, openInNewWindow } from "../../utils/misc";
 import { loadSettingsOrDefault } from "../../utils/clients";
 import AmountBadge from "../../components/Badge";
 import _ from "lodash";
@@ -36,31 +20,18 @@ import { isHTTPError } from "../../utils/api";
 import { appHeaderHeight, deviceBreakPoints } from "../../style/globalStyles";
 import AppHeader from "../../components/AppHeader";
 import Address from "../../components/Address";
+import ServerMessage from "../../components/ServerMessage";
 import { ReactComponent as AlephiumLogoSVG } from "../../images/alephium_logo_monochrome.svg";
 import { authenticate } from "../../services/auth";
-import BottomTabs from "../../components/BottomTabs";
-import {
-  IonButton,
-  IonIcon,
-  IonLabel,
-  IonPage,
-  IonRouterOutlet,
-  IonTabBar,
-  IonTabButton,
-  IonTabs,
-} from "@ionic/react";
-import { Route } from "react-router-dom";
-import ImportWordsPage from "../WalletManagement/ImportWordsPage";
-import { ellipse, refresh, square, triangle } from "ionicons/icons";
+import { getMessages, Message, messageHidden } from "../../services/messages";
+import { IonPage } from "@ionic/react";
+
 import { getSubscriptions, Subscription } from "../../services/subscriptions";
 import appLogo from "../../images/app-top-icon.svg";
 
 dayjs.extend(relativeTime);
 
-const renderIOAccountList = (
-  currentAddress: string,
-  io: { address?: string }[]
-) => {
+const renderIOAccountList = (currentAddress: string, io: { address?: string }[]) => {
   if (io.length > 0) {
     return _(io.filter((o) => o.address !== currentAddress))
       .map((v) => v.address)
@@ -74,25 +45,16 @@ const renderIOAccountList = (
 
 const WalletHomePage = () => {
   const history = useHistory();
-  const {
-    wallet,
-    setSnackbarMessage,
-    client,
-    setWallet,
-    jwtToken,
-    setJwtToken,
-  } = useContext(GlobalContext);
+  const { wallet, setSnackbarMessage, client, setWallet, jwtToken, setJwtToken } = useContext(GlobalContext);
   const [balance, setBalance] = useState<bigint | undefined>(undefined);
-  const { pendingTxList, loadedTxList, setLoadedTxList } =
-    useContext(WalletContext);
+  const { pendingTxList, loadedTxList, setLoadedTxList } = useContext(WalletContext);
   const [totalNumberOfTx, setTotalNumberOfTx] = useState(0);
+  const [serverMessages, setServerMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isHeaderCompact, setIsHeaderCompact] = useState(false);
   const [lastLoadedPage, setLastLoadedPage] = useState(1);
   const [subscriptionsLoaded, setSubscriptionsLoaded] = useState(false);
-  const [openedSubscriptions, setOpenedSubscriptions] = useState<
-    Array<Subscription>
-  >([]);
+  const [openedSubscriptions, setOpenedSubscriptions] = useState<Array<Subscription>>([]);
 
   // Animation related to scroll
   const { scrollY } = useViewportScroll();
@@ -117,11 +79,8 @@ const WalletHomePage = () => {
       setIsLoading(true);
       try {
         if (wallet && client) {
-          const addressDetailsResp = await client.explorer.getAddressDetails(
-            wallet.address
-          );
-          const addressTransactionsResp =
-            await client.explorer.getAddressTransactions(wallet.address, 1);
+          const addressDetailsResp = await client.explorer.getAddressDetails(wallet.address);
+          const addressTransactionsResp = await client.explorer.getAddressTransactions(wallet.address, 1);
 
           if (addressDetailsResp.data) {
             setBalance(BigInt(addressDetailsResp.data.balance));
@@ -150,22 +109,10 @@ const WalletHomePage = () => {
       const fetchNewPage = async () => {
         try {
           if (wallet && client) {
-            const addressTransactionsResp =
-              await client.explorer.getAddressTransactions(
-                wallet.address,
-                pageToLoad
-              );
+            const addressTransactionsResp = await client.explorer.getAddressTransactions(wallet.address, pageToLoad);
 
-            if (
-              loadedTxList[loadedTxList.length - 1].hash !==
-              addressTransactionsResp.data[
-                addressTransactionsResp.data.length - 1
-              ].hash
-            ) {
-              setLoadedTxList([
-                ...loadedTxList,
-                ...addressTransactionsResp.data,
-              ]);
+            if (loadedTxList[loadedTxList.length - 1].hash !== addressTransactionsResp.data[addressTransactionsResp.data.length - 1].hash) {
+              setLoadedTxList([...loadedTxList, ...addressTransactionsResp.data]);
             }
           }
         } catch (e) {
@@ -204,7 +151,6 @@ const WalletHomePage = () => {
     if (wallet) {
       authenticate(wallet)
         .then((data) => {
-          console.log("RECEIVED DATA", data.data.token);
           setJwtToken(data.data.token);
           refreshSubscriptions(data.data.token);
         })
@@ -214,6 +160,23 @@ const WalletHomePage = () => {
         .finally(() => {
           setSubscriptionsLoaded(true);
         });
+
+      getMessages().then((messages) => {
+        console.log("Got messages", messages.data);
+        const filteredMessages = messages.data.filter((message: Message) => {
+          // Don't show expired message
+          if (message.expiry_date && new Date(message.expiry_date).getTime() < new Date().getTime()) {
+            return false;
+          }
+          if (messageHidden(message)) {
+            return false;
+          }
+
+          return true;
+        });
+
+        setServerMessages(filteredMessages);
+      });
     }
   }, [wallet]);
 
@@ -222,45 +185,25 @@ const WalletHomePage = () => {
 
   if (!wallet) return null;
   // Make initial calls
-
   return (
     <IonPage>
       <AppHeader>
         <div className="app-brand">
           <img src={appLogo} className="app-logo" />
         </div>
-        <RefreshButton
-          transparent
-          squared
-          onClick={fetchData}
-          disabled={isLoading || pendingTxList.length > 0}
-        >
+        <RefreshButton transparent squared onClick={fetchData} disabled={isLoading || pendingTxList.length > 0}>
           {isLoading || pendingTxList.length > 0 ? <Spinner /> : <RefreshCw />}
         </RefreshButton>
-        <SettingsButton
-          transparent
-          squared
-          onClick={() => history.push("/wallet/settings")}
-        >
+        <SettingsButton transparent squared onClick={() => history.push("/wallet/settings")}>
           <SettingsIcon />
         </SettingsButton>
       </AppHeader>
       <WalletSidebar>
         <div className="section-title">Total balance</div>
-        <div className="nice-colors">
-          {balance ? abbreviateAmount(balance) : 0} ℵ
-        </div>
+        <div className="nice-colors">{balance ? abbreviateAmount(balance) : 0} ℵ</div>
         <WalletActions>
-          <WalletActionButton
-            Icon={QrCode}
-            label="Show address"
-            link="/wallet/address"
-          />
-          <WalletActionButton
-            Icon={Send}
-            label="Send token"
-            link="/wallet/send"
-          />
+          <WalletActionButton Icon={QrCode} label="Show address" link="/wallet/address" />
+          <WalletActionButton Icon={Send} label="Send token" link="/wallet/send" />
           {/* <WalletActionButton
             Icon={Lock}
             label="Lock wallet"
@@ -272,33 +215,28 @@ const WalletHomePage = () => {
           <>
             {openedSubscriptions.length > 0 ? (
               <FooterActions apparitionDelay={0.3}>
-                <Button onClick={() => goToPage("/wallet/subscriptions")}>
-                  Show my active plan ({openedSubscriptions.length})
-                </Button>
+                <Button onClick={() => goToPage("/wallet/subscriptions")}>Show my active plan ({openedSubscriptions.length})</Button>
               </FooterActions>
             ) : (
               <FooterActions apparitionDelay={0.3}>
                 <Button onClick={() => goToPage("/choose-plan")}>
-                  <i className="icon-pick-axe pr-2"></i> Get a cloud mining
-                  subscription
+                  <i className="icon-pick-axe pr-2"></i> Get a cloud mining subscription
                 </Button>
               </FooterActions>
             )}
           </>
         )}
       </WalletSidebar>
+      {serverMessages &&
+        serverMessages.map((msg) => {
+          return <ServerMessage key={msg._id} message={msg} />;
+        })}
       <AnimatePresence>
         {isHeaderCompact && (
-          <CompactWalletAmountBoxContainer
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-          >
+          <CompactWalletAmountBoxContainer initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
             <CompactWalletAmountBox>
               <WalletAmountContainer>
-                <WalletAmount style={{ scale: 0.7 }}>
-                  {balance && abbreviateAmount(balance)}ℵ
-                </WalletAmount>
+                <WalletAmount style={{ scale: 0.7 }}>{balance && abbreviateAmount(balance)}ℵ</WalletAmount>
               </WalletAmountContainer>
             </CompactWalletAmountBox>
           </CompactWalletAmountBoxContainer>
@@ -307,12 +245,8 @@ const WalletHomePage = () => {
       <TransactionsContainer>
         <MainPanel>
           <LastTransactionListHeader>
-            <LastTransactionListTitle>
-              Transactions ({totalNumberOfTx})
-            </LastTransactionListTitle>
-            {(isLoading || pendingTxList.length > 0) && (
-              <Spinner size={"16px"} />
-            )}
+            <LastTransactionListTitle>Transactions ({totalNumberOfTx})</LastTransactionListTitle>
+            {(isLoading || pendingTxList.length > 0) && <Spinner size={"16px"} />}
           </LastTransactionListHeader>
           <LastTransactionList>
             {pendingTxList
@@ -324,29 +258,15 @@ const WalletHomePage = () => {
             {loadedTxList &&
               loadedTxList.length > 0 &&
               loadedTxList?.map((t) => {
-                return (
-                  <TransactionItem
-                    key={t.hash}
-                    transaction={t}
-                    currentAddress={wallet.address}
-                  />
-                );
+                return <TransactionItem key={t.hash} transaction={t} currentAddress={wallet.address} />;
               })}
           </LastTransactionList>
-          {loadedTxList &&
-          loadedTxList.length > 0 &&
-          loadedTxList.length === totalNumberOfTx ? (
-            <NoMoreTransactionMessage>
-              No more transactions
-            </NoMoreTransactionMessage>
+          {loadedTxList && loadedTxList.length > 0 && loadedTxList.length === totalNumberOfTx ? (
+            <NoMoreTransactionMessage>No more transactions</NoMoreTransactionMessage>
           ) : loadedTxList.length === 0 ? (
-            <NoMoreTransactionMessage>
-              No transactions yet!
-            </NoMoreTransactionMessage>
+            <NoMoreTransactionMessage>No transactions yet!</NoMoreTransactionMessage>
           ) : (
-            <LoadMoreMessage onClick={() => fetchMore(lastLoadedPage + 1)}>
-              Load more
-            </LoadMoreMessage>
+            <LoadMoreMessage onClick={() => fetchMore(lastLoadedPage + 1)}>Load more</LoadMoreMessage>
           )}
         </MainPanel>
       </TransactionsContainer>
@@ -386,13 +306,7 @@ const WalletActionButton = ({
   );
 };
 
-const TransactionItem = ({
-  transaction: t,
-  currentAddress,
-}: {
-  transaction: Transaction;
-  currentAddress: string;
-}) => {
+const TransactionItem = ({ transaction: t, currentAddress }: { transaction: Transaction; currentAddress: string }) => {
   const amountDelta = calAmountDelta(t, currentAddress);
   const isOut = amountDelta < 0;
 
@@ -401,28 +315,17 @@ const TransactionItem = ({
   const { explorerUrl } = loadSettingsOrDefault();
 
   return (
-    <TransactionItemContainer
-      onClick={() => openInNewWindow(`${explorerUrl}/#/transactions/${t.hash}`)}
-    >
+    <TransactionItemContainer onClick={() => openInNewWindow(`${explorerUrl}/#/transactions/${t.hash}`)}>
       <TxDetails>
         <DirectionLabel>{isOut ? "↑ TO" : "↓ FROM"}</DirectionLabel>
-        <IOAddresses>
-          {IOAddressesList &&
-            renderIOAccountList(currentAddress, IOAddressesList)}
-        </IOAddresses>
-        <TxTimestamp>
-          {dayjs(t.timestamp).format("MM/DD/YYYY HH:mm:ss")}
-        </TxTimestamp>
+        <IOAddresses>{IOAddressesList && renderIOAccountList(currentAddress, IOAddressesList)}</IOAddresses>
+        <TxTimestamp>{dayjs(t.timestamp).format("MM/DD/YYYY HH:mm:ss")}</TxTimestamp>
       </TxDetails>
       <TxAmountContainer>
         <AmountBadge
           type={isOut ? "minus" : "plus"}
           prefix={isOut ? "- " : "+ "}
-          content={
-            amountDelta < 0
-              ? (amountDelta * -1n).toString()
-              : amountDelta.toString()
-          }
+          content={amountDelta < 0 ? (amountDelta * -1n).toString() : amountDelta.toString()}
           amount
         />
       </TxAmountContainer>
@@ -431,17 +334,11 @@ const TransactionItem = ({
 };
 
 // Transaction that has been sent and waiting to be fetched
-const PendingTransactionItem = ({
-  transaction: t,
-}: {
-  transaction: SimpleTx;
-}) => {
+const PendingTransactionItem = ({ transaction: t }: { transaction: SimpleTx }) => {
   const { explorerUrl } = loadSettingsOrDefault();
 
   return (
-    <PendingTransactionItemContainer
-      onClick={() => openInNewWindow(`${explorerUrl}/#/transactions/${t.txId}`)}
-    >
+    <PendingTransactionItemContainer onClick={() => openInNewWindow(`${explorerUrl}/#/transactions/${t.txId}`)}>
       <TxDetails>
         <DirectionLabel>TO</DirectionLabel>
         <IOAddresses>
@@ -477,7 +374,7 @@ const WalletSidebar = styled(SectionContent)`
   position: relative;
   border-right: 1px solid ${({ theme }) => theme.border.primary};
   background-color: ${({ theme }) => theme.bg.primary};
-  padding-top: ${appHeaderHeight};
+  transform: translateY(${appHeaderHeight});
 
   @media ${deviceBreakPoints.mobile} {
     flex: 0;
@@ -658,7 +555,7 @@ const TransactionsContainer = styled.div`
   justify-content: center;
   padding: 25px;
   padding-top: calc(10px + ${appHeaderHeight});
-
+  margin-top: 50px;
   @media ${deviceBreakPoints.mobile} {
     overflow: initial;
     padding: 0;

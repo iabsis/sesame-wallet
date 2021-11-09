@@ -4,6 +4,8 @@ import { config } from "../config/config";
 export type Slot = {
   min: number;
   max: number;
+  remaining: number;
+  total: number;
 };
 
 export const getSlotsAvailable = (jwtToken?: String): Promise<{ data: Slot }> => {

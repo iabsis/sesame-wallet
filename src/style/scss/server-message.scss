@@ -1,0 +1,41 @@
+@import "variables";
+
+.server-message {
+    border-radius: 5px;
+    background-color: $primary;
+    color: $bg;
+    margin: 1rem 2rem;
+    padding: 1rem;
+
+    &.server-message-low {
+        background-color: #eee;
+    }
+    &.server-message-high {
+        background-color: #ed4a34;
+    }
+
+    .close {
+        font-size: 1.2rem;
+        font-weight: bold;
+        float: right;
+        transform: translate(1rem, -1rem);
+    }
+    .title {
+        font-weight: bold;
+        font-size: 0.9rem;
+    }
+    .time {
+        font-style: italic;
+        font-size: 0.7rem;
+        margin-bottom: 1rem;
+    }
+
+    &.hide-it {
+        display: none;
+    }
+
+    .url {
+        font-weight: bold;
+        margin-top: 1rem;
+    }
+}

@@ -39,6 +39,10 @@ ion-range {
   --bar-background-active: #d4aa00;
   --pin-background: #d4aa00;
   --pin-color: #17161b !important;
+
+  &.marged-range {
+    margin: 12px 3rem;
+  }
 }
 
 ion-tab-bar {
@@ -198,6 +202,26 @@ a {
   color: $primary;
 }
 
+.mb {
+  margin-bottom: 2rem;
+}
+
+.centered {
+  text-align: center;
+  button {
+    margin: auto;
+  }
+}
+
+.white-full-screen-icon {
+  max-width: 100vw;
+  max-height: 40vh;
+  margin: auto;
+  display: block;
+  margin-bottom: 4rem;
+  opacity: 0.8;
+}
+
 @import "style/scss/plans.scss";
 @import "style/scss/subscriptions.scss";
 @import "style/scss/buttons.scss";
@@ -206,3 +230,4 @@ a {
 @import "style/scss/app-brand.scss";
 @import "style/scss/custom-font.scss";
 @import "style/scss/biometric.scss";
+@import "style/scss/server-message.scss";

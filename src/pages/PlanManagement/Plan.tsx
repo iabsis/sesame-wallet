@@ -12,10 +12,7 @@ interface PlanContext {
 
 const PlanElement: FC<PlanContext> = ({ plan, selected, onClick }) => {
   return (
-    <div
-      onClick={onClick}
-      className={`plan-element ${selected ? "selected" : ""}`}
-    >
+    <div onClick={onClick} className={`plan-element ${selected ? "selected" : ""}`}>
       <div className="plan-row">
         <div className="plan-name">
           <Checkbox checked={selected} />
