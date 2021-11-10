@@ -1,11 +1,5 @@
 import { useState, useContext, useEffect } from "react";
-import {
-  PanelContainer,
-  FooterActions,
-  PanelTitle,
-  MainPanel,
-  PanelContent,
-} from "../../components/PageComponents";
+import { PanelContainer, FooterActions, PanelTitle, MainPanel, PanelContent } from "../../components/PageComponents";
 import styled from "styled-components";
 import Paragraph from "../../components/Paragraph";
 import { Button } from "../../components/Buttons";
@@ -25,7 +19,7 @@ const ChoosePlanCheckoutPage = () => {
   const { onButtonBack, onButtonNext } = useContext(StepsContext);
   const { jwtToken, setJwtToken } = useContext(GlobalContext);
 
-  const [sessionError, setSessionError] = useState<boolean>(false);
+  const [sessionError, setSessionError] = useState<{ error: boolean | string; msg: string | null }>({ error: false, msg: null });
   const [loading, setLoading] = useState<boolean>(false);
 
   const redirectToDashboard = () => {
@@ -34,17 +28,19 @@ const ChoosePlanCheckoutPage = () => {
 
   const generateUrl = () => {
     if (jwtToken && planObject && nbSlots) {
-      setSessionError(false);
+      setSessionError({ error: false, msg: null });
       setLoading(true);
       checkout(planObject._id, nbSlots, jwtToken)
         .then((checkoutUrl) => {
           Browser.open({ url: checkoutUrl.data.url });
           console.log("THERE IS NO ERROR");
-          setSessionError(false);
+          setSessionError({ error: false, msg: null });
         })
         .catch((err) => {
-          console.log("THERE IS AN ERROR");
-          setSessionError(true);
+          console.log("THERE IS AN ERROR", JSON.stringify(err.response));
+          const msg = err.response?.data?.message;
+          console.log("err-msg", msg);
+          setSessionError({ error: true, msg });
         })
         .finally(() => {
           setLoading(false);
@@ -60,22 +56,33 @@ const ChoosePlanCheckoutPage = () => {
     <MainPanel>
       <PanelContainer>
         <PanelTitle color="primary">Checkout</PanelTitle>
-        <PanelContent>
-          You are about to be redirected to your browser in order to pay with
-          Stripe.
-        </PanelContent>
+        <PanelContent>You are about to be redirected to your browser in order to pay with Stripe.</PanelContent>
         <img src={creditCard} className="credit-card" />
-        <FooterActions apparitionDelay={0.3}>
-          {sessionError ? (
-            <Button disabled={loading} onClick={() => generateUrl()}>
-              Try again
-            </Button>
-          ) : (
-            <Button disabled={loading} onClick={() => redirectToDashboard()}>
-              Go back to dashboard
-            </Button>
-          )}
-        </FooterActions>
+        {!loading && (
+          <>
+            {sessionError.error ? (
+              <>
+                <p className="important-msg t-center">{sessionError.msg ? sessionError.msg : "Sorry! An unknown error occured."}</p>
+                <FooterActions>
+                  <Button disabled={loading} onClick={() => generateUrl()}>
+                    Try again
+                  </Button>
+                </FooterActions>
+                <FooterActions>
+                  <Button secondary disabled={loading} onClick={() => redirectToDashboard()}>
+                    Cancel
+                  </Button>
+                </FooterActions>
+              </>
+            ) : (
+              <FooterActions>
+                <Button disabled={loading} onClick={() => redirectToDashboard()}>
+                  Go back to dashboard
+                </Button>
+              </FooterActions>
+            )}
+          </>
+        )}
       </PanelContainer>
     </MainPanel>
   );

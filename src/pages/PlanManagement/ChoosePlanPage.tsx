@@ -128,6 +128,8 @@ const ChoosePlanPage = () => {
             );
           })}
 
+        <p className="important-msg t-center">Tokens are distributed every Monday to reduce gas fees.</p>
+
         {planObject && (
           <>
             <StepDescription step={2} text="How much slots do you want?"></StepDescription>
