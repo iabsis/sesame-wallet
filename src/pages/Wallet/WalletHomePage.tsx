@@ -374,7 +374,7 @@ const WalletSidebar = styled(SectionContent)`
   position: relative;
   border-right: 1px solid ${({ theme }) => theme.border.primary};
   background-color: ${({ theme }) => theme.bg.primary};
-  transform: translateY(${appHeaderHeight});
+  margin-top: translateY(${appHeaderHeight});
 
   @media ${deviceBreakPoints.mobile} {
     flex: 0;
