@@ -33,6 +33,7 @@ android: node_modules build
 	npx ionic capacitor add android
 	npx cordova-res android
 	npx cordova-res android --skip-config --copy --icon-background-source '#17161b'
+	npx cap-config run -y config.yaml
 	sed -i 's/versionName.*/versionName "$(versionName)"/g' android/app/build.gradle
 	sed -i 's/versionCode.*/versionCode $(versionCode)/g' android/app/build.gradle
 
@@ -48,6 +49,13 @@ ios: node_modules build
 	npx cordova-res ios --skip-config --copy
 
 ios-xcode: ios
+
+sign-android:
+	jarsigner -verbose -sigalg SHA256withRSA -digestalg SHA-256 -keystore ~/Documents/Iabsis/Passwords/Android.jks android/app/build/outputs/bundle/release/app-release.aab iabsis
+	jarsigner -verbose -sigalg SHA256withRSA -digestalg SHA-256 -keystore ~/Documents/Iabsis/Passwords/Android.jks android/app/build/outputs/apk/release/app-release-unsigned.apk iabsis
+
+open-xcode:
+	npx cap open ios
 
 show:
 	@ echo Timestamp: "$(timeStamp)"
