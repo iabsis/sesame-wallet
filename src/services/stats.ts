@@ -76,7 +76,7 @@ export const getStats = (walletAddress: string): Promise<MiningHistory[]> => {
  */
 export const getHistory = (): Promise<PriceHistory[]> => {
   return new Promise((resolve, reject) => {
-    const startDate = dayjs().subtract(5, "days").unix();
+    const startDate = dayjs().subtract(60, "days").unix();
     axios
       .get(`${config.API_URL}/history?startDate=${startDate}`, {})
       .then((history) => {

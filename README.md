@@ -17,3 +17,10 @@ npx ionic serve
 You can just follow the ionic / capacitor guidelines : https://ionicframework.com/docs/cli/commands/capacitor-build
 
 
+# How to build the chrome extension
+
+```bash
+cd build-chrome-extension/
+npm i
+npm run build && node build/cli.js build-chrome-extension
+```

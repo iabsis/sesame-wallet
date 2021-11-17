@@ -27,8 +27,14 @@ input {
   color: $text-default;
 }
 
+ion-app > ion-router-outlet {
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  overflow-y: auto;
+}
+
 ion-router-outlet {
-  // overflow-y: auto;
   ion-page {
     padding-bottom: 300px;
   }
@@ -151,6 +157,9 @@ a {
   overflow: auto;
   overflow-x: hidden;
   padding-bottom: 80px;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 .ion-color-primary {
