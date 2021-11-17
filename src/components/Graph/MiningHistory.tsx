@@ -18,10 +18,10 @@ const MiningHistory = ({ wallet }: MiningHistoryProps) => {
         .then((stats) => {
           let _data: Array<{ time: string; dayJsDate: Dayjs; tokens: number }> = [];
           stats.forEach((stat) => {
-            const dateString = `${dayjs(stat.periodStart).format("Do")}`;
+            const dateString = `${dayjs(stat.date).format("Do")}`;
             _data.push({
               time: dateString,
-              dayJsDate: dayjs(stat.periodStart),
+              dayJsDate: dayjs(stat.date),
               tokens: stat.amount,
             });
           });
@@ -63,7 +63,7 @@ const MiningHistory = ({ wallet }: MiningHistoryProps) => {
           <ResponsiveContainer>
             <BarChart
               onClick={(state: any) => {
-                if (state.activeTooltipIndex) {
+                if (state.activeTooltipIndex !== undefined) {
                   setFocusBar(state.activeTooltipIndex);
                 } else {
                   setFocusBar(null);

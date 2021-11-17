@@ -11,7 +11,6 @@ import "./index.scss";
 import "@yaireo/tagify/dist/tagify.css"; // Tagify CSS
 
 const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-console.log(prefersDark);
 ReactDOM.render(
   <React.StrictMode>
     <ThemeProvider theme={darkTheme}>

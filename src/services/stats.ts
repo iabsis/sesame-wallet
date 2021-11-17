@@ -1,13 +1,17 @@
 import axios from "axios";
 import { config } from "../config/config";
 import dayjs from "dayjs";
+import timezone from "dayjs/plugin/timezone"; // dependent on utc plugin
+import utc from "dayjs/plugin/utc";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
+dayjs.tz.guess();
 
 export type MiningHistory = {
-  periodStart: Date;
-  periodEnd: Date;
+  date: Date;
   amount: number;
-  address: number;
-  slot: number;
+  address: string;
 };
 
 type PlanPrice = {
@@ -28,19 +32,37 @@ export type PriceHistory = {
  * @returns
  */
 export const getStats = (walletAddress: string): Promise<MiningHistory[]> => {
+  const to = dayjs().set("hour", 0).set("minute", 0).set("second", 0);
+  const from = to.subtract(7, "days");
+
+  let currentDate = dayjs(from);
+  let dateRange: any = {};
+  while (currentDate.isBefore(to) || currentDate.isSame(to)) {
+    dateRange[currentDate.format("YYYY-MM-DD")] = 0;
+    currentDate = currentDate.add(1, "day");
+  }
+
+  const startDate = to.subtract(7, "days").unix();
+
   return new Promise((resolve, reject) => {
     axios
-      .get(`${config.API_URL}/stats?address=${walletAddress}&merged=1`, {})
+      .get(`${config.API_URL}/stats?address=${walletAddress}&startDate=${startDate}`, {})
       .then((history) => {
-        resolve(
-          history.data.map((histo: any) => ({
-            periodStart: dayjs(histo.periodStart).toDate(),
-            periodEnd: dayjs(histo.periodEnd).toDate(),
-            amount: histo.amount,
-            address: histo.address,
-            slot: histo.slot,
-          }))
-        );
+        let structuredData: MiningHistory[] = [];
+        for (const data of history.data) {
+          if (dateRange[dayjs(data.periodStart).format("YYYY-MM-DD")] !== undefined) {
+            dateRange[dayjs(data.periodStart).format("YYYY-MM-DD")] += data.amount;
+          }
+        }
+
+        for (const key in dateRange) {
+          structuredData.push({
+            date: dayjs(key).toDate(),
+            amount: dateRange[key],
+            address: walletAddress,
+          });
+        }
+        resolve(structuredData);
       })
       .catch((error) => {
         reject(error);
@@ -49,13 +71,14 @@ export const getStats = (walletAddress: string): Promise<MiningHistory[]> => {
 };
 
 /**
- * Get the price / slot history for the last 30 days
+ * Get the price / slot history for the last 60 days
  * @returns
  */
 export const getHistory = (): Promise<PriceHistory[]> => {
   return new Promise((resolve, reject) => {
+    const startDate = dayjs().subtract(5, "days").unix();
     axios
-      .get(`${config.API_URL}/history`, {})
+      .get(`${config.API_URL}/history?startDate=${startDate}`, {})
       .then((history) => {
         resolve(
           history.data

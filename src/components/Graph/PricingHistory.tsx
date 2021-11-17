@@ -56,19 +56,7 @@ const PriceHistory = ({ wallet }: PriceHistoryProps) => {
       <IonCardContent style={{ height: "30vh" }}>
         {data && data.length > 0 && (
           <ResponsiveContainer>
-            <LineChart
-              onClick={(state: any) => {
-                if (state.activeTooltipIndex) {
-                  setFocusBar(state.activeTooltipIndex);
-                } else {
-                  setFocusBar(null);
-                }
-              }}
-              className="diagramm"
-              width={window.innerWidth}
-              data={data}
-              margin={{ top: 0, right: 0, left: 0, bottom: 0 }}
-            >
+            <LineChart className="diagramm" width={window.innerWidth} data={data} margin={{ top: 0, right: 0, left: 0, bottom: 0 }}>
               <CartesianGrid strokeDasharray="7 7" strokeOpacity="0.5" />
               <XAxis dataKey="time" interval="preserveStartEnd" />
               <YAxis dataKey="bestPrice" visibility="hidden" width={0} />
