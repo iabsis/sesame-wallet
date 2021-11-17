@@ -21,10 +21,16 @@ export type PriceHistory = {
   bestPrice: number;
 };
 
+/**
+ * Get the history of tokens mined for the specific wallet
+ *
+ * @param walletAddress Address of the wallet we want to gram the performances from
+ * @returns
+ */
 export const getStats = (walletAddress: string): Promise<MiningHistory[]> => {
   return new Promise((resolve, reject) => {
     axios
-      .get(`${config.API_URL}/stats?address=${walletAddress}`, {})
+      .get(`${config.API_URL}/stats?address=${walletAddress}&merged=1`, {})
       .then((history) => {
         resolve(
           history.data.map((histo: any) => ({
@@ -42,6 +48,10 @@ export const getStats = (walletAddress: string): Promise<MiningHistory[]> => {
   });
 };
 
+/**
+ * Get the price / slot history for the last 30 days
+ * @returns
+ */
 export const getHistory = (): Promise<PriceHistory[]> => {
   return new Promise((resolve, reject) => {
     axios
