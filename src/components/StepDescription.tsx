@@ -5,6 +5,7 @@ import { motion, Variants } from "framer-motion";
 interface StepDescriptionProps {
   text: string;
   step: number;
+  subtitle?: string;
 }
 
 const variants: Variants = {
@@ -12,13 +13,14 @@ const variants: Variants = {
   shown: { y: 0, opacity: 1 },
 };
 
-const StepDescription = ({ text, step }: StepDescriptionProps) => {
+const StepDescription = ({ text, step, subtitle }: StepDescriptionProps) => {
   const theme = useTheme();
 
   return (
     <div className="step-description">
       <span className="step">{step}</span>
       <span className="description">{text}</span>
+      {subtitle && <span className="subtitle">{subtitle}</span>}
     </div>
   );
 };

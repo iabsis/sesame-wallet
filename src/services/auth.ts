@@ -11,7 +11,6 @@ export const authenticate = (wallet: Wallet) => {
   const key = ec.keyFromPrivate(wallet.privateKey)
   const date = Date.now().toString();
   const msg = Sha256(date).toString()
-  console.log(msg);
   var signature = Buffer.from(key.sign(msg).toDER()).toString('hex');
 
   const json = {
@@ -20,6 +19,5 @@ export const authenticate = (wallet: Wallet) => {
     timestampSignature: signature,
   };
 
-  console.log("post json", json);
   return axios.post(`${config.API_URL}/auth`, json);
 };

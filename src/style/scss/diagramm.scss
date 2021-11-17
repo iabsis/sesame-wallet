@@ -1,9 +1,40 @@
-.diagramm {
-    margin-top: 3rem;
+@import "variables";
+
+.recharts-default-tooltip {
+    padding: 0.3rem 0.4rem !important;
+    background-color: $bg !important;
+    border: none !important;
+    border-radius: 8px !important;
+    opacity: 0.9;
+}
+// .recharts-tooltip-label {
+//     display: none;
+// }
+
+.recharts-tooltip-item {
+    padding: 0 !important;
 }
 
-.recharts-responsive-container {
-    height: 50vh !important;
-    position: absolute;
-    bottom: 100px;
+.recharts-cartesian-axis-tick-line {
+    stroke: white !important;
+}
+
+.recharts-cartesian-axis-tick-value {
+    fill: white !important;
+}
+
+.recharts-cartesian-axis-line {
+    stroke: white !important;
+    margin-top: 1rem;
+}
+
+.recharts-bar-rectangle {
+    transform: translateY(-0.1rem);
+}
+
+.recharts-tooltip-item-name,
+.recharts-tooltip-item-separator.recharts-bar-rectangle,
+.recharts-tooltip-item-separator,
+.recharts-tooltip-cursor {
+    display: none;
 }

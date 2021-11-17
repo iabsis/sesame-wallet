@@ -66,12 +66,10 @@ export const setBiometricPasswordFor = (walletName: string, walletPassword: stri
             resolve(data);
           })
           .catch((e) => {
-            console.log("ERROR4", e);
             reject({ reason: "FINGERPRINT_FAILED" });
           });
       })
       .catch((e) => {
-        console.log("ERROR5", e);
         reject({ reason: "FINGERPRINT_NOT_AVAILABLE" });
       });
   });
@@ -99,13 +97,11 @@ export const getBiometricPassword = (): Promise<string | null> => {
               // iOS returns an error when trying to access the keyring when empty
               resolve(null);
             } else {
-              console.log("ERROR1", e);
               reject({ reason: "FINGERPRINT_FAILED" });
             }
           });
       })
       .catch((e) => {
-        console.log("ERROR2", e);
         reject({ reason: "FINGERPRINT_NOT_AVAILABLE" });
       });
   });

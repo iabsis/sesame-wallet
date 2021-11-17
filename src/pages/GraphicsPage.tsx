@@ -1,82 +1,74 @@
-import { IonPage } from "@ionic/react";
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer } from "recharts";
-
-import QRCode from "qrcode.react";
+import { IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonCol, IonGrid, IonPage, IonRow } from "@ionic/react";
 import { useContext, useEffect, useState } from "react";
-
-import { useTheme } from "styled-components";
-
 import { GlobalContext } from "../App";
-import { Transaction } from "alephium-js/dist/api/api-explorer";
-import { abbreviateAmount, calAmountDelta } from "../utils/misc";
-import dayjs from "dayjs";
+import PricingHistory from "../components/Graph/PricingHistory";
+import MiningHistory from "../components/Graph/MiningHistory";
 
-import { getWalletTransactions } from "../services/alephExplorer";
+import dayjs from "dayjs";
+import { getSlotsAvailable } from "../services/slots";
+var advancedFormat = require("dayjs/plugin/advancedFormat");
+dayjs.extend(advancedFormat);
 
 const GraphicsPage = () => {
-  let indexes: any = {};
-  // let data: any = [];
+  const [availableSlots, setAvailableSlots] = useState<{ min: number; max: number; remaining: number | null; total: number }>({
+    min: 1,
+    max: 10,
+    remaining: null,
+    total: 0,
+  });
 
-  const [data, setData] = useState<Array<{ time: string; tokens: number }>>([]);
-
-  const theme = useTheme();
-
-  console.log("DATA", indexes, data);
-
-  const { wallet, client } = useContext(GlobalContext);
-  const QUINTILLION = 10000000000000000n;
-
-  const convertTransToAmount = (transaction: Transaction, currentAddress: string) => {
-    const amountDelta = calAmountDelta(transaction, currentAddress);
-
-    const date: string = dayjs(transaction.timestamp).format("MM-DD");
-    // abbreviateAmount;
-    return {
-      date,
-      amount: amountDelta < 0 ? amountDelta * -1n : amountDelta,
-    };
-  };
+  const { jwtToken, wallet, client } = useContext(GlobalContext);
 
   useEffect(() => {
-    if (wallet && client) {
-      getWalletTransactions(wallet.address, 750).then((transactions) => {
-        console.log("Got transactions list", transactions);
-        let _data: Array<{ time: string; tokens: number }> = [];
-        for (let i = 7; i > 0; i--) {
-          const dateString = dayjs(new Date()).subtract(i, "day").format("MM-DD");
-          indexes[dateString] = 7 - i;
-          _data.push({
-            time: dateString,
-            tokens: 0,
-          });
-        }
-        transactions.forEach((transaction) => {
-          const converted = convertTransToAmount(transaction, wallet.address);
-          const index = indexes[converted.date];
-          console.log("index", index);
-          if (_data[index] !== undefined) {
-            _data[index].tokens += parseFloat(abbreviateAmount(converted.amount));
-          }
-        });
-        console.log("values", _data);
-        setData(_data);
+    if (wallet && client && jwtToken) {
+      getSlotsAvailable(jwtToken).then((slot) => {
+        setAvailableSlots({ min: slot.data.min, max: slot.data.max, remaining: slot.data.remaining, total: slot.data.total });
       });
     }
-  }, [wallet, client]);
+  }, [wallet, client, jwtToken]);
+
   return (
     <IonPage>
-      <h1 className="page-title">Your statistics</h1>
-      <p className="page-subtitle">Below, you will find your daily statistcs for the last week.</p>
-      {data && data.length > 0 && (
-        <ResponsiveContainer>
-          <BarChart className="diagramm" width={window.innerWidth} data={data} margin={{ top: 5, right: 20, left: 10, bottom: 5 }}>
-            <CartesianGrid strokeDasharray="7 7" />
-            <XAxis dataKey="time" textDecoration="t" />
-            <YAxis dataKey="tokens" />
-            <Bar label={false} dataKey="tokens" fill={theme.global.accent} />
-          </BarChart>
-        </ResponsiveContainer>
-      )}
+      <h1 className="page-title">Mining statistics</h1>
+      <p className="page-subtitle">Below, you will find statistics about the server usage and your mining performance.</p>
+
+      <IonGrid>
+        <IonRow>
+          <IonCol>
+            <IonCard className="ion-card-alt">
+              <IonCardHeader>
+                <IonCardTitle className="t-center">Server slots</IonCardTitle>
+              </IonCardHeader>
+
+              <IonCardContent className="accent t-center">{availableSlots.total === 0 ? "Loading..." : availableSlots.total}</IonCardContent>
+            </IonCard>
+          </IonCol>
+          <IonCol>
+            <IonCard className="ion-card-alt">
+              <IonCardHeader>
+                <IonCardTitle className="t-center">Free slots</IonCardTitle>
+              </IonCardHeader>
+
+              <IonCardContent className="accent t-center">{availableSlots.total === 0 ? "Loading..." : availableSlots.remaining}</IonCardContent>
+            </IonCard>
+          </IonCol>
+        </IonRow>
+      </IonGrid>
+
+      <IonGrid>
+        <IonRow>
+          <IonCol>
+            <PricingHistory wallet={wallet} />
+          </IonCol>
+        </IonRow>
+      </IonGrid>
+      <IonGrid>
+        <IonRow>
+          <IonCol>
+            <MiningHistory wallet={wallet} />
+          </IonCol>
+        </IonRow>
+      </IonGrid>
     </IonPage>
   );
 };

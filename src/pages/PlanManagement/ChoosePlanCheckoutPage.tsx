@@ -13,7 +13,7 @@ import creditCard from "../../images/credit_card_path.svg";
 import { useHistory } from "react-router";
 
 const ChoosePlanCheckoutPage = () => {
-  const { setContext, planObject, nbSlots } = useContext(ChoosePlanContext);
+  const { setContext, planObject, nbSlots, referral } = useContext(ChoosePlanContext);
   const history = useHistory();
 
   const { onButtonBack, onButtonNext } = useContext(StepsContext);
@@ -30,16 +30,13 @@ const ChoosePlanCheckoutPage = () => {
     if (jwtToken && planObject && nbSlots) {
       setSessionError({ error: false, msg: null });
       setLoading(true);
-      checkout(planObject._id, nbSlots, jwtToken)
+      checkout(planObject._id, nbSlots, referral, jwtToken)
         .then((checkoutUrl) => {
           Browser.open({ url: checkoutUrl.data.url });
-          console.log("THERE IS NO ERROR");
           setSessionError({ error: false, msg: null });
         })
         .catch((err) => {
-          console.log("THERE IS AN ERROR", JSON.stringify(err.response));
           const msg = err.response?.data?.message;
-          console.log("err-msg", msg);
           setSessionError({ error: true, msg });
         })
         .finally(() => {

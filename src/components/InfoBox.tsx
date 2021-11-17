@@ -63,6 +63,8 @@ const BoxContainer = styled.div<{ small?: boolean }>`
   margin: 0 auto 20px auto;
   margin-top: 10px;
   max-width: ${({ small }) => (small ? "300px" : "initial")};
+  width: 100%;
+  word-break: break-all;
 `;
 
 const IconContainer = styled.div`

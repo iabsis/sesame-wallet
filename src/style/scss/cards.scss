@@ -1,0 +1,23 @@
+@import "variables";
+
+ion-card.ion-card-primary,
+ion-card.ion-card-alt {
+    background-color: $primary;
+    border: none;
+
+    ion-card-title {
+        color: white;
+        opacity: 0.9;
+    }
+    ion-card-subtitle {
+        color: white;
+        opacity: 0.8;
+    }
+    ion-card-content {
+        color: white;
+    }
+}
+
+ion-card.ion-card-alt {
+    background-color: $soft-bg;
+}

@@ -16,6 +16,7 @@ import { useHistory } from "react-router";
 import { authenticate } from "../../services/auth";
 
 import serverError from "../../images/server-error.svg";
+import { Input } from "../../components/Inputs";
 
 const ChoosePlanPage = () => {
   const { setContext, planObject: existingPlan, nbSlots: existingNbSlots } = useContext(ChoosePlanContext);
@@ -37,6 +38,7 @@ const ChoosePlanPage = () => {
   const history = useHistory();
 
   const [plans, setPlans] = useState<Plan[]>([]);
+  const [referral, setReferral] = useState<string>("");
   const [availableSlots, setAvailableSlots] = useState<{ min: number; max: number; remaining: number | null; total: number }>({
     min: 1,
     max: 10,
@@ -58,7 +60,7 @@ const ChoosePlanPage = () => {
         {
           text: "Proceed",
           handler: (d) => {
-            setContext((prevContext) => ({ ...prevContext, planObject, nbSlots }));
+            setContext((prevContext) => ({ ...prevContext, planObject, nbSlots, referral }));
             onButtonNext();
           },
         },
@@ -109,11 +111,14 @@ const ChoosePlanPage = () => {
     );
   };
 
+  const handleReferralChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setReferral(e.target.value);
+  };
+
   const renderPlans = () => {
     return (
       <>
         <StepDescription step={1} text="Choose a plan"></StepDescription>
-
         {plans.length > 0 &&
           plans.map((currentPlan) => {
             return (
@@ -127,9 +132,7 @@ const ChoosePlanPage = () => {
               />
             );
           })}
-
         <p className="important-msg t-center">Tokens are distributed every Monday to reduce gas fees.</p>
-
         {planObject && (
           <>
             <StepDescription step={2} text="How much slots do you want?"></StepDescription>
@@ -143,6 +146,15 @@ const ChoosePlanPage = () => {
               onIonChange={(e) => setState({ ...state, nbSlots: e.detail.value as number })}
             />
             {nbSlots > 0 && <div className="nb-slots">{nbSlots} slot(s)</div>}
+            <StepDescription
+              step={3}
+              text="Referral"
+              subtitle="Put the referral alephium address. You and your referal will both get rewards."
+            ></StepDescription>
+
+            <div className="margin">
+              <Input value={referral} placeholder="Referral (optional)" type="text" autoComplete="off" onChange={handleReferralChange} />
+            </div>
           </>
         )}
 

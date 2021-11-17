@@ -94,11 +94,11 @@ const App = () => {
 
         console.log("Clients initialized.");
 
-        setSnackbarMessage({
-          text: `Connected to Alephium's Node "${settings.nodeHost}"!`,
-          type: "info",
-          duration: 2000,
-        });
+        // setSnackbarMessage({
+        //   text: `Connected to Alephium's Node "${settings.nodeHost}"!`,
+        //   type: "info",
+        //   duration: 2000,
+        // });
         setClientIsLoading(false);
       } catch (e) {
         console.log(e);

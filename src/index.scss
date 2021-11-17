@@ -28,7 +28,7 @@ input {
 }
 
 ion-router-outlet {
-  overflow-y: auto;
+  // overflow-y: auto;
   ion-page {
     padding-bottom: 300px;
   }
@@ -150,6 +150,7 @@ a {
   height: 100vh;
   overflow: auto;
   overflow-x: hidden;
+  padding-bottom: 80px;
 }
 
 .ion-color-primary {
@@ -199,11 +200,15 @@ a {
 }
 
 .accent {
-  color: $primary;
+  color: $primary !important;
 }
 
 .mb {
   margin-bottom: 2rem;
+}
+
+.margin {
+  margin: 1rem;
 }
 
 .centered {
@@ -244,3 +249,4 @@ a {
 @import "style/scss/custom-font.scss";
 @import "style/scss/biometric.scss";
 @import "style/scss/server-message.scss";
+@import "style/scss/cards.scss";

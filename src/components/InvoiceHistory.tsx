@@ -15,14 +15,10 @@ const InvoiceHistory = ({ subscription }: { subscription: Subscription }) => {
       {subscription &&
         subscription.invoices.length > 0 &&
         subscription.invoices.map((invoice) => {
-          console.log("invoice", invoice);
           return (
             <li>
-              Invoice from{" "}
-              {dayjs(new Date(invoice.invoiceDate)).format("YYYY-MM-DD")}
-              <IonButton onClick={() => loadInvoice(invoice)}>
-                View invoice
-              </IonButton>
+              Invoice from {dayjs(new Date(invoice.invoiceDate)).format("YYYY-MM-DD")}
+              <IonButton onClick={() => loadInvoice(invoice)}>View invoice</IonButton>
             </li>
           );
         })}

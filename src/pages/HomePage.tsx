@@ -128,7 +128,6 @@ const Login = ({ usernames, setShowActions }: { usernames: string[]; networkId: 
   const loginWithFingerprint = () => {
     getBiometricPasswordFor(credentials.username)
       .then((password: string | null) => {
-        console.log("GOT PASSWORD", password);
         login(() => {
           history.push("/wallet");
         }, password);

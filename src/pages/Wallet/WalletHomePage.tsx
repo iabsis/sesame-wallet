@@ -126,7 +126,6 @@ const WalletHomePage = () => {
   );
 
   const refreshSubscriptions = (jwtToken: string | String | null) => {
-    console.log("Will fetch subscriptions pending", jwtToken);
     if (jwtToken) {
       getSubscriptions(jwtToken, true)
         .then((subData) => {
@@ -162,7 +161,6 @@ const WalletHomePage = () => {
         });
 
       getMessages().then((messages) => {
-        console.log("Got messages", messages.data);
         const filteredMessages = messages.data.filter((message: Message) => {
           // Don't show expired message
           if (message.expiry_date && new Date(message.expiry_date).getTime() < new Date().getTime()) {

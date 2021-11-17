@@ -32,12 +32,10 @@ const MultiStepsController = ({
 
   const onButtonNext = () => {
     window.scrollTo(0, 0);
-    console.log(`GO NEXT /${baseUrl}/${stepNumber + 1}`)
     history.push(`/${baseUrl}/${stepNumber + 1}`);
   };
   const onButtonBack = () => {
     window.scrollTo(0, 0);
-    console.log("window.location", window.location.pathname);
     if (window.location.pathname === `/choose-plan/0`) {
       history.push("/wallet");
       return;

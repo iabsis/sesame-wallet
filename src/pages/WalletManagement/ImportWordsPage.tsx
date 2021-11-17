@@ -25,7 +25,6 @@ const ImportWordsPage = () => {
 
   const handlePhraseChange = (event: CustomEvent<ChangeEventData<BaseTagData>>) => {
     // Split words where spaces are
-    console.log("change phrase", event.detail.value);
     const newPhrase = event.detail.value && JSON.parse(event.detail.value);
     setPhrase(newPhrase || []);
     setCustomPlaceholder(newPhrase.length > 0 ? (newPhrase.length === 24 ? "" : `${24 - newPhrase.length} words left`) : "Type your 24 words");
@@ -69,7 +68,6 @@ const ImportWordsPage = () => {
     }
   };
 
-  console.log(allowedWords);
   return (
     <MainPanel>
       <PanelContainer>

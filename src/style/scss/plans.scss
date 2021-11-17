@@ -20,6 +20,13 @@
         color: $text-default;
         text-transform: uppercase;
     }
+
+    .subtitle {
+        display: block;
+        opacity: 0.8;
+        font-size: 0.8rem;
+        margin: 1rem;
+    }
 }
 
 .plan-element {

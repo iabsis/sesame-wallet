@@ -47,7 +47,7 @@ const SubscriptionsPage = () => {
           setSubscriptions(data.data);
         })
         .catch((reason) => {
-          console.log("ERROR2", reason);
+          console.log("ERROR", reason);
         });
     }
   }, [jwtToken]);
