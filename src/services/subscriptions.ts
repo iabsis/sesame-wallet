@@ -18,12 +18,10 @@ export type Subscription = {
   invoices: Array<Invoice>;
   requestedAt: string;
   nextInvoice: string;
+  referral: string;
 };
 
-export const getSubscriptions = (
-  jwtToken?: String,
-  onlyCurrent: boolean = false
-): Promise<{ data: Array<Subscription> }> => {
+export const getSubscriptions = (jwtToken?: String, onlyCurrent: boolean = false): Promise<{ data: Array<Subscription> }> => {
   let url = `${config.API_URL}/subscription`;
   if (onlyCurrent) {
     url = url + `?renewal=true`;
@@ -34,10 +32,7 @@ export const getSubscriptions = (
     },
   });
 };
-export const deleteSubscription = (
-  jwtToken: String,
-  subscription: Subscription
-): Promise<{ data: Array<Subscription> }> => {
+export const deleteSubscription = (jwtToken: String, subscription: Subscription): Promise<{ data: Array<Subscription> }> => {
   return axios.delete(`${config.API_URL}/subscription/${subscription._id}`, {
     headers: {
       Authorization: jwtToken,

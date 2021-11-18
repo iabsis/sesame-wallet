@@ -16,20 +16,13 @@ interface SubscriptionContext {
   cancelSubscription: any;
 }
 
-const SubscriptionElement: FC<SubscriptionContext> = ({
-  subscription,
-  showInvoices,
-  switchDisplayInvoices,
-  cancelSubscription,
-}) => {
+const SubscriptionElement: FC<SubscriptionContext> = ({ subscription, showInvoices, switchDisplayInvoices, cancelSubscription }) => {
   const loadInvoice = (invoice: Invoice) => {
     window.open(invoice.pdfInvoiceLink);
   };
 
   return (
-    <div
-      className={`subscription-element ${showInvoices ? "show-invoices" : ""}`}
-    >
+    <div className={`subscription-element ${showInvoices ? "show-invoices" : ""}`}>
       <div className="subscription-row">
         <div className="subscription-name">
           <div>{subscription.plan.name}</div>
@@ -41,28 +34,19 @@ const SubscriptionElement: FC<SubscriptionContext> = ({
         </div>
         <div className="subscription-slots">{subscription.nbSlots} slot(s)</div>
       </div>
+      {subscription.referral && <div className="row no-margin small">Referral: {subscription.referral}</div>}
       <div className="row">
         <div className="col-left">
-          {subscription.invoices.length > 0 && (
-            <Button onClick={switchDisplayInvoices}>
-              {subscription.invoices.length} invoice(s)
-            </Button>
-          )}
+          {subscription.invoices.length > 0 && <Button onClick={switchDisplayInvoices}>{subscription.invoices.length} invoice(s)</Button>}
         </div>
         <div className="col-right">
           <div className="info">
-            <div className="soft-text">
-              Subscribed on{" "}
-              {dayjs(subscription.requestedAt).format("D MMM, YYYY")}
-            </div>
+            <div className="soft-text">Subscribed on {dayjs(subscription.requestedAt).format("D MMM, YYYY")}</div>
             {subscription.renewal ? (
-            <SwitchLink
-              className="no-margin no-padding"
-              onClick={cancelSubscription}
-            >
-              Cancel the subscription
-            </SwitchLink>
-            ) : null }
+              <SwitchLink className="no-margin no-padding" onClick={cancelSubscription}>
+                Cancel the renewal
+              </SwitchLink>
+            ) : null}
           </div>
         </div>
       </div>
@@ -78,23 +62,15 @@ const SubscriptionElement: FC<SubscriptionContext> = ({
                       <div className="row-title">{invoice.invoiceID}</div>
                     </div>
                     <div className="col-right">
-                      <PaymentStatusElement
-                        status={invoice.lastPaymentStatus}
-                      />
+                      <PaymentStatusElement status={invoice.lastPaymentStatus} />
                     </div>
                   </div>
                   <div className="row no-margin">
                     <div className="col-left">
-                      <div className="row-subtitle">
-                        Invoice on{" "}
-                        {dayjs(invoice.invoiceDate).format("D MMM, YYYY")}
-                      </div>
+                      <div className="row-subtitle">Invoice on {dayjs(invoice.invoiceDate).format("D MMM, YYYY")}</div>
                     </div>
                     <div className="col-right">
-                      <SwitchLink
-                        className="no-margin no-padding"
-                        onClick={() => loadInvoice(invoice)}
-                      >
+                      <SwitchLink className="no-margin no-padding" onClick={() => loadInvoice(invoice)}>
                         See pdf on stripe
                       </SwitchLink>
                     </div>

@@ -21,11 +21,7 @@ import styled from "styled-components";
 import { GlobalContext } from "../App";
 import AppHeader from "../components/AppHeader";
 import { PanelContainer, SectionContent } from "../components/PageComponents";
-import {
-  deleteSubscription,
-  getSubscriptions,
-  Subscription,
-} from "../services/subscriptions";
+import { deleteSubscription, getSubscriptions, Subscription } from "../services/subscriptions";
 import InvoiceHistory from "../components/InvoiceHistory";
 import SubscriptionElement from "../components/Subscription";
 import { Button } from "../components/Buttons";
@@ -34,9 +30,7 @@ import { useHistory } from "react-router";
 const SubscriptionsPage = () => {
   const { jwtToken } = useContext(GlobalContext);
   const history = useHistory();
-  const [subscriptions, setSubscriptions] = useState<Subscription[] | null>(
-    null
-  );
+  const [subscriptions, setSubscriptions] = useState<Subscription[] | null>(null);
 
   const [subscriptionsOpened, setSubscriptionsOpened] = useState<any>({});
 
@@ -54,7 +48,11 @@ const SubscriptionsPage = () => {
 
   const cancelSubscription = (subscription: Subscription) => {
     if (jwtToken) {
-      if (window.confirm("Do you really want to cancel this subscription?")) {
+      if (
+        window.confirm(
+          "You are about to cancel auto renewal of the subscription. You will continue to receive tokens until the end of the subscription. Do you confirm?"
+        )
+      ) {
         deleteSubscription(jwtToken, subscription)
           .then(() => {
             let subscriptionAfterDelete = subscriptions
@@ -89,9 +87,7 @@ const SubscriptionsPage = () => {
   return (
     <IonPage className="internal-page">
       <h1 className="page-title">Your subscriptions</h1>
-      <p className="page-subtitle">
-        Below, you will find your subscription history and the invoices.
-      </p>
+      <p className="page-subtitle">Below, you will find your subscription history and the invoices.</p>
 
       <Button className="btn-centered" onClick={goToPlanSelection}>
         <i className="icon-pick-axe pr-2"></i> Start mining in the cloud
