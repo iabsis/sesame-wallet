@@ -16,6 +16,7 @@ export type MiningHistory = {
 
 type PlanPrice = {
   plan_id: string;
+  plan_name: string;
   price: number;
 };
 
