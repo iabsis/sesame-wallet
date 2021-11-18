@@ -226,13 +226,13 @@ const WalletHomePage = () => {
       <WalletSidebar>
         <div className="section-title">Total balance</div>
         <div className="nice-colors">{balance ? abbreviateAmount(balance) : 0} ℵ</div>
-        <div className={`section-title text-align no-margin-bottom ${!myReferral && "v-hidden"}`}>
+        {/* <div className={`section-title text-align no-margin-bottom ${!myReferral && "v-hidden"}`}>
           My referral code <IonIcon icon={helpCircleSharp} onClick={showReferralInfos} />
         </div>
         <div className={`nice-colors small text-align ${!myReferral && "v-hidden"}`}>
           {myReferral}
           <IonIcon icon={copy} onClick={handleCopyReferral} />
-        </div>
+        </div> */}
 
         <WalletActions>
           <WalletActionButton Icon={QrCode} label="Show address" link="/wallet/address" />

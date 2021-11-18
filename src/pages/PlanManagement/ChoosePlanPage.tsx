@@ -147,7 +147,7 @@ const ChoosePlanPage = () => {
               onIonChange={(e) => setState({ ...state, nbSlots: e.detail.value as number })}
             />
             {nbSlots > 0 && <div className="nb-slots">{nbSlots} slot(s)</div>}
-            <StepDescription
+            {/* <StepDescription
               step={3}
               text="Referral"
               subtitle="Put the referral alephium address. You and your referal will both get rewards."
@@ -155,7 +155,7 @@ const ChoosePlanPage = () => {
 
             <div className="margin">
               <Input value={referral} placeholder="Referral (optional)" type="text" autoComplete="off" onChange={handleReferralChange} />
-            </div>
+            </div> */}
           </>
         )}
 
