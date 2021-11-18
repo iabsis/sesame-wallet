@@ -37,7 +37,7 @@ const GraphicsPage = () => {
           <IonCol>
             <IonCard className="ion-card-alt">
               <IonCardHeader>
-                <IonCardTitle className="t-center">Server slots</IonCardTitle>
+                <IonCardTitle className="t-center">Total slots</IonCardTitle>
               </IonCardHeader>
 
               <IonCardContent className="accent t-center">{availableSlots.total === 0 ? "Loading..." : availableSlots.total}</IonCardContent>

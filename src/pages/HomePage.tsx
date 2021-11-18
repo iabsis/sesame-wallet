@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import styled, { useTheme } from "styled-components";
 
 import { ReactComponent as MountainSVG } from "../images/mountain.svg";
@@ -12,7 +12,7 @@ import { useHistory } from "react-router";
 import Paragraph, { CenteredSecondaryParagraph } from "../components/Paragraph";
 import { walletOpen, getStorage } from "alephium-js";
 import { GlobalContext } from "../App";
-import { Settings as SettingsIcon } from "lucide-react";
+import { getExtensionState, saveExtensionState } from "../utils/chrome-extension-background";
 import alephiumLogo from "../images/alephium_logo.svg";
 import { deviceBreakPoints } from "../style/globalStyles";
 import AppHeader from "../components/AppHeader";
@@ -31,19 +31,35 @@ const Storage = getStorage();
 
 const HomePage = ({ hasWallet, usernames, networkId }: HomeProps) => {
   const history = useHistory();
+  const { setWallet, setCurrentUsername } = useContext(GlobalContext);
   const [showActions, setShowActions] = useState(false);
+  const [loaded, setLoaded] = useState(false);
   const theme = useTheme();
 
   const renderActions = () => <InitialActions hasWallet={hasWallet} setShowActions={setShowActions} />;
+  useEffect(() => {
+    // Handle auto re-login for the chrome extension
+    getExtensionState()
+      .then((data) => {
+        if (data.wallet && data.credentials) {
+          setWallet(data.wallet);
+          setCurrentUsername(data.credentials.username);
+          history.push("/wallet/dashboard");
+        }
+      })
+      .catch((err) => {
+        console.log("ERROR", err);
+      })
+      .finally(() => {
+        setLoaded(true);
+      });
+  });
 
+  if (!loaded) {
+    return <></>;
+  }
   return (
     <HomeContainer>
-      {/* <AppHeader>
-        <SettingsButton transparent squared onClick={() => history.push("/settings")}>
-          <SettingsIcon />
-        </SettingsButton>
-      </AppHeader> */}
-
       <InteractionArea>
         <MainPanel verticalAlign="center" horizontalAlign="center">
           {showActions ? (
@@ -100,6 +116,7 @@ const Login = ({ usernames, setShowActions }: { usernames: string[]; networkId: 
         if (wallet) {
           setWallet(wallet);
           setCurrentUsername(credentials.username);
+          saveExtensionState(wallet, credentials);
           callback(wallet, credentials);
         }
       } catch (e) {
@@ -208,7 +225,6 @@ const InitialActions = ({ hasWallet, setShowActions }: { hasWallet: boolean; set
           New wallet
         </Button>
         <Button onClick={() => history.push("/import")}>Import wallet</Button>
-
         {hasWallet && <SwitchLink onClick={() => setShowActions(false)}>Use an existing account</SwitchLink>}
       </SectionContent>
     </>

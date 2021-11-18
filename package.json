@@ -85,7 +85,8 @@
     "workbox-strategies": "^5.1.4",
     "workbox-streams": "^5.1.4",
     "yargs": "^17.2.1",
-    "zxcvbn": "^4.4.2"
+    "zxcvbn": "^4.4.2",
+    "@types/chrome": "0.0.35"
   },
   "scripts": {
     "start": "react-scripts start",

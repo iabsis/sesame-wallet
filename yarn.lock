@@ -2318,6 +2318,13 @@
   dependencies:
     "@babel/types" "^7.3.0"
 
+"@types/chrome@0.0.35":
+  "integrity" "sha1-rDGPtqfSeV/Mj6sO25cSqMoYgZQ="
+  "resolved" "https://registry.npmjs.org/@types/chrome/-/chrome-0.0.35.tgz"
+  "version" "0.0.35"
+  dependencies:
+    "@types/filesystem" "*"
+
 "@types/cordova@latest":
   "integrity" "sha1-6nrd907Ow9dimCegw54smt3HPQQ="
   "resolved" "https://registry.npmjs.org/@types/cordova/-/cordova-0.0.34.tgz"
@@ -2378,6 +2385,18 @@
   "integrity" "sha512-EYNwp3bU+98cpU4lAWYYL7Zz+2gryWH1qbdDTidVd6hkiR6weksdbMadyXKXNPEkQFhXM+hVO9ZygomHXp+AIw=="
   "resolved" "https://registry.npmjs.org/@types/estree/-/estree-0.0.39.tgz"
   "version" "0.0.39"
+
+"@types/filesystem@*":
+  "integrity" "sha512-Yuf4jR5YYMR2DVgwuCiP11s0xuVRyPKmz8vo6HBY3CGdeMj8af93CFZX+T82+VD1+UqHOxTq31lO7MI7lepBtQ=="
+  "resolved" "https://registry.npmjs.org/@types/filesystem/-/filesystem-0.0.32.tgz"
+  "version" "0.0.32"
+  dependencies:
+    "@types/filewriter" "*"
+
+"@types/filewriter@*":
+  "integrity" "sha512-BsPXH/irW0ht0Ji6iw/jJaK8Lj3FJemon2gvEqHKpCdDCeemHa+rI3WBGq5z7cDMZgoLjY40oninGxqk+8NzNQ=="
+  "resolved" "https://registry.npmjs.org/@types/filewriter/-/filewriter-0.0.29.tgz"
+  "version" "0.0.29"
 
 "@types/fs-extra@^9.0.11":
   "integrity" "sha512-nEnwB++1u5lVDM2UI4c1+5R+FYaKfaAzS4OococimjVm3nQw3TuzH5UNsocrcTBbhnerblyHj4A49qXbIiZdpA=="

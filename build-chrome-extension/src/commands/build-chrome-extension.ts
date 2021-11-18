@@ -3,13 +3,17 @@ import { readFileSync, writeFileSync } from "fs";
 
 const manifestDetails = {
   name: "Sesame wallet",
-  version: "1.0",
+  version: "1.0.2",
   description: "Hold your alephium tokens and manage your cloud mining",
-  content_security_policy: "script-src 'self' 'unsafe-eval'; object-src 'self'",
+  background: {
+    scripts: ["background.js"],
+    persistante: false,
+  },
   browser_action: {
     default_popup: "index.html",
     default_icon: "assets/icon/favicon.png",
   },
+  permissions: ["alarms"],
   manifest_version: 2,
 };
 
@@ -66,6 +70,16 @@ const copyBuild = () => {
 };
 
 /**
+ * Delete existint chromr-build folder if exists
+ * @returns
+ */
+const clearBuildFolder = () => {
+  return new Promise((resolve, reject) => {
+    manageProcessStdout(exec("rm -rf chrome-build", (error, stdout, stderr) => manageProcess(error, stdout, stderr, resolve, reject)));
+  });
+};
+
+/**
  * Create the manifest.json file in the build folder
  * @param manifestDetails
  */
@@ -79,7 +93,19 @@ const writeManifest = (manifestDetails: any) => {
 const updateIndexHtml = () => {
   let fileContent: string = String(readFileSync("chrome-build/index.html"));
   fileContent = fileContent.replace("</head>", pluginSpecific + "</head>");
+  // fileContent = fileContent.replace(`</body>`, `<script src="/static/js/background.js"></script></body>`);
   writeFileSync("chrome-build/index.html", fileContent);
+};
+
+/**
+ * Add the window size in the index.html file
+ */
+const injectRessources = () => {
+  return new Promise((resolve, reject) => {
+    manageProcessStdout(
+      exec("cp build-chrome-extension/res/background.js chrome-build/", (error, stdout, stderr) => manageProcess(error, stdout, stderr, resolve, reject))
+    );
+  });
 };
 
 /**
@@ -88,10 +114,12 @@ const updateIndexHtml = () => {
 export const handler = async (): Promise<any> => {
   try {
     process.chdir("../");
+    await clearBuildFolder();
     await buildAssets();
     await copyBuild();
     await writeManifest(manifestDetails);
     await updateIndexHtml();
+    await injectRessources();
   } catch (err) {
     console.error(err);
     process.exit(1);
