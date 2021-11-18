@@ -12,6 +12,7 @@ import { CenteredSecondaryParagraph } from "../components/Paragraph";
 import { walletOpen, getStorage, Wallet } from "alephium-js";
 import styled from "styled-components";
 import { addBiometricPasswordFor, deleteBiometricFor, disableBiometricFor, isBiometricEnabledForWallet } from "../services/fingerprints";
+import { saveExtensionState } from "../utils/chrome-extension-background";
 
 const Storage = getStorage();
 
@@ -78,6 +79,7 @@ const AccountSettings = () => {
 
   const handleLogout = () => {
     setWallet(undefined);
+    saveExtensionState(null, null);
   };
 
   const handleRemoveAccount = () => {

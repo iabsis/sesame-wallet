@@ -9,7 +9,7 @@ import { Wallet } from "alephium-js";
  * @param wallet
  * @param credentials
  */
-export const saveExtensionState = (wallet: Wallet, credentials: any) => {
+export const saveExtensionState = (wallet: Wallet | null, credentials: any) => {
   if (chrome?.runtime?.sendMessage) {
     chrome.runtime.sendMessage({ action: "set-state", state: { wallet, credentials } });
   }
