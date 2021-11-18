@@ -184,7 +184,11 @@ a {
   margin: 0 !important;
 }
 
-.no-margin {
+.no-margin-bottom {
+  margin-bottom: 0 !important;
+}
+
+.no-padding {
   padding: 0 !important;
 }
 
@@ -247,6 +251,10 @@ a {
 
 .t-center {
   text-align: center;
+}
+
+.v-hidden {
+  visibility: hidden;
 }
 
 @import "style/scss/plans.scss";

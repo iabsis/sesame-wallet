@@ -35,7 +35,7 @@ const SettingsPage = () => {
 };
 
 const AccountSettings = () => {
-  const { currentUsername, setSnackbarMessage, setWallet } = useContext(GlobalContext);
+  const { currentUsername, setSnackbarMessage, setWallet, setJwtToken, setMyReferral } = useContext(GlobalContext);
   const [isDisplayingSecretModal, setIsDisplayingSecretModal] = useState(false);
   const [isDisplayingBiometricModal, setIsDisplayingBiometricModal] = useState(false);
   const [isDisplayingRemoveModal, setIsDisplayingRemoveModal] = useState(false);
@@ -80,6 +80,8 @@ const AccountSettings = () => {
   const handleLogout = () => {
     setWallet(undefined);
     saveExtensionState(null, null);
+    setJwtToken(null);
+    setMyReferral(null);
   };
 
   const handleRemoveAccount = () => {

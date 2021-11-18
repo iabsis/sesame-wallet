@@ -20,8 +20,8 @@ import { Input } from "../../components/Inputs";
 
 const ChoosePlanPage = () => {
   const { setContext, planObject: existingPlan, nbSlots: existingNbSlots } = useContext(ChoosePlanContext);
-  const { onButtonBack, onButtonNext } = useContext(StepsContext);
-  const { jwtToken, setJwtToken, wallet } = useContext(GlobalContext);
+  const { onButtonNext } = useContext(StepsContext);
+  const { setMyReferral, setJwtToken, wallet } = useContext(GlobalContext);
 
   const [state, setState] = useState<{
     planObject: Plan | null;
@@ -78,6 +78,7 @@ const ChoosePlanPage = () => {
       authenticate(wallet)
         .then((data) => {
           setJwtToken(data.data.token);
+          setMyReferral(data.data.referral);
           getSlotsAvailable(data.data.token).then((slot) => {
             setAvailableSlots({ min: slot.data.min, max: slot.data.max, remaining: slot.data.remaining, total: slot.data.total });
           });

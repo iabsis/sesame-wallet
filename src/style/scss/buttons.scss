@@ -36,6 +36,11 @@
     -webkit-text-fill-color: transparent;
     margin-bottom: 2rem;
     font-weight: 800;
+
+    &.small {
+        margin-bottom: 1rem;
+        font-size: 1rem;
+    }
 }
 
 .section-title {
@@ -85,4 +90,17 @@
 
 .btn-centered {
     margin: auto;
+}
+
+.text-align {
+    display: flex;
+    margin: auto;
+    align-items: center;
+    margin-bottom: 1rem;
+
+    ion-icon {
+        font-size: 1rem;
+        opacity: 0.8;
+        margin-left: 0.2rem;
+    }
 }

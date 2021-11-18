@@ -36,6 +36,8 @@ interface Context {
   setSnackbarMessage: (message: SnackbarMessage) => void;
   jwtToken: String | null;
   setJwtToken: (token: string | null) => void;
+  myReferral: string | null;
+  setMyReferral: (myReferral: string | null) => void;
   isFingerPrintAvailable: boolean;
 }
 
@@ -54,6 +56,8 @@ const initialContext: Context = {
   setSnackbarMessage: () => null,
   jwtToken: null,
   setJwtToken: () => null,
+  myReferral: null,
+  setMyReferral: () => null,
   isFingerPrintAvailable: false,
 };
 
@@ -72,6 +76,7 @@ const App = () => {
   const [isFingerPrintAvailable, setIsFingerPrintAvailable] = useState<boolean>(false);
   const [currentUsername, setCurrentUsername] = useState("");
   const [jwtToken, setJwtToken] = useState<string | null>(null);
+  const [myReferral, setMyReferral] = useState<string | null>(null);
   const [snackbarMessage, setSnackbarMessage] = useState<SnackbarMessage | undefined>();
   const [client, setClient] = useState<Client>();
   const [settings, setSettings] = useState<Settings>(loadSettingsOrDefault());
@@ -153,6 +158,8 @@ const App = () => {
         setSettings,
         jwtToken,
         setJwtToken,
+        myReferral,
+        setMyReferral,
         isFingerPrintAvailable,
       }}
     >

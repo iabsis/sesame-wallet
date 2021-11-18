@@ -13,11 +13,10 @@ import creditCard from "../../images/credit_card_path.svg";
 import { useHistory } from "react-router";
 
 const ChoosePlanCheckoutPage = () => {
-  const { setContext, planObject, nbSlots, referral } = useContext(ChoosePlanContext);
+  const { planObject, nbSlots, referral } = useContext(ChoosePlanContext);
   const history = useHistory();
 
-  const { onButtonBack, onButtonNext } = useContext(StepsContext);
-  const { jwtToken, setJwtToken } = useContext(GlobalContext);
+  const { jwtToken } = useContext(GlobalContext);
 
   const [sessionError, setSessionError] = useState<{ error: boolean | string; msg: string | null }>({ error: false, msg: null });
   const [loading, setLoading] = useState<boolean>(false);

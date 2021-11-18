@@ -24,10 +24,12 @@ import ServerMessage from "../../components/ServerMessage";
 import { ReactComponent as AlephiumLogoSVG } from "../../images/alephium_logo_monochrome.svg";
 import { authenticate } from "../../services/auth";
 import { getMessages, Message, messageHidden } from "../../services/messages";
-import { IonPage } from "@ionic/react";
+import { IonIcon, IonPage, useIonAlert } from "@ionic/react";
 
 import { getSubscriptions, Subscription } from "../../services/subscriptions";
 import appLogo from "../../images/app-top-icon.svg";
+import { copy, helpCircleSharp } from "ionicons/icons";
+import { Clipboard } from "@capacitor/clipboard";
 
 dayjs.extend(relativeTime);
 
@@ -45,7 +47,7 @@ const renderIOAccountList = (currentAddress: string, io: { address?: string }[])
 
 const WalletHomePage = () => {
   const history = useHistory();
-  const { wallet, setSnackbarMessage, client, setWallet, jwtToken, setJwtToken } = useContext(GlobalContext);
+  const { wallet, setSnackbarMessage, client, jwtToken, setJwtToken, setMyReferral, myReferral } = useContext(GlobalContext);
   const [balance, setBalance] = useState<bigint | undefined>(undefined);
   const { pendingTxList, loadedTxList, setLoadedTxList } = useContext(WalletContext);
   const [totalNumberOfTx, setTotalNumberOfTx] = useState(0);
@@ -151,6 +153,7 @@ const WalletHomePage = () => {
       authenticate(wallet)
         .then((data) => {
           setJwtToken(data.data.token);
+          setMyReferral(data.data.referral);
           refreshSubscriptions(data.data.token);
         })
         .catch((reason) => {
@@ -181,6 +184,30 @@ const WalletHomePage = () => {
   // Polling (when pending tx)
   useInterval(fetchData, 2000, pendingTxList.length === 0);
 
+  const handleCopyReferral = () => {
+    Clipboard.write({ string: myReferral ? myReferral : "" })
+      .catch((e) => {
+        throw e;
+      })
+      .then(() => {
+        setSnackbarMessage({
+          text: "Referral code copied to clipboard!",
+          type: "info",
+        });
+      });
+  };
+
+  const [present] = useIonAlert();
+
+  const showReferralInfos = () => {
+    present({
+      header: "Referral",
+      message: "You can send your referral code to your friends. If he subscribes to the mining service, you will both receives special rewards.",
+      buttons: ["Thanks"],
+      onDidDismiss: (e) => console.log("did dismiss"),
+    });
+  };
+
   if (!wallet) return null;
   // Make initial calls
   return (
@@ -199,6 +226,14 @@ const WalletHomePage = () => {
       <WalletSidebar>
         <div className="section-title">Total balance</div>
         <div className="nice-colors">{balance ? abbreviateAmount(balance) : 0} ℵ</div>
+        <div className={`section-title text-align no-margin-bottom ${!myReferral && "v-hidden"}`}>
+          My referral code <IonIcon icon={helpCircleSharp} onClick={showReferralInfos} />
+        </div>
+        <div className={`nice-colors small text-align ${!myReferral && "v-hidden"}`}>
+          {myReferral}
+          <IonIcon icon={copy} onClick={handleCopyReferral} />
+        </div>
+
         <WalletActions>
           <WalletActionButton Icon={QrCode} label="Show address" link="/wallet/address" />
           <WalletActionButton Icon={Send} label="Send token" link="/wallet/send" />
