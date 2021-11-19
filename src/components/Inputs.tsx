@@ -1,9 +1,4 @@
-import {
-  AnimatePresence,
-  HTMLMotionProps,
-  motion,
-  Variants,
-} from "framer-motion";
+import { AnimatePresence, HTMLMotionProps, motion, Variants } from "framer-motion";
 import styled, { css } from "styled-components";
 import tinycolor from "tinycolor2";
 import classNames from "classnames";
@@ -35,16 +30,7 @@ const placeHolderVariants: Variants = {
   down: { y: 0, scale: 1 },
 };
 
-export const Input = ({
-  placeholder,
-  error,
-  isValid,
-  disabled,
-  onChange,
-  value,
-  endButton,
-  ...props
-}: InputProps) => {
+export const Input = ({ placeholder, error, isValid, disabled, onChange, value, endButton, ...props }: InputProps) => {
   const [canBeAnimated, setCanBeAnimated] = useState(false);
 
   const className = classNames({
@@ -62,41 +48,21 @@ export const Input = ({
       <Label variants={placeHolderVariants} animate={!value ? "down" : "up"}>
         {placeholder}
       </Label>
-      <StyledInput
-        {...props}
-        value={value}
-        onChange={onChange}
-        className={className}
-        disabled={disabled}
-        isValid={isValid}
-      />
+      <StyledInput {...props} value={value} onChange={onChange} className={className} disabled={disabled} isValid={isValid} />
       {endButton}
       {!disabled && isValid && (
-        <ValidIconContainer
-          initial={{ y: 10, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-        >
+        <ValidIconContainer initial={{ y: 10, opacity: 0 }} animate={{ y: 0, opacity: 1 }}>
           <Check strokeWidth={3} />
         </ValidIconContainer>
       )}
-      {!disabled && error && (
-        <ErrorMessage animate={{ y: 10, opacity: 1 }}>{error}</ErrorMessage>
-      )}
+      {!disabled && error && <ErrorMessage animate={{ y: 10, opacity: 1 }}>{error}</ErrorMessage>}
     </InputContainer>
   );
 };
 
 // === TEXT AREA === //
 
-export const TextArea = ({
-  placeholder,
-  error,
-  isValid,
-  disabled,
-  onChange,
-  value,
-  ...props
-}: TextAreaProps) => {
+export const TextArea = ({ placeholder, error, isValid, disabled, onChange, value, ...props }: TextAreaProps) => {
   const [canBeAnimated, setCanBeAnimated] = useState(false);
 
   const className = classNames({
@@ -114,26 +80,14 @@ export const TextArea = ({
       <Label variants={placeHolderVariants} animate={!value ? "down" : "up"}>
         {placeholder}
       </Label>
-      <StyledTextArea
-        {...props}
-        value={value}
-        onChange={onChange}
-        className={className}
-        disabled={disabled}
-        isValid={isValid}
-      />
+      <StyledTextArea {...props} value={value} onChange={onChange} className={className} disabled={disabled} isValid={isValid} />
 
       {!disabled && isValid && (
-        <ValidIconContainer
-          initial={{ y: 10, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-        >
+        <ValidIconContainer initial={{ y: 10, opacity: 0 }} animate={{ y: 0, opacity: 1 }}>
           <Check strokeWidth={3} />
         </ValidIconContainer>
       )}
-      {!disabled && error && (
-        <ErrorMessage animate={{ y: 10, opacity: 1 }}>{error}</ErrorMessage>
-      )}
+      {!disabled && error && <ErrorMessage animate={{ y: 10, opacity: 1 }}>{error}</ErrorMessage>}
     </TextAreaContainer>
   );
 };
@@ -145,16 +99,20 @@ export const TextAreaTags = (props: React.ComponentProps<typeof Tags>) => {
       <StyledTags
         {...props}
         settings={{
+          pattern: "/a-z /",
+          transformTag: (tag) => {
+            tag.value = tag.value.toLowerCase();
+          },
           enforceWhitelist: true,
           delimiters: " ",
           maxTags: 24,
           duplicates: true,
           dropdown: {
-            enabled: 1, // show suggestion after 1 typed character
+            enabled: 100, // show suggestion after 1 typed character
             fuzzySearch: false, // match only suggestions that starts with the typed characters
             position: "all",
             classname: "tags-dropdown",
-            maxItems: 5,
+            maxItems: 3,
             highlightFirst: true,
           },
           addTagOnBlur: false,
@@ -178,14 +136,7 @@ interface SelectProps extends HTMLMotionProps<"select"> {
   onValueChange: (value: SelectOption | undefined) => void;
 }
 
-export const Select = ({
-  options,
-  placeholder,
-  disabled,
-  initialValue,
-  className,
-  onValueChange,
-}: SelectProps) => {
+export const Select = ({ options, placeholder, disabled, initialValue, className, onValueChange }: SelectProps) => {
   const [canBeAnimated, setCanBeAnimated] = useState(false);
   const [value, setValue] = useState(initialValue);
   const [showPopup, setShowPopup] = useState(false);
@@ -226,12 +177,7 @@ export const Select = ({
         <Chevron>
           <ChevronDown />
         </Chevron>
-        <StyledInput
-          type="button"
-          className={className}
-          ref={inputRef}
-          disabled={disabled}
-        />
+        <StyledInput type="button" className={className} ref={inputRef} disabled={disabled} />
       </InputContainer>
       <AnimatePresence>
         {showPopup && (
@@ -360,8 +306,7 @@ const defaultStyle = (isValid?: boolean) => {
 
     &.error {
       border: 1px solid ${({ theme }) => theme.global.alert};
-      background-color: ${({ theme }) =>
-        tinycolor(theme.global.alert).setAlpha(0.1).toString()};
+      background-color: ${({ theme }) => tinycolor(theme.global.alert).setAlpha(0.1).toString()};
     }
 
     &:disabled {

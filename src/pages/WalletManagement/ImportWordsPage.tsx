@@ -10,6 +10,7 @@ import { walletImport, getStorage } from "alephium-js";
 import { GlobalContext } from "../../App";
 import { WalletManagementContext } from "./WalletManagementContext";
 import { isHTTPError } from "../../utils/api";
+// import { Keyboard } from "@capacitor/keyboard";
 
 const Storage = getStorage();
 
@@ -22,6 +23,8 @@ const ImportWordsPage = () => {
   const allowedWords = useRef(bip39Words.split(" "));
   const [customPlaceholder, setCustomPlaceholder] = useState("Type your 24 words");
   const tagifyRef = useRef<Tagify<TagData> | undefined>();
+
+  const [keyboardOpen, setKeyboardOpen] = useState<boolean>(false);
 
   const handlePhraseChange = (event: CustomEvent<ChangeEventData<BaseTagData>>) => {
     // Split words where spaces are
@@ -68,8 +71,23 @@ const ImportWordsPage = () => {
     }
   };
 
+  // useEffect(() => {
+  //   try {
+  //     Keyboard.addListener("keyboardWillShow", (info) => {
+  //       setKeyboardOpen(true);
+  //     });
+
+  //     Keyboard.addListener("keyboardWillHide", () => {
+  //       Keyboard.show();
+  //       setKeyboardOpen(false);
+  //     });
+  //   } catch(err) {
+  //     console.error(err);
+  //   }
+  // });
+
   return (
-    <MainPanel>
+    <MainPanel className={`${keyboardOpen ? "keyboard-open" : ""}`}>
       <PanelContainer>
         <PanelTitle color="primary">Secret words</PanelTitle>
         <PanelContent>

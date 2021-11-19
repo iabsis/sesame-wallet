@@ -11,10 +11,7 @@ import styled from "styled-components";
 
 const ImportWalletRootPage = () => {
   const [context, setContext] = useState<WalletManagementContextType>(initialWalletManagementContext);
-  // test
-  chrome.runtime.sendMessage({ action: "store-state", state: { username: "gilles" } }, function (response: any) {
-    console.log("RESPONSE", response);
-  });
+
   const importWalletSteps: JSX.Element[] = [
     <CreateAccountPage key="create-account" isRestoring />,
     <ImportWordsPage key="import-words" />,

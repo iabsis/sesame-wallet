@@ -20,6 +20,7 @@ import { AskForBiometric } from "../components/AskForBiometric";
 import { disableBiometricFor, getBiometricPasswordFor, isBiometricAskedForWallet, isBiometricEnabledForWallet } from "../services/fingerprints";
 
 import fingerprint from "../images/fingerprint.svg";
+import { IonTextarea } from "@ionic/react";
 
 interface HomeProps {
   hasWallet: boolean;
