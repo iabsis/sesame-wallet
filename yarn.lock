@@ -1214,10 +1214,10 @@
   "resolved" "https://registry.npmjs.org/@capacitor-community/privacy-screen/-/privacy-screen-2.1.0.tgz"
   "version" "2.1.0"
 
-"@capacitor/android@3.3.0":
-  "integrity" "sha512-dzbzdN7KjjwpUbg7mZKVkgAVytEwGyXUL4Z1t9c12UhViJaNjU7/nSlTXjb+IiauwVg9oI2LHtSVrp1NIjUycw=="
-  "resolved" "https://registry.npmjs.org/@capacitor/android/-/android-3.3.0.tgz"
-  "version" "3.3.0"
+"@capacitor/android@3.3.2":
+  "integrity" "sha512-TG+tGz0KxkT/BgvSLQfbQwQ9c4Budub5TRijIGdmMbB1ZYB76TFhwvVuwWZ52HFSlKS3sx/UYLlbULL7UQ2aug=="
+  "resolved" "https://registry.npmjs.org/@capacitor/android/-/android-3.3.2.tgz"
+  "version" "3.3.2"
 
 "@capacitor/app@^1.0.3":
   "integrity" "sha512-NjHIs6f4WJQuhabnCkcE6YLyIIn+t4Al5etB/SJGZJwUYRe1yJYtZ4T/KobDIzwwZn9I9de7QbEA5947lGttBQ=="
