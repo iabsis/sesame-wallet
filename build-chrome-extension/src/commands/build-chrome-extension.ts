@@ -3,7 +3,7 @@ import { readFileSync, writeFileSync } from "fs";
 
 const manifestDetails = {
   name: "Sesame wallet",
-  version: "1.0.2",
+  version: "1.5.0",
   description: "Hold your alephium tokens and manage your cloud mining",
   background: {
     scripts: ["background.js"],
@@ -13,7 +13,7 @@ const manifestDetails = {
     default_popup: "index.html",
     default_icon: "assets/icon/favicon.png",
   },
-  permissions: ["alarms"],
+  permissions: [],
   manifest_version: 2,
 };
 

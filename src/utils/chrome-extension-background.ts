@@ -10,8 +10,12 @@ import { Wallet } from "alephium-js";
  * @param credentials
  */
 export const saveExtensionState = (wallet: Wallet | null, credentials: any) => {
-  if (chrome?.runtime?.sendMessage) {
-    chrome.runtime.sendMessage({ action: "set-state", state: { wallet, credentials } });
+  try {
+    if (chrome?.runtime?.sendMessage) {
+      chrome.runtime.sendMessage({ action: "set-state", state: { wallet, credentials } });
+    }
+  } catch (err) {
+    console.log("ERROR", err);
   }
 };
 
@@ -20,11 +24,15 @@ export const saveExtensionState = (wallet: Wallet | null, credentials: any) => {
  */
 export const getExtensionState = (): Promise<{ wallet: Wallet | null; credentials: any }> => {
   return new Promise((resolve, reject) => {
-    if (chrome?.runtime?.sendMessage) {
-      chrome.runtime.sendMessage({ action: "get-state" }, (data) => {
-        resolve(data);
-      });
-    } else {
+    try {
+      if (chrome?.runtime?.sendMessage) {
+        chrome.runtime.sendMessage({ action: "get-state" }, (data) => {
+          resolve(data);
+        });
+      } else {
+        resolve({ wallet: null, credentials: null });
+      }
+    } catch (err) {
       resolve({ wallet: null, credentials: null });
     }
   });
