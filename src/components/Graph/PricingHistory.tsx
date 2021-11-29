@@ -34,7 +34,7 @@ const PriceHistory = ({ wallet }: PriceHistoryProps) => {
   }, [wallet]);
 
   const formatter = (value: number) => {
-    return `${value.toFixed(4)} ALEPH`;
+    return `${value.toFixed(4)} CHF`;
   };
 
   const labelFormatter = (value: string, data: any) => {
@@ -49,7 +49,7 @@ const PriceHistory = ({ wallet }: PriceHistoryProps) => {
       <IonCardHeader>
         <IonCardSubtitle>* Based on the best plan</IonCardSubtitle>
         <IonCardTitle>
-          Price history <span className="accent">*</span>
+          Mining cost history <span className="accent">*</span>
         </IonCardTitle>
       </IonCardHeader>
 

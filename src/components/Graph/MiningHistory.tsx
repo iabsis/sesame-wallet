@@ -34,7 +34,7 @@ const MiningHistory = ({ wallet }: MiningHistoryProps) => {
   }, [wallet]);
 
   const formatter = (value: number) => {
-    return `${value.toFixed(4)} ALEPH`;
+    return `${value.toFixed(4)} ALPH`;
   };
 
   const labelFormatter = (value: string, data: any) => {
