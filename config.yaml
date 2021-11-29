@@ -4,7 +4,7 @@ vars:
   PACKAGE_NAME:
     default: com.iabsis.sesamewallet
   VERSION_NAME:
-    default: 1.5.7
+    default: 1.6.8
 
 platforms:
   ios:
