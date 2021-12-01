@@ -102,7 +102,7 @@ const ChoosePlanPage = () => {
             >
               <IonIcon icon={arrowBack}></IonIcon> Select another month
             </button>
-            <StepDescription step={2} text="How much slots do you want?"></StepDescription>
+            <StepDescription step={2} text="How many slots do you want?"></StepDescription>
             <p className="margin">
               {prebookableSlotObject ? (
                 <>
