@@ -13,7 +13,7 @@ import creditCard from "../../images/credit_card_path.svg";
 import { useHistory } from "react-router";
 
 const ChoosePlanCheckoutPage = () => {
-  const { planObject, nbSlots, referral } = useContext(ChoosePlanContext);
+  const { prebookableSlotObject, nbSlots, referral } = useContext(ChoosePlanContext);
   const history = useHistory();
 
   const { jwtToken } = useContext(GlobalContext);
@@ -26,21 +26,21 @@ const ChoosePlanCheckoutPage = () => {
   };
 
   const generateUrl = () => {
-    if (jwtToken && planObject && nbSlots) {
+    if (jwtToken && prebookableSlotObject && nbSlots) {
       setSessionError({ error: false, msg: null });
       setLoading(true);
-      checkout(planObject._id, nbSlots, referral, jwtToken)
-        .then((checkoutUrl) => {
-          Browser.open({ url: checkoutUrl.data.url });
-          setSessionError({ error: false, msg: null });
-        })
-        .catch((err) => {
-          const msg = err.response?.data?.message;
-          setSessionError({ error: true, msg });
-        })
-        .finally(() => {
-          setLoading(false);
-        });
+      // checkout(prebookableSlotObject.date, nbSlots, referral, jwtToken)
+      //   .then((checkoutUrl) => {
+      //     Browser.open({ url: checkoutUrl.data.url });
+      //     setSessionError({ error: false, msg: null });
+      //   })
+      //   .catch((err) => {
+      //     const msg = err.response?.data?.message;
+      //     setSessionError({ error: true, msg });
+      //   })
+      //   .finally(() => {
+      //     setLoading(false);
+      //   });
     }
   };
 

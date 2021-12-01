@@ -4,7 +4,7 @@
     text-align: center;
     font-size: 1rem;
     line-height: 1.3rem;
-    margin: 3rem auto 0 auto;
+    margin: 1rem auto 0 auto;
     .step {
         display: inline-block;
         background-color: $primary;
@@ -74,6 +74,112 @@
             color: $primary;
         }
     }
+}
+
+.prebookable-slot-element {
+    display: flex;
+    flex-direction: column;
+    margin: 1rem;
+    padding: 1rem;
+
+    border: 2px solid $soft-bg;
+    border-radius: 6px;
+
+    transition: all 0.4s;
+
+    &.disabled {
+        background-color: #222;
+        background: linear-gradient(
+            135deg,
+            #222 12.5%,
+            #000 12.5%,
+            #000 37.5%,
+            #222 37.5%,
+            #222 62.5%,
+            #000 62.5%,
+            #000 87.5%,
+            #222 87.5%
+        );
+        background-size: 60px 60px;
+        background-position: 50px 50px;
+    }
+
+    .prebookable-slot-row {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .prebookable-slot-name {
+        flex-grow: 1;
+        font-weight: bold;
+        i {
+            margin-right: 0.5rem;
+        }
+    }
+
+    .prebookable-slot-price {
+        font-size: 1.2rem;
+        font-weight: bold;
+    }
+
+    .prebookable-slot-description {
+        margin: 0;
+        padding: 0;
+        font-style: italic;
+        list-style: none;
+        opacity: 0.7;
+    }
+
+    &.selected {
+        transition: all 0.4s;
+        background: $soft-bg;
+        border: 2px solid $primary;
+        .prebookable-slot-price {
+            color: $primary;
+        }
+    }
+
+    .prebookable-order-button {
+        background-color: rgba(255, 255, 255, 0.2);
+        color: white;
+        border-radius: 6px;
+
+        display: flex;
+        padding: 0.5rem;
+        flex-direction: row;
+        align-items: center;
+
+        &.sold-out {
+            background: none;
+        }
+
+        .vertical {
+            text-align: left;
+        }
+
+        .btn-title,
+        .btn-main,
+        .btn-sold-out {
+            display: block;
+            font-weight: bold;
+        }
+
+        .btn-sold-out {
+            color: $alert;
+        }
+
+        .btn-icon {
+            font-size: 1.5rem;
+            padding-left: 0.5rem;
+        }
+    }
+}
+
+.back-button {
+    color: $primary;
+    font-size: 1rem;
+    font-weight: bold;
 }
 
 .ion-overlay-wrapper {

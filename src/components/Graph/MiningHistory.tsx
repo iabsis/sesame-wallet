@@ -54,7 +54,6 @@ const MiningHistory = ({ wallet }: MiningHistoryProps) => {
   return (
     <IonCard className="ion-card-primary">
       <IonCardHeader>
-        {/* <IonCardSubtitle>Tokens are delivered every Monday</IonCardSubtitle> */}
         <IonCardTitle>Your last 7 days rewards</IonCardTitle>
       </IonCardHeader>
 

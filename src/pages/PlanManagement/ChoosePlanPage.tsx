@@ -9,64 +9,46 @@ import { StepsContext } from "../MultiStepsController";
 import { ChoosePlanContext } from "./ChoosePlanContext";
 import { getPlans, Plan } from "../../services/plans";
 import { getSlotsAvailable } from "../../services/slots";
-import PlanElement from "./Plan";
-import { IonPage, IonRange, useIonAlert } from "@ionic/react";
+import { getPrebookableSlots, PrebookableSlot } from "../../services/slotsPrebooking";
+import PrebookableSlotElement from "./PrebookableSlot";
+import { IonIcon, IonPage, IonRange, useIonAlert } from "@ionic/react";
 import StepDescription from "../../components/StepDescription";
 import { useHistory } from "react-router";
 import { authenticate } from "../../services/auth";
 
 import serverError from "../../images/server-error.svg";
 import { Input } from "../../components/Inputs";
+import dayjs from "dayjs";
+import { arrowBack } from "ionicons/icons";
 
 const ChoosePlanPage = () => {
-  const { setContext, planObject: existingPlan, nbSlots: existingNbSlots } = useContext(ChoosePlanContext);
+  const { setContext, prebookableSlotObject: prebookableSlot, nbSlots: existingNbSlots } = useContext(ChoosePlanContext);
   const { onButtonNext } = useContext(StepsContext);
   const { setMyReferral, setJwtToken, wallet } = useContext(GlobalContext);
 
   const [state, setState] = useState<{
-    planObject: Plan | null;
-    planObjectError: string;
+    prebookableSlotObject: PrebookableSlot | null;
+    prebookableSlotObjectError: string;
     nbSlots: number;
     nbSlotsError: string;
   }>({
-    planObject: existingPlan,
-    planObjectError: "",
+    prebookableSlotObject: prebookableSlot,
+    prebookableSlotObjectError: "",
     nbSlots: existingNbSlots,
     nbSlotsError: "",
   });
-  const { planObject, nbSlots } = state;
+  const { prebookableSlotObject, nbSlots } = state;
   const history = useHistory();
 
-  const [plans, setPlans] = useState<Plan[]>([]);
+  const [prebookableSlots, setPrebookableSlots] = useState<PrebookableSlot[]>([]);
   const [referral, setReferral] = useState<string>("");
-  const [availableSlots, setAvailableSlots] = useState<{ min: number; max: number; remaining: number | null; total: number }>({
-    min: 1,
-    max: 10,
-    remaining: null,
-    total: 0,
-  });
-
-  const [present] = useIonAlert();
 
   // Is next button activated?
-  const isNextButtonActive = () => nbSlots > 0 && planObject && planObject._id;
+  const isNextButtonActive = () => nbSlots > 0 && prebookableSlotObject && prebookableSlotObject.date;
 
   const handleNextButtonClick = () => {
-    present({
-      header: "Important",
-      message: "Remember that subscriptions are auto renewed. You will be able to cancel auto renew from the subscriptions tab once paid.",
-      buttons: [
-        "Cancel",
-        {
-          text: "Proceed",
-          handler: (d) => {
-            setContext((prevContext) => ({ ...prevContext, planObject, nbSlots, referral }));
-            onButtonNext();
-          },
-        },
-      ],
-      onDidDismiss: (e) => console.log("did dismiss"),
-    });
+    setContext((prevContext) => ({ ...prevContext, prebookableSlotObject, nbSlots, referral }));
+    onButtonNext();
   };
 
   const redirectToDashboard = () => {
@@ -79,11 +61,9 @@ const ChoosePlanPage = () => {
         .then((data) => {
           setJwtToken(data.data.token);
           setMyReferral(data.data.referral);
-          getSlotsAvailable(data.data.token).then((slot) => {
-            setAvailableSlots({ min: slot.data.min, max: slot.data.max, remaining: slot.data.remaining, total: slot.data.total });
-          });
-          getPlans(data.data.token).then((plans) => {
-            setPlans(plans.data);
+
+          getPrebookableSlots(data.data.token).then((slots) => {
+            setPrebookableSlots(slots.data);
           });
         })
 
@@ -93,88 +73,73 @@ const ChoosePlanPage = () => {
     }
   }, []);
 
-  const goToWhitelist = () => {
-    window.open("https://docs.google.com/forms/d/e/1FAIpQLSdWIMC7-z-i5fdFWdT021QnAkvHFQuQlWfbf1W7OsUirnnBGg/viewform", "_system");
-  };
-
-  const renderWaitingList = () => {
+  const renderPrebookableSlots = () => {
     return (
-      <div className="centered">
-        <h1 className="page-title">Sorry! No remaining slots available</h1>
-        <img src={serverError} className="white-full-screen-icon" />
-        <p className="page-subtitle">
-          The whole {availableSlots.total} slots available on our cloud are already booked. You can apply for the new slots below.{" "}
-        </p>
-        <Button onClick={() => goToWhitelist()} type="button">
-          Apply for new slots
-        </Button>
-      </div>
-    );
-  };
+      <div className={`sliding-page ${prebookableSlotObject ? "step-2" : "step-1"}`}>
+        <div className={`step-1`}>
+          <StepDescription step={1} text="Choose the mining period"></StepDescription>
+          {prebookableSlots.length > 0 &&
+            prebookableSlots.map((currentPrebookableSlot) => {
+              return (
+                <PrebookableSlotElement
+                  prebookableSlot={currentPrebookableSlot}
+                  onClick={() => {
+                    setState({ ...state, prebookableSlotObject: currentPrebookableSlot });
+                  }}
+                  key={currentPrebookableSlot.date.getTime()}
+                />
+              );
+            })}
+        </div>
 
-  const handleReferralChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setReferral(e.target.value);
-  };
-
-  const renderPlans = () => {
-    return (
-      <>
-        <StepDescription step={1} text="Choose a plan"></StepDescription>
-        {plans.length > 0 &&
-          plans.map((currentPlan) => {
-            return (
-              <PlanElement
-                plan={currentPlan}
-                selected={!!(planObject && planObject._id === currentPlan._id)}
-                onClick={() => {
-                  setState({ ...state, planObject: currentPlan });
-                }}
-                key={currentPlan._id}
-              />
-            );
-          })}
-        <p className="important-msg t-center">Tokens are distributed every Monday to reduce gas fees.</p>
-        {planObject && (
+        <div className={`step-2`}>
           <>
+            <button
+              onClick={() => {
+                setState({ ...state, prebookableSlotObject: null, nbSlots: 0 });
+              }}
+              className="back-button margin"
+            >
+              <IonIcon icon={arrowBack}></IonIcon> Select another month
+            </button>
             <StepDescription step={2} text="How much slots do you want?"></StepDescription>
+            <p className="margin">
+              {prebookableSlotObject ? (
+                <>
+                  Please select below the number of slots you want to book for{" "}
+                  <strong className="accent">{dayjs(prebookableSlotObject.date).format("MMMM YY")}</strong>
+                </>
+              ) : (
+                <>You did not select any month</>
+              )}
+            </p>
             <IonRange
               mode="md"
-              min={availableSlots.min}
-              max={availableSlots.max}
+              min={prebookableSlotObject ? prebookableSlotObject.min_slots : 0}
+              max={prebookableSlotObject ? prebookableSlotObject.max_slots : 0}
               pin={true}
               value={nbSlots}
               className="marged-range"
               onIonChange={(e) => setState({ ...state, nbSlots: e.detail.value as number })}
             />
             {nbSlots > 0 && <div className="nb-slots">{nbSlots} slot(s)</div>}
-            {/* <StepDescription
-              step={3}
-              text="Referral"
-              subtitle="Put the referral alephium address. You and your referal will both get rewards."
-            ></StepDescription>
-
-            <div className="margin">
-              <Input value={referral} placeholder="Referral (optional)" type="text" autoComplete="off" onChange={handleReferralChange} />
-            </div> */}
+            <FooterActions apparitionDelay={0.3}>
+              <Button disabled={!isNextButtonActive()} onClick={handleNextButtonClick} className="mb">
+                {prebookableSlotObject ? `Pay ${(nbSlots * prebookableSlotObject.price_per_slot).toFixed(2)} CHF with stripe` : "Continue"}
+              </Button>
+            </FooterActions>
           </>
-        )}
-
-        <FooterActions apparitionDelay={0.3}>
-          <Button disabled={!isNextButtonActive()} onClick={handleNextButtonClick} className="mb">
-            {planObject ? `Pay ${(nbSlots * planObject.pricePerSlot).toFixed(2)} CHF with stripe` : "Continue"}
-          </Button>
-        </FooterActions>
-      </>
+        </div>
+      </div>
     );
   };
 
   return (
-    <IonPage className="page-padding">
+    <IonPage className="page-padding no-scroll">
       <button className="global-close" onClick={() => redirectToDashboard()}>
         &times;
       </button>
-      {availableSlots.remaining === 0 && renderWaitingList()}
-      {plans.length > 0 && availableSlots.remaining !== 0 && renderPlans()}
+      {prebookableSlots.length > 0 && renderPrebookableSlots()}
     </IonPage>
   );
 };

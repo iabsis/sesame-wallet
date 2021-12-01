@@ -257,6 +257,14 @@ a {
   visibility: hidden;
 }
 
+.bg-primary {
+  background-color: $primary;
+}
+
+.no-scroll {
+  overflow: hidden !important;
+}
+
 @import "style/scss/plans.scss";
 @import "style/scss/subscriptions.scss";
 @import "style/scss/buttons.scss";
@@ -267,3 +275,4 @@ a {
 @import "style/scss/biometric.scss";
 @import "style/scss/server-message.scss";
 @import "style/scss/cards.scss";
+@import "style/scss/sliding-page.scss";
