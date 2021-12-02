@@ -4,20 +4,16 @@ import { PanelContainer, SectionContent, FooterActions, PanelTitle, MainPanel, P
 import styled from "styled-components";
 import Paragraph from "../../components/Paragraph";
 import { Button } from "../../components/Buttons";
+import Loader from "../../components/Loader";
 import { GlobalContext } from "../../App";
 import { StepsContext } from "../MultiStepsController";
 import { ChoosePlanContext } from "./ChoosePlanContext";
-import { getPlans, Plan } from "../../services/plans";
-import { getSlotsAvailable } from "../../services/slots";
 import { getPrebookableSlots, PrebookableSlot } from "../../services/slotsPrebooking";
 import PrebookableSlotElement from "./PrebookableSlot";
-import { IonIcon, IonPage, IonRange, useIonAlert } from "@ionic/react";
+import { IonIcon, IonPage, IonRange } from "@ionic/react";
 import StepDescription from "../../components/StepDescription";
 import { useHistory } from "react-router";
 import { authenticate } from "../../services/auth";
-
-import serverError from "../../images/server-error.svg";
-import { Input } from "../../components/Inputs";
 import dayjs from "dayjs";
 import { arrowBack } from "ionicons/icons";
 import { Cart } from "../../services/checkout";
@@ -169,8 +165,10 @@ const ChoosePlanPage = () => {
           <>
             <button
               onClick={() => {
-                setState({ ...state, prebookableSlotObject: null, nbSlots: 0 });
+                setState({ ...state, prebookableSlotObject: null, nbSlots: 0, nbMonths: 0 });
                 setStep("step-1");
+                setMaxMonth(1);
+                setMinMonth(1);
               }}
               className="back-button margin"
             >
@@ -267,9 +265,10 @@ const ChoosePlanPage = () => {
   return (
     <IonPage className="page-padding no-scroll">
       <button className="global-close" onClick={() => redirectToDashboard()}>
-        &times;
+        <div className="btn-title">Back to dashboard</div>
+        <div className="icon">&times;</div>
       </button>
-      {prebookableSlots.length > 0 && renderPrebookableSlots()}
+      {prebookableSlots.length > 0 ? renderPrebookableSlots() : <Loader title="Loading in progress..." />}
     </IonPage>
   );
 };

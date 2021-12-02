@@ -16,7 +16,7 @@ export interface ChoosePlanContextType {
 export const initialChoosePlanContext: ChoosePlanContextType = {
   prebookableSlotObject: null,
   nbSlots: 0,
-  nbMonths: 0,
+  nbMonths: 1,
   referral: "",
   cart: [],
   price: 0,

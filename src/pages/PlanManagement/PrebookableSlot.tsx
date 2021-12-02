@@ -30,7 +30,7 @@ const PrebookableSlotElement: FC<PrebookableSlotContext> = ({ prebookableSlot, o
             <button className="prebookable-order-button" type="button">
               <div className="vertical">
                 <span className="btn-title">Book from</span>
-                <span className="btn-main">{prebookableSlot.price_per_slot} chf / slot</span>
+                <span className="btn-main">{prebookableSlot.price_per_slot.toFixed(2)} chf / slot</span>
               </div>
               <IonIcon icon={play} className="btn-icon" />
             </button>

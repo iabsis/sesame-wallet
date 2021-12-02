@@ -7,6 +7,15 @@
     right: 1rem;
     color: $primary;
     padding: 0;
+    display: flex;
+    flex-direction: row;
+    font-size: 1rem;
+    text-transform: uppercase;
+    align-items: center;
+    .icon {
+        padding-left: 0.2rem;
+        font-size: 1.3rem;
+    }
 }
 
 .checkbox {

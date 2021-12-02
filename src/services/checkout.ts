@@ -15,7 +15,7 @@ export const checkout = (date: string, cart: Cart[], calculated_price: number, r
     `${config.API_URL}/stripe-session-booking`,
     {
       referral,
-      calculated_price,
+      calculated_price: parseInt(calculated_price.toFixed(2)),
       booking: cart
         .filter((item) => item.selected)
         .map((cartItem) => ({

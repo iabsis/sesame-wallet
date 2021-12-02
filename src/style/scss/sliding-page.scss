@@ -55,4 +55,14 @@
             transform: scale(0.95) translateX(17vw);
         }
     }
+
+    &.step-1 .step-1 {
+        z-index: 9;
+    }
+    &.step-2 .step-2 {
+        z-index: 9;
+    }
+    &.step-3 .step-3 {
+        z-index: 9;
+    }
 }
