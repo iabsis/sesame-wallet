@@ -2,12 +2,13 @@
 
 .sliding-page {
     display: flex;
-    width: 175vw;
+    width: 300vw;
     .step-1,
-    .step-2 {
+    .step-2,
+    .step-3 {
         height: calc(100vh - 80px);
         overflow: scroll;
-        margin: 0.5rem;
+        margin: 2rem;
         background-color: $soft-bg;
         border-radius: 1rem;
         padding: 0.5rem 0;
@@ -17,21 +18,41 @@
     &.step-1 {
         transform: translateX(0);
         transition: all 0.4s;
-        .step-2 {
+        .step-2,
+        .step-3 {
             opacity: 0.4;
-            transform: scale(0.95);
+            transform: scale(0.95) translateX(-17vw);
             filter: grayscale(1);
             transition: all 0.4s;
         }
     }
     &.step-2 {
-        transform: translateX(-75vw);
+        transform: translateX(-100vw);
         transition: all 0.4s;
-        .step-1 {
+        .step-1,
+        .step-3 {
             transition: all 0.4s;
             opacity: 0.4;
             filter: grayscale(1);
-            transform: scale(0.95);
+        }
+
+        .step-1 {
+            transform: scale(0.95) translateX(17vw);
+        }
+        .step-3 {
+            transform: scale(0.95) translateX(-17vw);
+        }
+    }
+
+    &.step-3 {
+        transform: translateX(-200vw);
+        transition: all 0.4s;
+        .step-1,
+        .step-2 {
+            transition: all 0.4s;
+            opacity: 0.4;
+            filter: grayscale(1);
+            transform: scale(0.95) translateX(17vw);
         }
     }
 }

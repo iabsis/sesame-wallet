@@ -20,35 +20,82 @@ import serverError from "../../images/server-error.svg";
 import { Input } from "../../components/Inputs";
 import dayjs from "dayjs";
 import { arrowBack } from "ionicons/icons";
+import { Cart } from "../../services/checkout";
 
 const ChoosePlanPage = () => {
-  const { setContext, prebookableSlotObject: prebookableSlot, nbSlots: existingNbSlots } = useContext(ChoosePlanContext);
+  const { setContext, prebookableSlotObject: prebookableSlot, nbSlots: existingNbSlots, nbMonths: existingNbMonths } = useContext(ChoosePlanContext);
   const { onButtonNext } = useContext(StepsContext);
   const { setMyReferral, setJwtToken, wallet } = useContext(GlobalContext);
+
+  const [minMonth, setMinMonth] = useState(1);
+  const [maxMonth, setMaxMonth] = useState(1);
+  const [cart, setCart] = useState<Cart[]>([]);
+  const [price, setPrice] = useState<number>(0);
+  const [step, setStep] = useState<string>("step-1");
 
   const [state, setState] = useState<{
     prebookableSlotObject: PrebookableSlot | null;
     prebookableSlotObjectError: string;
     nbSlots: number;
+    nbMonths: number;
     nbSlotsError: string;
   }>({
     prebookableSlotObject: prebookableSlot,
     prebookableSlotObjectError: "",
     nbSlots: existingNbSlots,
+    nbMonths: existingNbMonths,
     nbSlotsError: "",
   });
-  const { prebookableSlotObject, nbSlots } = state;
+  const { prebookableSlotObject, nbSlots, nbMonths } = state;
   const history = useHistory();
 
   const [prebookableSlots, setPrebookableSlots] = useState<PrebookableSlot[]>([]);
   const [referral, setReferral] = useState<string>("");
 
   // Is next button activated?
-  const isNextButtonActive = () => nbSlots > 0 && prebookableSlotObject && prebookableSlotObject.date;
+  const isCheckoutButtonActive = () => nbSlots > 0 && prebookableSlotObject && prebookableSlotObject.date;
+  const isPaymentButtonActive = () => price && nbSlots > 0 && prebookableSlotObject && prebookableSlotObject.date;
 
-  const handleNextButtonClick = () => {
-    setContext((prevContext) => ({ ...prevContext, prebookableSlotObject, nbSlots, referral }));
+  const handleStripeButtonClick = () => {
+    setContext((prevContext) => ({ ...prevContext, prebookableSlotObject, nbSlots, referral, cart, price }));
     onButtonNext();
+  };
+
+  const handleCheckoutClick = () => {
+    setContext((prevContext) => ({ ...prevContext, prebookableSlotObject, nbSlots, referral }));
+    setStep("step-3");
+    generateCart();
+  };
+
+  const generateCart = () => {
+    if (!prebookableSlotObject) {
+      setCart([]);
+      return;
+    }
+
+    let cart = [];
+    let used = 0;
+    let price = 0;
+    for (const slot of prebookableSlots) {
+      if (slot.date >= prebookableSlotObject.date) {
+        let selected = used < nbMonths && slot.remaining_slots >= nbSlots && slot.max_slots >= nbSlots;
+        let cartItem: Cart = {
+          dateString: slot.date,
+          date: slot.dateObject,
+          selected: selected,
+          nbSlots,
+        };
+        if (selected) {
+          used++;
+          price += slot.price_per_slot * nbSlots;
+        }
+
+        cart.push(cartItem);
+      }
+    }
+    setCart(cart);
+    setPrice(price);
+    console.log(cart);
   };
 
   const redirectToDashboard = () => {
@@ -63,7 +110,12 @@ const ChoosePlanPage = () => {
           setMyReferral(data.data.referral);
 
           getPrebookableSlots(data.data.token).then((slots) => {
-            setPrebookableSlots(slots.data);
+            setPrebookableSlots(
+              slots.data.map((slot) => {
+                slot.dateObject = dayjs(slot.date).toDate();
+                return slot;
+              })
+            );
           });
         })
 
@@ -73,9 +125,29 @@ const ChoosePlanPage = () => {
     }
   }, []);
 
+  useEffect(() => {
+    const dateOfStart = prebookableSlotObject?.date;
+    if (!dateOfStart) {
+      setMaxMonth(0);
+      return;
+    }
+
+    let maxMonths = 0;
+    for (const slot of prebookableSlots) {
+      if (slot.date >= prebookableSlotObject.date && slot.remaining_slots >= nbSlots && slot.max_slots >= nbSlots) {
+        maxMonths++;
+      }
+    }
+    console.log("Update max months", maxMonths);
+    setMaxMonth(maxMonths);
+    if (maxMonths < nbMonths) {
+      setState({ ...state, nbMonths: maxMonths });
+    }
+  }, [nbSlots]);
+
   const renderPrebookableSlots = () => {
     return (
-      <div className={`sliding-page ${prebookableSlotObject ? "step-2" : "step-1"}`}>
+      <div className={`sliding-page ${step}`}>
         <div className={`step-1`}>
           <StepDescription step={1} text="Choose the mining period"></StepDescription>
           {prebookableSlots.length > 0 &&
@@ -85,8 +157,9 @@ const ChoosePlanPage = () => {
                   prebookableSlot={currentPrebookableSlot}
                   onClick={() => {
                     setState({ ...state, prebookableSlotObject: currentPrebookableSlot });
+                    setStep("step-2");
                   }}
-                  key={currentPrebookableSlot.date.getTime()}
+                  key={currentPrebookableSlot.dateObject?.getTime()}
                 />
               );
             })}
@@ -97,13 +170,15 @@ const ChoosePlanPage = () => {
             <button
               onClick={() => {
                 setState({ ...state, prebookableSlotObject: null, nbSlots: 0 });
+                setStep("step-1");
               }}
               className="back-button margin"
             >
               <IonIcon icon={arrowBack}></IonIcon> Select another month
             </button>
+
             <StepDescription step={2} text="How many slots do you want?"></StepDescription>
-            <p className="margin">
+            <p className="margin t-center">
               {prebookableSlotObject ? (
                 <>
                   Please select below the number of slots you want to book for{" "}
@@ -123,12 +198,67 @@ const ChoosePlanPage = () => {
               onIonChange={(e) => setState({ ...state, nbSlots: e.detail.value as number })}
             />
             {nbSlots > 0 && <div className="nb-slots">{nbSlots} slot(s)</div>}
+
+            <StepDescription step={3} text="How long do you want to mine?"></StepDescription>
+            <p className="margin t-center">
+              {prebookableSlotObject ? (
+                <>
+                  How many month would you like to book from <strong className="accent">{dayjs(prebookableSlotObject.date).format("MMMM YY")}</strong>.
+                </>
+              ) : (
+                <>You did not select any month</>
+              )}
+            </p>
+            <IonRange
+              mode="md"
+              min={minMonth}
+              max={maxMonth}
+              pin={true}
+              value={nbMonths}
+              className="marged-range"
+              onIonChange={(e) => setState({ ...state, nbMonths: e.detail.value as number })}
+            />
+            {nbMonths > 0 && <div className="nb-slots">{nbMonths} month(s)</div>}
+
             <FooterActions apparitionDelay={0.3}>
+              <Button disabled={!isCheckoutButtonActive()} onClick={handleCheckoutClick} className="mb">
+                Checkout
+              </Button>
+            </FooterActions>
+
+            {/* <FooterActions apparitionDelay={0.3}>
               <Button disabled={!isNextButtonActive()} onClick={handleNextButtonClick} className="mb">
                 {prebookableSlotObject ? `Pay ${(nbSlots * prebookableSlotObject.price_per_slot).toFixed(2)} CHF with stripe` : "Continue"}
               </Button>
-            </FooterActions>
+            </FooterActions> */}
           </>
+        </div>
+
+        <div className={`step-3`}>
+          <button
+            onClick={() => {
+              setStep("step-2");
+            }}
+            className="back-button margin"
+          >
+            <IonIcon icon={arrowBack}></IonIcon> Choose other slot(s)
+          </button>
+          <StepDescription step={1} text="Checkout"></StepDescription>
+          <p className="margin t-center">Please ascknowledge the resume of your booking before to proceed to the stripe payment.</p>
+          <div className="cart-items">
+            {cart &&
+              cart.map((cartItem) => (
+                <div className={`cart-item ${cartItem.selected ? "selected" : ""}`}>
+                  {dayjs(cartItem.date).format("MMMM YY")}
+                  {cartItem.selected && <> - {nbSlots} slot(s)</>}
+                </div>
+              ))}
+          </div>
+          <FooterActions apparitionDelay={0.3}>
+            <Button disabled={!isPaymentButtonActive()} onClick={handleStripeButtonClick} className="mb">
+              {prebookableSlotObject ? `Pay ${price.toFixed(2)} CHF with stripe` : "Continue"}
+            </Button>
+          </FooterActions>
         </div>
       </div>
     );
