@@ -1,5 +1,3 @@
-import React, { useState } from "react";
-
 import { SectionContent } from "./PageComponents";
 import { Button } from "./Buttons";
 import { addBiometricPasswordFor, disableBiometricFor, enableBiometricFor } from "../services/fingerprints";

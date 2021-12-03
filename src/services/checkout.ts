@@ -10,7 +10,16 @@ export type Cart = {
 
 export const checkout = (date: string, cart: Cart[], calculated_price: number, referral: string, jwtToken?: String): Promise<{ data: { url: string } }> => {
   // ${config.API_URL}/stripe-session
-
+  console.log("CHECKOUT", {
+    referral,
+    calculated_price: parseInt(calculated_price.toFixed(2)),
+    booking: cart
+      .filter((item) => item.selected)
+      .map((cartItem) => ({
+        date: cartItem.dateString,
+        nb_slots: cartItem.nbSlots,
+      })),
+  });
   return axios.post(
     `${config.API_URL}/stripe-session-booking`,
     {

@@ -181,6 +181,15 @@
     flex-direction: column;
     align-items: center;
 
+    &.inline {
+        width: auto;
+        display: inline-block;
+        .cart-item {
+            width: auto;
+            display: inline-block;
+        }
+    }
+
     .cart-item {
         margin: 0.2rem;
         border: 1px solid $text-default;

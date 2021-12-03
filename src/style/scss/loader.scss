@@ -1,3 +1,5 @@
+@use "sass:math";
+
 $size: 50vw;
 
 .loader-1 {
@@ -7,7 +9,7 @@ $size: 50vw;
     left: 50%;
     height: $size;
     width: $size;
-    margin: #{$size/2 * -1} 0 0 #{$size/2 * -1};
+    margin: #{math.div($size, 2) * -1} 0 0 #{math.div($size, 2) * -1};
     border: 2px solid transparent;
     border-top-color: $primary;
     border-radius: 50%;
@@ -17,7 +19,7 @@ $size: 50vw;
 .loader-title {
     text-transform: uppercase;
     color: $primary;
-    top: calc(50% + #{$size/2} + 20px);
+    top: calc(50% + #{math.div($size, 2)} + 20px);
     position: absolute;
     text-align: center;
     margin: auto;
