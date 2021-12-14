@@ -261,12 +261,20 @@ a {
   background-color: $primary;
 }
 
+.border-primary {
+  border-color: $primary !important;
+}
+
 .no-scroll {
   overflow: hidden !important;
 }
 
 .space-top {
   margin-top: 3rem !important;
+}
+
+.badge-bg-dark {
+  background-color: $bg;
 }
 
 @import "style/scss/plans.scss";

@@ -7,6 +7,7 @@ export type PrebookableSlot = {
   date: string;
   dateObject: Date | null;
   remaining_slots: number;
+  remaining_days: number;
   min_slots: number;
   max_slots: number;
   price_per_slot: number;

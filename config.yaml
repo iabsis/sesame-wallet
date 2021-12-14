@@ -1,8 +1,8 @@
 vars:
   BUNDLE_ID:
-    default: com.iabsis.sesamewallet
+    default: com.iabsis.sesamewalletdev
   PACKAGE_NAME:
-    default: com.iabsis.sesamewallet
+    default: com.iabsis.sesamewalletdev
   VERSION_NAME:
     default: 1.6.8
 

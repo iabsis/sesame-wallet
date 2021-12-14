@@ -165,6 +165,10 @@
             font-weight: bold;
         }
 
+        .btn-little {
+            font-size: 0.8rem;
+            white-space: nowrap;
+        }
         .btn-sold-out {
             color: $alert;
         }

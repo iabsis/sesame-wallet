@@ -5,6 +5,7 @@ import styled from "styled-components";
 import Paragraph from "../../components/Paragraph";
 import { Button } from "../../components/Buttons";
 import Loader from "../../components/Loader";
+import CartItem from "../../components/CartItem";
 import { GlobalContext } from "../../App";
 import { StepsContext } from "../MultiStepsController";
 import { ChoosePlanContext } from "./ChoosePlanContext";
@@ -146,6 +147,11 @@ const ChoosePlanPage = () => {
       <div className={`sliding-page ${step}`}>
         <div className={`step-1`}>
           <StepDescription step={1} text="Choose the mining period"></StepDescription>
+          <p className="margin t-center">
+            <strong className="accent">Why every month has a diffent price?</strong>
+            <br /> The monthly price changes depending on the number of days of period (28 days, 30 days, 31 days).
+          </p>
+
           {prebookableSlots.length > 0 &&
             prebookableSlots.map((currentPrebookableSlot) => {
               return (
@@ -243,15 +249,7 @@ const ChoosePlanPage = () => {
           </button>
           <StepDescription step={1} text="Checkout"></StepDescription>
           <p className="margin t-center">Please ascknowledge the resume of your booking before to proceed to the stripe payment.</p>
-          <div className="cart-items">
-            {cart &&
-              cart.map((cartItem) => (
-                <div className={`cart-item ${cartItem.selected ? "selected" : ""}`}>
-                  {dayjs(cartItem.date).format("MMMM YY")}
-                  {cartItem.selected && <> - {nbSlots} slot(s)</>}
-                </div>
-              ))}
-          </div>
+          <div className="cart-items">{cart && cart.map((cartItem) => <CartItem selected={cartItem.selected} month={cartItem.date} nbSlots={nbSlots} />)}</div>
           <FooterActions apparitionDelay={0.3}>
             <Button disabled={!isPaymentButtonActive()} onClick={handleStripeButtonClick} className="mb">
               {prebookableSlotObject ? `Pay ${price.toFixed(2)} CHF with stripe` : "Continue"}

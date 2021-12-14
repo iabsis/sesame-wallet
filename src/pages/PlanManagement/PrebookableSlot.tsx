@@ -18,7 +18,10 @@ const PrebookableSlotElement: FC<PrebookableSlotContext> = ({ prebookableSlot, o
         <div className="prebookable-slot-name">
           {dayjs(prebookableSlot.date).format("MMMM YYYY")}
           <div className="prebookable-slot-description">
-            Remaining slots: <span className="badge badge-success">{prebookableSlot.remaining_slots}</span>
+            Avail. slots: <span className="badge badge-success">{prebookableSlot.remaining_slots}</span>
+          </div>
+          <div className="prebookable-slot-description">
+            <span className="">Mining {prebookableSlot.remaining_days} days</span>
           </div>
         </div>
         {prebookableSlot.remaining_slots < 1 ? (
@@ -29,8 +32,9 @@ const PrebookableSlotElement: FC<PrebookableSlotContext> = ({ prebookableSlot, o
           <div className="prebookable-slot-price">
             <button className="prebookable-order-button" type="button">
               <div className="vertical">
-                <span className="btn-title">Book from</span>
-                <span className="btn-main">{prebookableSlot.price_per_slot.toFixed(2)} chf / slot</span>
+                <span className="btn-title">{prebookableSlot.price_per_slot.toFixed(2)} CHF</span>
+                <span className="btn-little">{(prebookableSlot.price_per_slot / prebookableSlot.remaining_days).toFixed(2)} chf / slot / day</span>
+                <span className="btn-main"> </span>
               </div>
               <IonIcon icon={play} className="btn-icon" />
             </button>
