@@ -4,6 +4,7 @@ import { getHistory } from "../../services/stats";
 import { Wallet } from "alephium-js";
 import dayjs, { Dayjs } from "dayjs";
 import { XAxis, YAxis, CartesianGrid, ResponsiveContainer, Tooltip, Rectangle, Cell, LineChart, Line } from "recharts";
+import { darkTheme, lightTheme } from "../../style/themes";
 
 interface PriceHistoryProps {
   wallet?: Wallet;
@@ -41,7 +42,15 @@ const PriceHistory = ({ wallet }: PriceHistoryProps) => {
     if (!data[0]) {
       return "";
     }
-    return `Reward for ${data[0].payload.dayJsDate.format("MMMM Do, YYYY")}`;
+    return (
+      <g>
+        <foreignObject x={0} y={0} width={100} height={100}>
+          <div style={{ fontWeight: "bold", color: "#d4aa00" }}>{data[0].payload.dayJsDate.format("MMMM Do, YYYY")}</div>
+          <div>{`Cost per alph: `}</div>
+        </foreignObject>
+      </g>
+    );
+    return `Cost per alph ${data[0].payload.dayJsDate.format("MMMM Do, YYYY")}`;
   };
 
   return (
