@@ -50,9 +50,11 @@ ios: node_modules build
 
 ios-xcode: ios
 
-sign-android:
+sign-android: android-prod
 	jarsigner -verbose -sigalg SHA256withRSA -digestalg SHA-256 -keystore ~/Documents/Iabsis/Passwords/Android.jks android/app/build/outputs/bundle/release/app-release.aab iabsis
 	jarsigner -verbose -sigalg SHA256withRSA -digestalg SHA-256 -keystore ~/Documents/Iabsis/Passwords/Android.jks android/app/build/outputs/apk/release/app-release-unsigned.apk iabsis
+	@echo Bundle app: android/app/build/outputs/bundle/release/app-release.aab
+	@echo APK app: android/app/build/outputs/apk/release/app-release-unsigned.apk
 
 open-xcode:
 	npx cap open ios
