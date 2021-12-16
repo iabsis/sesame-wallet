@@ -43,15 +43,6 @@ const GraphicsPage = () => {
               <IonCardContent className="accent t-center">{availableSlots.total === 0 ? "Loading..." : availableSlots.total}</IonCardContent>
             </IonCard>
           </IonCol>
-          <IonCol>
-            <IonCard className="ion-card-alt">
-              <IonCardHeader>
-                <IonCardTitle className="t-center">Free slots</IonCardTitle>
-              </IonCardHeader>
-
-              <IonCardContent className="accent t-center">{availableSlots.total === 0 ? "Loading..." : availableSlots.remaining}</IonCardContent>
-            </IonCard>
-          </IonCol>
         </IonRow>
       </IonGrid>
 
