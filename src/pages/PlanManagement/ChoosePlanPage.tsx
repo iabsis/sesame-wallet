@@ -248,7 +248,7 @@ const ChoosePlanPage = () => {
             <IonIcon icon={arrowBack}></IonIcon> Choose other slot(s)
           </button>
           <StepDescription step={1} text="Checkout"></StepDescription>
-          <p className="margin t-center">Please ascknowledge the resume of your booking before to proceed to the stripe payment.</p>
+          <p className="margin t-center">Please acknowledge the resume of your booking before to proceed to the stripe payment.</p>
           <div className="cart-items">{cart && cart.map((cartItem) => <CartItem selected={cartItem.selected} month={cartItem.date} nbSlots={nbSlots} />)}</div>
           <FooterActions apparitionDelay={0.3}>
             <Button disabled={!isPaymentButtonActive()} onClick={handleStripeButtonClick} className="mb">
