@@ -35,20 +35,6 @@ const GraphicsPage = () => {
       <IonGrid>
         <IonRow>
           <IonCol>
-            <IonCard className="ion-card-alt">
-              <IonCardHeader>
-                <IonCardTitle className="t-center">Total slots</IonCardTitle>
-              </IonCardHeader>
-
-              <IonCardContent className="accent t-center">{availableSlots.total === 0 ? "Loading..." : availableSlots.total}</IonCardContent>
-            </IonCard>
-          </IonCol>
-        </IonRow>
-      </IonGrid>
-
-      <IonGrid>
-        <IonRow>
-          <IonCol>
             <PricingHistory wallet={wallet} />
           </IonCol>
         </IonRow>
